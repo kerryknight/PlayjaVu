@@ -1,4 +1,4 @@
-playjavu
+PlayjaVu
 ========
 
-Rhymes with "deja vú"
+Rhymes with "deja vú."
