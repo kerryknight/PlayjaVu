@@ -1,0 +1,1151 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		35D7DFD41DC8118759825112 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 313A3FE2FFEDC96957BF0980 /* libPods.a */; };
+		F10BA4321A5621C500B19739 /* PFFile+RACExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA41B1A5621C500B19739 /* PFFile+RACExtensions.m */; };
+		F10BA4341A5621C500B19739 /* PFAnonymousUtils+RACExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA4201A5621C500B19739 /* PFAnonymousUtils+RACExtensions.m */; };
+		F10BA4351A5621C500B19739 /* PFCloud+RACExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA4221A5621C500B19739 /* PFCloud+RACExtensions.m */; };
+		F10BA4361A5621C500B19739 /* PFGeoPoint+RACExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA4241A5621C500B19739 /* PFGeoPoint+RACExtensions.m */; };
+		F10BA4371A5621C500B19739 /* PFObject+RACExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA4261A5621C500B19739 /* PFObject+RACExtensions.m */; };
+		F10BA4381A5621C500B19739 /* PFPush+RACExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA4281A5621C500B19739 /* PFPush+RACExtensions.m */; };
+		F10BA4391A5621C500B19739 /* PFQuery+RACExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA42A1A5621C500B19739 /* PFQuery+RACExtensions.m */; };
+		F10BA43A1A5621C500B19739 /* PFRACCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA42C1A5621C500B19739 /* PFRACCallbacks.m */; };
+		F10BA43B1A5621C500B19739 /* PFRACErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA42E1A5621C500B19739 /* PFRACErrors.m */; };
+		F10BA43C1A5621C500B19739 /* PFUser+RACExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA4301A5621C500B19739 /* PFUser+RACExtensions.m */; };
+		F11BB6E01A5765F000A1185C /* PVMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F6D1A55F571000BCCB2 /* PVMenuViewController.m */; };
+		F11BB6E11A57677F00A1185C /* PVNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F701A55F571000BCCB2 /* PVNavigationController.m */; };
+		F11BB6E81A5767DF00A1185C /* BEFORE-DELETING in Resources */ = {isa = PBXBuildFile; fileRef = F11BB6E31A5767DF00A1185C /* BEFORE-DELETING */; };
+		F11BB6E91A5767DF00A1185C /* ICSDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F11BB6E51A5767DF00A1185C /* ICSDrawerController.m */; };
+		F11BB6EA1A5767DF00A1185C /* ICSDropShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F11BB6E71A5767DF00A1185C /* ICSDropShadowView.m */; };
+		F122B3701A55F18400A5BBCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F122B36F1A55F18400A5BBCB /* main.m */; };
+		F122B37B1A55F18400A5BBCB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F122B37A1A55F18400A5BBCB /* Images.xcassets */; };
+		F122B37E1A55F18400A5BBCB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F122B37C1A55F18400A5BBCB /* LaunchScreen.xib */; };
+		F122B38A1A55F18400A5BBCB /* PlayjaVuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F122B3891A55F18400A5BBCB /* PlayjaVuTests.m */; };
+		F145D8021A562F570000D472 /* PFRACCallbacks+PV_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA41D1A5621C500B19739 /* PFRACCallbacks+PV_Extensions.m */; };
+		F146F1F31A561A10002EDD15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F146F1F21A561A10002EDD15 /* AudioToolbox.framework */; };
+		F159E2F61A57B435009560A3 /* PVBaseOnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F159E2F51A57B435009560A3 /* PVBaseOnboardingViewController.m */; };
+		F1776FC31A55F572000BCCB2 /* PVMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F6E1A55F571000BCCB2 /* PVMenuViewController.xib */; };
+		F1776FC51A55F572000BCCB2 /* STPCardTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F741A55F571000BCCB2 /* STPCardTransition.m */; };
+		F1776FC61A55F572000BCCB2 /* STPSlideUpTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F761A55F571000BCCB2 /* STPSlideUpTransition.m */; };
+		F1776FC71A55F572000BCCB2 /* PVBarGolfToolbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F791A55F571000BCCB2 /* PVBarGolfToolbarViewController.m */; };
+		F1776FC81A55F572000BCCB2 /* PVBarGolfToolbarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F7A1A55F571000BCCB2 /* PVBarGolfToolbarViewController.xib */; };
+		F1776FC91A55F572000BCCB2 /* PVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F7C1A55F571000BCCB2 /* PVAppDelegate.m */; };
+		F1776FCA1A55F572000BCCB2 /* PVForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F801A55F571000BCCB2 /* PVForgotPasswordViewController.m */; };
+		F1776FCB1A55F572000BCCB2 /* PVForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F811A55F571000BCCB2 /* PVForgotPasswordViewController.xib */; };
+		F1776FCC1A55F572000BCCB2 /* PVLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F831A55F571000BCCB2 /* PVLoginViewController.m */; };
+		F1776FCD1A55F572000BCCB2 /* PVLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F841A55F571000BCCB2 /* PVLoginViewController.xib */; };
+		F1776FCE1A55F572000BCCB2 /* PVSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F861A55F571000BCCB2 /* PVSignUpViewController.m */; };
+		F1776FCF1A55F572000BCCB2 /* PVSignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F871A55F571000BCCB2 /* PVSignUpViewController.xib */; };
+		F1776FD01A55F572000BCCB2 /* PVWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F891A55F571000BCCB2 /* PVWelcomeViewController.m */; };
+		F1776FD11A55F572000BCCB2 /* PVForgotPasswordViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F8C1A55F571000BCCB2 /* PVForgotPasswordViewModel.m */; };
+		F1776FD21A55F572000BCCB2 /* PVLoginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F8E1A55F571000BCCB2 /* PVLoginViewModel.m */; };
+		F1776FD31A55F572000BCCB2 /* PVSignUpViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F901A55F571000BCCB2 /* PVSignUpViewModel.m */; };
+		F1776FD41A55F572000BCCB2 /* PVMyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F981A55F571000BCCB2 /* PVMyProfileViewController.m */; };
+		F1776FD51A55F572000BCCB2 /* PVMyProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F991A55F571000BCCB2 /* PVMyProfileViewController.xib */; };
+		F1776FD61A55F572000BCCB2 /* NSString+EmailAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FA11A55F572000BCCB2 /* NSString+EmailAdditions.m */; };
+		F1776FD71A55F572000BCCB2 /* UIImage+AlphaAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FA41A55F572000BCCB2 /* UIImage+AlphaAdditions.m */; };
+		F1776FD81A55F572000BCCB2 /* UIImage+Coloring.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FA61A55F572000BCCB2 /* UIImage+Coloring.m */; };
+		F1776FD91A55F572000BCCB2 /* UIImage+Colorization.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FA81A55F572000BCCB2 /* UIImage+Colorization.m */; };
+		F1776FDA1A55F572000BCCB2 /* UIImage+ResizeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FAA1A55F572000BCCB2 /* UIImage+ResizeAdditions.m */; };
+		F1776FDB1A55F572000BCCB2 /* UIImage+RoundedCornerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FAC1A55F572000BCCB2 /* UIImage+RoundedCornerAdditions.m */; };
+		F1776FDC1A55F572000BCCB2 /* JVFloatLabeledTextField+LabelText.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FB01A55F572000BCCB2 /* JVFloatLabeledTextField+LabelText.m */; };
+		F1776FE01A55F572000BCCB2 /* PVStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FBA1A55F572000BCCB2 /* PVStatusBarNotification.m */; };
+		F1776FE11A55F572000BCCB2 /* PVCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FBC1A55F572000BCCB2 /* PVCache.m */; };
+		F1776FE21A55F572000BCCB2 /* PVConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FBE1A55F572000BCCB2 /* PVConfig.m */; };
+		F1776FE31A55F572000BCCB2 /* PVUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FC11A55F572000BCCB2 /* PVUtility.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F122B3841A55F18400A5BBCB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F122B3621A55F18400A5BBCB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F122B3691A55F18400A5BBCB;
+			remoteInfo = PlayjaVu;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		06952478CFC23570B4B1D89A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		313A3FE2FFEDC96957BF0980 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7BE0B6675EF865E68BF96D2C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		F10BA4181A5621C500B19739 /* PFFacebookUtils+RACExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFFacebookUtils+RACExtensions.h"; sourceTree = "<group>"; };
+		F10BA4191A5621C500B19739 /* PFFacebookUtils+RACExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFFacebookUtils+RACExtensions.m"; sourceTree = "<group>"; };
+		F10BA41A1A5621C500B19739 /* PFFile+RACExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFFile+RACExtensions.h"; sourceTree = "<group>"; };
+		F10BA41B1A5621C500B19739 /* PFFile+RACExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFFile+RACExtensions.m"; sourceTree = "<group>"; };
+		F10BA41C1A5621C500B19739 /* PFRACCallbacks+PV_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFRACCallbacks+PV_Extensions.h"; sourceTree = "<group>"; };
+		F10BA41D1A5621C500B19739 /* PFRACCallbacks+PV_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFRACCallbacks+PV_Extensions.m"; sourceTree = "<group>"; };
+		F10BA41E1A5621C500B19739 /* Parse-RACExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Parse-RACExtensions.h"; sourceTree = "<group>"; };
+		F10BA41F1A5621C500B19739 /* PFAnonymousUtils+RACExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFAnonymousUtils+RACExtensions.h"; sourceTree = "<group>"; };
+		F10BA4201A5621C500B19739 /* PFAnonymousUtils+RACExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFAnonymousUtils+RACExtensions.m"; sourceTree = "<group>"; };
+		F10BA4211A5621C500B19739 /* PFCloud+RACExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFCloud+RACExtensions.h"; sourceTree = "<group>"; };
+		F10BA4221A5621C500B19739 /* PFCloud+RACExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFCloud+RACExtensions.m"; sourceTree = "<group>"; };
+		F10BA4231A5621C500B19739 /* PFGeoPoint+RACExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFGeoPoint+RACExtensions.h"; sourceTree = "<group>"; };
+		F10BA4241A5621C500B19739 /* PFGeoPoint+RACExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFGeoPoint+RACExtensions.m"; sourceTree = "<group>"; };
+		F10BA4251A5621C500B19739 /* PFObject+RACExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFObject+RACExtensions.h"; sourceTree = "<group>"; };
+		F10BA4261A5621C500B19739 /* PFObject+RACExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFObject+RACExtensions.m"; sourceTree = "<group>"; };
+		F10BA4271A5621C500B19739 /* PFPush+RACExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFPush+RACExtensions.h"; sourceTree = "<group>"; };
+		F10BA4281A5621C500B19739 /* PFPush+RACExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFPush+RACExtensions.m"; sourceTree = "<group>"; };
+		F10BA4291A5621C500B19739 /* PFQuery+RACExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFQuery+RACExtensions.h"; sourceTree = "<group>"; };
+		F10BA42A1A5621C500B19739 /* PFQuery+RACExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFQuery+RACExtensions.m"; sourceTree = "<group>"; };
+		F10BA42B1A5621C500B19739 /* PFRACCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFRACCallbacks.h; sourceTree = "<group>"; };
+		F10BA42C1A5621C500B19739 /* PFRACCallbacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFRACCallbacks.m; sourceTree = "<group>"; };
+		F10BA42D1A5621C500B19739 /* PFRACErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFRACErrors.h; sourceTree = "<group>"; };
+		F10BA42E1A5621C500B19739 /* PFRACErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFRACErrors.m; sourceTree = "<group>"; };
+		F10BA42F1A5621C500B19739 /* PFUser+RACExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFUser+RACExtensions.h"; sourceTree = "<group>"; };
+		F10BA4301A5621C500B19739 /* PFUser+RACExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFUser+RACExtensions.m"; sourceTree = "<group>"; };
+		F11BB6E31A5767DF00A1185C /* BEFORE-DELETING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "BEFORE-DELETING"; sourceTree = "<group>"; };
+		F11BB6E41A5767DF00A1185C /* ICSDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICSDrawerController.h; sourceTree = "<group>"; };
+		F11BB6E51A5767DF00A1185C /* ICSDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICSDrawerController.m; sourceTree = "<group>"; };
+		F11BB6E61A5767DF00A1185C /* ICSDropShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICSDropShadowView.h; sourceTree = "<group>"; };
+		F11BB6E71A5767DF00A1185C /* ICSDropShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICSDropShadowView.m; sourceTree = "<group>"; };
+		F122B36A1A55F18400A5BBCB /* PlayjaVu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayjaVu.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F122B36E1A55F18400A5BBCB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F122B36F1A55F18400A5BBCB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F122B37A1A55F18400A5BBCB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F122B37D1A55F18400A5BBCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		F122B3831A55F18400A5BBCB /* PlayjaVuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayjaVuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F122B3881A55F18400A5BBCB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F122B3891A55F18400A5BBCB /* PlayjaVuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayjaVuTests.m; sourceTree = "<group>"; };
+		F146F1F11A561A10002EDD15 /* PlayjaVu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PlayjaVu.entitlements; sourceTree = "<group>"; };
+		F146F1F21A561A10002EDD15 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F159E2F41A57B435009560A3 /* PVBaseOnboardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVBaseOnboardingViewController.h; sourceTree = "<group>"; };
+		F159E2F51A57B435009560A3 /* PVBaseOnboardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVBaseOnboardingViewController.m; sourceTree = "<group>"; };
+		F1776F6C1A55F571000BCCB2 /* PVMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVMenuViewController.h; sourceTree = "<group>"; };
+		F1776F6D1A55F571000BCCB2 /* PVMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVMenuViewController.m; sourceTree = "<group>"; };
+		F1776F6E1A55F571000BCCB2 /* PVMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVMenuViewController.xib; sourceTree = "<group>"; };
+		F1776F6F1A55F571000BCCB2 /* PVNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVNavigationController.h; sourceTree = "<group>"; };
+		F1776F701A55F571000BCCB2 /* PVNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVNavigationController.m; sourceTree = "<group>"; };
+		F1776F721A55F571000BCCB2 /* PVAllSTPTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVAllSTPTransitions.h; sourceTree = "<group>"; };
+		F1776F731A55F571000BCCB2 /* STPCardTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPCardTransition.h; sourceTree = "<group>"; };
+		F1776F741A55F571000BCCB2 /* STPCardTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPCardTransition.m; sourceTree = "<group>"; };
+		F1776F751A55F571000BCCB2 /* STPSlideUpTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPSlideUpTransition.h; sourceTree = "<group>"; };
+		F1776F761A55F571000BCCB2 /* STPSlideUpTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPSlideUpTransition.m; sourceTree = "<group>"; };
+		F1776F781A55F571000BCCB2 /* PVBarGolfToolbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVBarGolfToolbarViewController.h; sourceTree = "<group>"; };
+		F1776F791A55F571000BCCB2 /* PVBarGolfToolbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVBarGolfToolbarViewController.m; sourceTree = "<group>"; };
+		F1776F7A1A55F571000BCCB2 /* PVBarGolfToolbarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVBarGolfToolbarViewController.xib; sourceTree = "<group>"; };
+		F1776F7B1A55F571000BCCB2 /* PVAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVAppDelegate.h; sourceTree = "<group>"; };
+		F1776F7C1A55F571000BCCB2 /* PVAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVAppDelegate.m; sourceTree = "<group>"; };
+		F1776F7F1A55F571000BCCB2 /* PVForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVForgotPasswordViewController.h; sourceTree = "<group>"; };
+		F1776F801A55F571000BCCB2 /* PVForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVForgotPasswordViewController.m; sourceTree = "<group>"; };
+		F1776F811A55F571000BCCB2 /* PVForgotPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVForgotPasswordViewController.xib; sourceTree = "<group>"; };
+		F1776F821A55F571000BCCB2 /* PVLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVLoginViewController.h; sourceTree = "<group>"; };
+		F1776F831A55F571000BCCB2 /* PVLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVLoginViewController.m; sourceTree = "<group>"; };
+		F1776F841A55F571000BCCB2 /* PVLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVLoginViewController.xib; sourceTree = "<group>"; };
+		F1776F851A55F571000BCCB2 /* PVSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVSignUpViewController.h; sourceTree = "<group>"; };
+		F1776F861A55F571000BCCB2 /* PVSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVSignUpViewController.m; sourceTree = "<group>"; };
+		F1776F871A55F571000BCCB2 /* PVSignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVSignUpViewController.xib; sourceTree = "<group>"; };
+		F1776F881A55F571000BCCB2 /* PVWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVWelcomeViewController.h; sourceTree = "<group>"; };
+		F1776F891A55F571000BCCB2 /* PVWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVWelcomeViewController.m; sourceTree = "<group>"; };
+		F1776F8B1A55F571000BCCB2 /* PVForgotPasswordViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVForgotPasswordViewModel.h; sourceTree = "<group>"; };
+		F1776F8C1A55F571000BCCB2 /* PVForgotPasswordViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVForgotPasswordViewModel.m; sourceTree = "<group>"; };
+		F1776F8D1A55F571000BCCB2 /* PVLoginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVLoginViewModel.h; sourceTree = "<group>"; };
+		F1776F8E1A55F571000BCCB2 /* PVLoginViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVLoginViewModel.m; sourceTree = "<group>"; };
+		F1776F8F1A55F571000BCCB2 /* PVSignUpViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVSignUpViewModel.h; sourceTree = "<group>"; };
+		F1776F901A55F571000BCCB2 /* PVSignUpViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVSignUpViewModel.m; sourceTree = "<group>"; };
+		F1776F971A55F571000BCCB2 /* PVMyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVMyProfileViewController.h; sourceTree = "<group>"; };
+		F1776F981A55F571000BCCB2 /* PVMyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVMyProfileViewController.m; sourceTree = "<group>"; };
+		F1776F991A55F571000BCCB2 /* PVMyProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVMyProfileViewController.xib; sourceTree = "<group>"; };
+		F1776FA01A55F572000BCCB2 /* NSString+EmailAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EmailAdditions.h"; sourceTree = "<group>"; };
+		F1776FA11A55F572000BCCB2 /* NSString+EmailAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EmailAdditions.m"; sourceTree = "<group>"; };
+		F1776FA31A55F572000BCCB2 /* UIImage+AlphaAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AlphaAdditions.h"; sourceTree = "<group>"; };
+		F1776FA41A55F572000BCCB2 /* UIImage+AlphaAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AlphaAdditions.m"; sourceTree = "<group>"; };
+		F1776FA51A55F572000BCCB2 /* UIImage+Coloring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Coloring.h"; sourceTree = "<group>"; };
+		F1776FA61A55F572000BCCB2 /* UIImage+Coloring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Coloring.m"; sourceTree = "<group>"; };
+		F1776FA71A55F572000BCCB2 /* UIImage+Colorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Colorization.h"; sourceTree = "<group>"; };
+		F1776FA81A55F572000BCCB2 /* UIImage+Colorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Colorization.m"; sourceTree = "<group>"; };
+		F1776FA91A55F572000BCCB2 /* UIImage+ResizeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeAdditions.h"; sourceTree = "<group>"; };
+		F1776FAA1A55F572000BCCB2 /* UIImage+ResizeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ResizeAdditions.m"; sourceTree = "<group>"; };
+		F1776FAB1A55F572000BCCB2 /* UIImage+RoundedCornerAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCornerAdditions.h"; sourceTree = "<group>"; };
+		F1776FAC1A55F572000BCCB2 /* UIImage+RoundedCornerAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCornerAdditions.m"; sourceTree = "<group>"; };
+		F1776FAF1A55F572000BCCB2 /* JVFloatLabeledTextField+LabelText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JVFloatLabeledTextField+LabelText.h"; sourceTree = "<group>"; };
+		F1776FB01A55F572000BCCB2 /* JVFloatLabeledTextField+LabelText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JVFloatLabeledTextField+LabelText.m"; sourceTree = "<group>"; };
+		F1776FB91A55F572000BCCB2 /* PVStatusBarNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVStatusBarNotification.h; sourceTree = "<group>"; };
+		F1776FBA1A55F572000BCCB2 /* PVStatusBarNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVStatusBarNotification.m; sourceTree = "<group>"; };
+		F1776FBB1A55F572000BCCB2 /* PVCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVCache.h; sourceTree = "<group>"; };
+		F1776FBC1A55F572000BCCB2 /* PVCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVCache.m; sourceTree = "<group>"; };
+		F1776FBD1A55F572000BCCB2 /* PVConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVConfig.h; sourceTree = "<group>"; };
+		F1776FBE1A55F572000BCCB2 /* PVConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVConfig.m; sourceTree = "<group>"; };
+		F1776FBF1A55F572000BCCB2 /* PVMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVMacros.h; sourceTree = "<group>"; };
+		F1776FC01A55F572000BCCB2 /* PVUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVUtility.h; sourceTree = "<group>"; };
+		F1776FC11A55F572000BCCB2 /* PVUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVUtility.m; sourceTree = "<group>"; };
+		F1776FE41A55F5D2000BCCB2 /* NOTES.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = NOTES.text; path = PlayjaVu/NOTES.text; sourceTree = "<group>"; };
+		F1776FE51A55F5D2000BCCB2 /* System Design Specifications.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "System Design Specifications.text"; path = "PlayjaVu/System Design Specifications.text"; sourceTree = "<group>"; };
+		F1776FE81A55F930000BCCB2 /* PlayjaVu-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PlayjaVu-Prefix.pch"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F122B3671A55F18400A5BBCB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35D7DFD41DC8118759825112 /* libPods.a in Frameworks */,
+				F146F1F31A561A10002EDD15 /* AudioToolbox.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F122B3801A55F18400A5BBCB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B34AB99F2F556C19B5621C38 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F146F1F21A561A10002EDD15 /* AudioToolbox.framework */,
+				313A3FE2FFEDC96957BF0980 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F10BA4161A5621C500B19739 /* Parse+RACExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				F10BA4171A5621C500B19739 /* Categories */,
+				F10BA41E1A5621C500B19739 /* Parse-RACExtensions.h */,
+				F10BA41F1A5621C500B19739 /* PFAnonymousUtils+RACExtensions.h */,
+				F10BA4201A5621C500B19739 /* PFAnonymousUtils+RACExtensions.m */,
+				F10BA4211A5621C500B19739 /* PFCloud+RACExtensions.h */,
+				F10BA4221A5621C500B19739 /* PFCloud+RACExtensions.m */,
+				F10BA4231A5621C500B19739 /* PFGeoPoint+RACExtensions.h */,
+				F10BA4241A5621C500B19739 /* PFGeoPoint+RACExtensions.m */,
+				F10BA4251A5621C500B19739 /* PFObject+RACExtensions.h */,
+				F10BA4261A5621C500B19739 /* PFObject+RACExtensions.m */,
+				F10BA4271A5621C500B19739 /* PFPush+RACExtensions.h */,
+				F10BA4281A5621C500B19739 /* PFPush+RACExtensions.m */,
+				F10BA4291A5621C500B19739 /* PFQuery+RACExtensions.h */,
+				F10BA42A1A5621C500B19739 /* PFQuery+RACExtensions.m */,
+				F10BA42B1A5621C500B19739 /* PFRACCallbacks.h */,
+				F10BA42C1A5621C500B19739 /* PFRACCallbacks.m */,
+				F10BA42D1A5621C500B19739 /* PFRACErrors.h */,
+				F10BA42E1A5621C500B19739 /* PFRACErrors.m */,
+				F10BA42F1A5621C500B19739 /* PFUser+RACExtensions.h */,
+				F10BA4301A5621C500B19739 /* PFUser+RACExtensions.m */,
+			);
+			path = "Parse+RACExtensions";
+			sourceTree = "<group>";
+		};
+		F10BA4171A5621C500B19739 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F10BA4181A5621C500B19739 /* PFFacebookUtils+RACExtensions.h */,
+				F10BA4191A5621C500B19739 /* PFFacebookUtils+RACExtensions.m */,
+				F10BA41A1A5621C500B19739 /* PFFile+RACExtensions.h */,
+				F10BA41B1A5621C500B19739 /* PFFile+RACExtensions.m */,
+				F10BA41C1A5621C500B19739 /* PFRACCallbacks+PV_Extensions.h */,
+				F10BA41D1A5621C500B19739 /* PFRACCallbacks+PV_Extensions.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		F11BB6E21A5767DF00A1185C /* ICSDrawerController */ = {
+			isa = PBXGroup;
+			children = (
+				F11BB6E31A5767DF00A1185C /* BEFORE-DELETING */,
+				F11BB6E41A5767DF00A1185C /* ICSDrawerController.h */,
+				F11BB6E51A5767DF00A1185C /* ICSDrawerController.m */,
+				F11BB6E61A5767DF00A1185C /* ICSDropShadowView.h */,
+				F11BB6E71A5767DF00A1185C /* ICSDropShadowView.m */,
+			);
+			path = ICSDrawerController;
+			sourceTree = "<group>";
+		};
+		F122B3611A55F18400A5BBCB = {
+			isa = PBXGroup;
+			children = (
+				F1776FE41A55F5D2000BCCB2 /* NOTES.text */,
+				F1776FE51A55F5D2000BCCB2 /* System Design Specifications.text */,
+				F122B36C1A55F18400A5BBCB /* PlayjaVu */,
+				F122B3861A55F18400A5BBCB /* PlayjaVuTests */,
+				F122B36B1A55F18400A5BBCB /* Products */,
+				FF506B5B7C805457BAFEE33B /* Pods */,
+				B34AB99F2F556C19B5621C38 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F122B36B1A55F18400A5BBCB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F122B36A1A55F18400A5BBCB /* PlayjaVu.app */,
+				F122B3831A55F18400A5BBCB /* PlayjaVuTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F122B36C1A55F18400A5BBCB /* PlayjaVu */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F7B1A55F571000BCCB2 /* PVAppDelegate.h */,
+				F1776F7C1A55F571000BCCB2 /* PVAppDelegate.m */,
+				F1776F6B1A55F571000BCCB2 /* Base Architecture */,
+				F1776F7D1A55F571000BCCB2 /* Sections */,
+				F1776F9E1A55F571000BCCB2 /* Utilities */,
+				F122B36D1A55F18400A5BBCB /* Supporting Files */,
+			);
+			path = PlayjaVu;
+			sourceTree = "<group>";
+		};
+		F122B36D1A55F18400A5BBCB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F146F1F11A561A10002EDD15 /* PlayjaVu.entitlements */,
+				F122B37A1A55F18400A5BBCB /* Images.xcassets */,
+				F122B36E1A55F18400A5BBCB /* Info.plist */,
+				F122B36F1A55F18400A5BBCB /* main.m */,
+				F1776FE81A55F930000BCCB2 /* PlayjaVu-Prefix.pch */,
+				F122B37C1A55F18400A5BBCB /* LaunchScreen.xib */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F122B3861A55F18400A5BBCB /* PlayjaVuTests */ = {
+			isa = PBXGroup;
+			children = (
+				F122B3891A55F18400A5BBCB /* PlayjaVuTests.m */,
+				F122B3871A55F18400A5BBCB /* Supporting Files */,
+			);
+			path = PlayjaVuTests;
+			sourceTree = "<group>";
+		};
+		F122B3871A55F18400A5BBCB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F122B3881A55F18400A5BBCB /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F1776F6B1A55F571000BCCB2 /* Base Architecture */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F6C1A55F571000BCCB2 /* PVMenuViewController.h */,
+				F1776F6D1A55F571000BCCB2 /* PVMenuViewController.m */,
+				F1776F6E1A55F571000BCCB2 /* PVMenuViewController.xib */,
+				F1776F6F1A55F571000BCCB2 /* PVNavigationController.h */,
+				F1776F701A55F571000BCCB2 /* PVNavigationController.m */,
+				F1776F711A55F571000BCCB2 /* Transitions */,
+				F1776F771A55F571000BCCB2 /* Views */,
+			);
+			path = "Base Architecture";
+			sourceTree = "<group>";
+		};
+		F1776F711A55F571000BCCB2 /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F721A55F571000BCCB2 /* PVAllSTPTransitions.h */,
+				F1776F731A55F571000BCCB2 /* STPCardTransition.h */,
+				F1776F741A55F571000BCCB2 /* STPCardTransition.m */,
+				F1776F751A55F571000BCCB2 /* STPSlideUpTransition.h */,
+				F1776F761A55F571000BCCB2 /* STPSlideUpTransition.m */,
+			);
+			path = Transitions;
+			sourceTree = "<group>";
+		};
+		F1776F771A55F571000BCCB2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F781A55F571000BCCB2 /* PVBarGolfToolbarViewController.h */,
+				F1776F791A55F571000BCCB2 /* PVBarGolfToolbarViewController.m */,
+				F1776F7A1A55F571000BCCB2 /* PVBarGolfToolbarViewController.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F1776F7D1A55F571000BCCB2 /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F7E1A55F571000BCCB2 /* Login and Signup */,
+				F1776F911A55F571000BCCB2 /* Menu Items */,
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
+		F1776F7E1A55F571000BCCB2 /* Login and Signup */ = {
+			isa = PBXGroup;
+			children = (
+				F159E2F41A57B435009560A3 /* PVBaseOnboardingViewController.h */,
+				F159E2F51A57B435009560A3 /* PVBaseOnboardingViewController.m */,
+				F1776F7F1A55F571000BCCB2 /* PVForgotPasswordViewController.h */,
+				F1776F801A55F571000BCCB2 /* PVForgotPasswordViewController.m */,
+				F1776F811A55F571000BCCB2 /* PVForgotPasswordViewController.xib */,
+				F1776F821A55F571000BCCB2 /* PVLoginViewController.h */,
+				F1776F831A55F571000BCCB2 /* PVLoginViewController.m */,
+				F1776F841A55F571000BCCB2 /* PVLoginViewController.xib */,
+				F1776F851A55F571000BCCB2 /* PVSignUpViewController.h */,
+				F1776F861A55F571000BCCB2 /* PVSignUpViewController.m */,
+				F1776F871A55F571000BCCB2 /* PVSignUpViewController.xib */,
+				F1776F881A55F571000BCCB2 /* PVWelcomeViewController.h */,
+				F1776F891A55F571000BCCB2 /* PVWelcomeViewController.m */,
+				F1776F8A1A55F571000BCCB2 /* View Models */,
+			);
+			path = "Login and Signup";
+			sourceTree = "<group>";
+		};
+		F1776F8A1A55F571000BCCB2 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F8B1A55F571000BCCB2 /* PVForgotPasswordViewModel.h */,
+				F1776F8C1A55F571000BCCB2 /* PVForgotPasswordViewModel.m */,
+				F1776F8D1A55F571000BCCB2 /* PVLoginViewModel.h */,
+				F1776F8E1A55F571000BCCB2 /* PVLoginViewModel.m */,
+				F1776F8F1A55F571000BCCB2 /* PVSignUpViewModel.h */,
+				F1776F901A55F571000BCCB2 /* PVSignUpViewModel.m */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		F1776F911A55F571000BCCB2 /* Menu Items */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F921A55F571000BCCB2 /* Acknowledgements */,
+				F1776F951A55F571000BCCB2 /* My Profile */,
+				F1776F9B1A55F571000BCCB2 /* Privacy Policy and TOS */,
+			);
+			path = "Menu Items";
+			sourceTree = "<group>";
+		};
+		F1776F921A55F571000BCCB2 /* Acknowledgements */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F931A55F571000BCCB2 /* View Controllers */,
+				F1776F941A55F571000BCCB2 /* View Models */,
+			);
+			path = Acknowledgements;
+			sourceTree = "<group>";
+		};
+		F1776F931A55F571000BCCB2 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F1776F941A55F571000BCCB2 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		F1776F951A55F571000BCCB2 /* My Profile */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F961A55F571000BCCB2 /* View Controllers */,
+				F1776F9A1A55F571000BCCB2 /* View Models */,
+			);
+			path = "My Profile";
+			sourceTree = "<group>";
+		};
+		F1776F961A55F571000BCCB2 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F971A55F571000BCCB2 /* PVMyProfileViewController.h */,
+				F1776F981A55F571000BCCB2 /* PVMyProfileViewController.m */,
+				F1776F991A55F571000BCCB2 /* PVMyProfileViewController.xib */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F1776F9A1A55F571000BCCB2 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		F1776F9B1A55F571000BCCB2 /* Privacy Policy and TOS */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F9C1A55F571000BCCB2 /* View Controllers */,
+				F1776F9D1A55F571000BCCB2 /* View Models */,
+			);
+			path = "Privacy Policy and TOS";
+			sourceTree = "<group>";
+		};
+		F1776F9C1A55F571000BCCB2 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F1776F9D1A55F571000BCCB2 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		F1776F9E1A55F571000BCCB2 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F9F1A55F572000BCCB2 /* Categories */,
+				F1776FAD1A55F572000BCCB2 /* External */,
+				F1776FBB1A55F572000BCCB2 /* PVCache.h */,
+				F1776FBC1A55F572000BCCB2 /* PVCache.m */,
+				F1776FBD1A55F572000BCCB2 /* PVConfig.h */,
+				F1776FBE1A55F572000BCCB2 /* PVConfig.m */,
+				F1776FBF1A55F572000BCCB2 /* PVMacros.h */,
+				F1776FC01A55F572000BCCB2 /* PVUtility.h */,
+				F1776FC11A55F572000BCCB2 /* PVUtility.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F1776F9F1A55F572000BCCB2 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F1776FA21A55F572000BCCB2 /* UIImage Categories */,
+				F1776FA01A55F572000BCCB2 /* NSString+EmailAdditions.h */,
+				F1776FA11A55F572000BCCB2 /* NSString+EmailAdditions.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		F1776FA21A55F572000BCCB2 /* UIImage Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F1776FA31A55F572000BCCB2 /* UIImage+AlphaAdditions.h */,
+				F1776FA41A55F572000BCCB2 /* UIImage+AlphaAdditions.m */,
+				F1776FA51A55F572000BCCB2 /* UIImage+Coloring.h */,
+				F1776FA61A55F572000BCCB2 /* UIImage+Coloring.m */,
+				F1776FA71A55F572000BCCB2 /* UIImage+Colorization.h */,
+				F1776FA81A55F572000BCCB2 /* UIImage+Colorization.m */,
+				F1776FA91A55F572000BCCB2 /* UIImage+ResizeAdditions.h */,
+				F1776FAA1A55F572000BCCB2 /* UIImage+ResizeAdditions.m */,
+				F1776FAB1A55F572000BCCB2 /* UIImage+RoundedCornerAdditions.h */,
+				F1776FAC1A55F572000BCCB2 /* UIImage+RoundedCornerAdditions.m */,
+			);
+			path = "UIImage Categories";
+			sourceTree = "<group>";
+		};
+		F1776FAD1A55F572000BCCB2 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				F1776FAE1A55F572000BCCB2 /* Cocoapod Categories */,
+				F1776FB11A55F572000BCCB2 /* Non-Pod Libraries */,
+				F1776FB81A55F572000BCCB2 /* Subclasses */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		F1776FAE1A55F572000BCCB2 /* Cocoapod Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F1776FAF1A55F572000BCCB2 /* JVFloatLabeledTextField+LabelText.h */,
+				F1776FB01A55F572000BCCB2 /* JVFloatLabeledTextField+LabelText.m */,
+			);
+			name = "Cocoapod Categories";
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		F1776FB11A55F572000BCCB2 /* Non-Pod Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				F11BB6E21A5767DF00A1185C /* ICSDrawerController */,
+				F10BA4161A5621C500B19739 /* Parse+RACExtensions */,
+			);
+			path = "Non-Pod Libraries";
+			sourceTree = "<group>";
+		};
+		F1776FB81A55F572000BCCB2 /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				F1776FB91A55F572000BCCB2 /* PVStatusBarNotification.h */,
+				F1776FBA1A55F572000BCCB2 /* PVStatusBarNotification.m */,
+			);
+			path = Subclasses;
+			sourceTree = "<group>";
+		};
+		FF506B5B7C805457BAFEE33B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				06952478CFC23570B4B1D89A /* Pods.debug.xcconfig */,
+				7BE0B6675EF865E68BF96D2C /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F122B3691A55F18400A5BBCB /* PlayjaVu */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F122B38D1A55F18400A5BBCB /* Build configuration list for PBXNativeTarget "PlayjaVu" */;
+			buildPhases = (
+				55FFB537CC38A55CE00EF12B /* Check Pods Manifest.lock */,
+				F122B3661A55F18400A5BBCB /* Sources */,
+				F122B3671A55F18400A5BBCB /* Frameworks */,
+				F122B3681A55F18400A5BBCB /* Resources */,
+				2038CFDA1906577CD9E9D459 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PlayjaVu;
+			productName = PlayjaVu;
+			productReference = F122B36A1A55F18400A5BBCB /* PlayjaVu.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F122B3821A55F18400A5BBCB /* PlayjaVuTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F122B3901A55F18400A5BBCB /* Build configuration list for PBXNativeTarget "PlayjaVuTests" */;
+			buildPhases = (
+				F122B37F1A55F18400A5BBCB /* Sources */,
+				F122B3801A55F18400A5BBCB /* Frameworks */,
+				F122B3811A55F18400A5BBCB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F122B3851A55F18400A5BBCB /* PBXTargetDependency */,
+			);
+			name = PlayjaVuTests;
+			productName = PlayjaVuTests;
+			productReference = F122B3831A55F18400A5BBCB /* PlayjaVuTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F122B3621A55F18400A5BBCB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Kerry Knight";
+				TargetAttributes = {
+					F122B3691A55F18400A5BBCB = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 2FXS3J8N9C;
+						SystemCapabilities = {
+							com.apple.InterAppAudio = {
+								enabled = 1;
+							};
+						};
+					};
+					F122B3821A55F18400A5BBCB = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = F122B3691A55F18400A5BBCB;
+					};
+				};
+			};
+			buildConfigurationList = F122B3651A55F18400A5BBCB /* Build configuration list for PBXProject "PlayjaVu" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F122B3611A55F18400A5BBCB;
+			productRefGroup = F122B36B1A55F18400A5BBCB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F122B3691A55F18400A5BBCB /* PlayjaVu */,
+				F122B3821A55F18400A5BBCB /* PlayjaVuTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F122B3681A55F18400A5BBCB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1776FCB1A55F572000BCCB2 /* PVForgotPasswordViewController.xib in Resources */,
+				F1776FD51A55F572000BCCB2 /* PVMyProfileViewController.xib in Resources */,
+				F1776FC81A55F572000BCCB2 /* PVBarGolfToolbarViewController.xib in Resources */,
+				F1776FCD1A55F572000BCCB2 /* PVLoginViewController.xib in Resources */,
+				F122B37E1A55F18400A5BBCB /* LaunchScreen.xib in Resources */,
+				F122B37B1A55F18400A5BBCB /* Images.xcassets in Resources */,
+				F11BB6E81A5767DF00A1185C /* BEFORE-DELETING in Resources */,
+				F1776FCF1A55F572000BCCB2 /* PVSignUpViewController.xib in Resources */,
+				F1776FC31A55F572000BCCB2 /* PVMenuViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F122B3811A55F18400A5BBCB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2038CFDA1906577CD9E9D459 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		55FFB537CC38A55CE00EF12B /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F122B3661A55F18400A5BBCB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1776FCA1A55F572000BCCB2 /* PVForgotPasswordViewController.m in Sources */,
+				F1776FD21A55F572000BCCB2 /* PVLoginViewModel.m in Sources */,
+				F145D8021A562F570000D472 /* PFRACCallbacks+PV_Extensions.m in Sources */,
+				F11BB6E01A5765F000A1185C /* PVMenuViewController.m in Sources */,
+				F1776FE31A55F572000BCCB2 /* PVUtility.m in Sources */,
+				F1776FCC1A55F572000BCCB2 /* PVLoginViewController.m in Sources */,
+				F1776FC71A55F572000BCCB2 /* PVBarGolfToolbarViewController.m in Sources */,
+				F1776FDC1A55F572000BCCB2 /* JVFloatLabeledTextField+LabelText.m in Sources */,
+				F11BB6E91A5767DF00A1185C /* ICSDrawerController.m in Sources */,
+				F10BA4371A5621C500B19739 /* PFObject+RACExtensions.m in Sources */,
+				F1776FD41A55F572000BCCB2 /* PVMyProfileViewController.m in Sources */,
+				F1776FD31A55F572000BCCB2 /* PVSignUpViewModel.m in Sources */,
+				F159E2F61A57B435009560A3 /* PVBaseOnboardingViewController.m in Sources */,
+				F1776FD81A55F572000BCCB2 /* UIImage+Coloring.m in Sources */,
+				F1776FD01A55F572000BCCB2 /* PVWelcomeViewController.m in Sources */,
+				F1776FD71A55F572000BCCB2 /* UIImage+AlphaAdditions.m in Sources */,
+				F11BB6EA1A5767DF00A1185C /* ICSDropShadowView.m in Sources */,
+				F1776FDB1A55F572000BCCB2 /* UIImage+RoundedCornerAdditions.m in Sources */,
+				F1776FC61A55F572000BCCB2 /* STPSlideUpTransition.m in Sources */,
+				F10BA4381A5621C500B19739 /* PFPush+RACExtensions.m in Sources */,
+				F1776FE21A55F572000BCCB2 /* PVConfig.m in Sources */,
+				F11BB6E11A57677F00A1185C /* PVNavigationController.m in Sources */,
+				F10BA43B1A5621C500B19739 /* PFRACErrors.m in Sources */,
+				F10BA4341A5621C500B19739 /* PFAnonymousUtils+RACExtensions.m in Sources */,
+				F1776FCE1A55F572000BCCB2 /* PVSignUpViewController.m in Sources */,
+				F10BA4391A5621C500B19739 /* PFQuery+RACExtensions.m in Sources */,
+				F122B3701A55F18400A5BBCB /* main.m in Sources */,
+				F1776FE01A55F572000BCCB2 /* PVStatusBarNotification.m in Sources */,
+				F1776FDA1A55F572000BCCB2 /* UIImage+ResizeAdditions.m in Sources */,
+				F10BA4321A5621C500B19739 /* PFFile+RACExtensions.m in Sources */,
+				F1776FD11A55F572000BCCB2 /* PVForgotPasswordViewModel.m in Sources */,
+				F1776FC91A55F572000BCCB2 /* PVAppDelegate.m in Sources */,
+				F10BA4361A5621C500B19739 /* PFGeoPoint+RACExtensions.m in Sources */,
+				F1776FC51A55F572000BCCB2 /* STPCardTransition.m in Sources */,
+				F1776FE11A55F572000BCCB2 /* PVCache.m in Sources */,
+				F1776FD61A55F572000BCCB2 /* NSString+EmailAdditions.m in Sources */,
+				F1776FD91A55F572000BCCB2 /* UIImage+Colorization.m in Sources */,
+				F10BA43C1A5621C500B19739 /* PFUser+RACExtensions.m in Sources */,
+				F10BA4351A5621C500B19739 /* PFCloud+RACExtensions.m in Sources */,
+				F10BA43A1A5621C500B19739 /* PFRACCallbacks.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F122B37F1A55F18400A5BBCB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F122B38A1A55F18400A5BBCB /* PlayjaVuTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F122B3851A55F18400A5BBCB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F122B3691A55F18400A5BBCB /* PlayjaVu */;
+			targetProxy = F122B3841A55F18400A5BBCB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F122B37C1A55F18400A5BBCB /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F122B37D1A55F18400A5BBCB /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F122B38B1A55F18400A5BBCB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F122B38C1A55F18400A5BBCB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F122B38E1A55F18400A5BBCB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06952478CFC23570B4B1D89A /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PlayjaVu/PlayjaVu.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PlayjaVu/PlayjaVu-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"XCODE_COLORS=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Bolts\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK/FacebookSDK\"",
+					"\"${PODS_ROOT}/Headers/Public/JDStatusBarNotification\"",
+					"\"${PODS_ROOT}/Headers/Public/JVFloatLabeledTextField\"",
+					"\"${PODS_ROOT}/Headers/Public/MRProgress\"",
+					"\"${PODS_ROOT}/Headers/Public/Mantle\"",
+					"\"${PODS_ROOT}/Headers/Public/Nimbus\"",
+					"\"${PODS_ROOT}/Headers/Public/Parse\"",
+					"\"${PODS_ROOT}/Headers/Public/ParseFacebookUtils\"",
+					"\"${PODS_ROOT}/Headers/Public/ParseFacebookUtils/PFFacebookUtils\"",
+					"\"${PODS_ROOT}/Headers/Public/ParseUI\"",
+					"\"${PODS_ROOT}/Headers/Public/Reachability\"",
+					"\"${PODS_ROOT}/Headers/Public/ReactiveCocoa\"",
+					"\"${PODS_ROOT}/Headers/Public/ReactiveViewModel\"",
+					"\"${PODS_ROOT}/Headers/Public/SIAlertView\"",
+					"\"${PODS_ROOT}/Headers/Public/STPTransitions\"",
+					"\"${PODS_ROOT}/Headers/Public/TRVSMonitor\"",
+				);
+				INFOPLIST_FILE = PlayjaVu/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"$(OTHER_LDFLAGS)",
+					"-lz",
+					"-lsqlite3",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreText\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Parse\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"AudioToolbox\"",
+					"-weak_framework",
+					"\"CoreGraphics\"",
+					"-weak_framework",
+					"\"CoreLocation\"",
+					"-weak_framework",
+					"\"Foundation\"",
+					"-weak_framework",
+					"\"QuartzCore\"",
+					"-weak_framework",
+					"\"Security\"",
+					"-weak_framework",
+					"\"Social\"",
+					"-weak_framework",
+					"\"UIKit\"",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		F122B38F1A55F18400A5BBCB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BE0B6675EF865E68BF96D2C /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PlayjaVu/PlayjaVu.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PlayjaVu/PlayjaVu-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"RELEASE=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Bolts\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK/FacebookSDK\"",
+					"\"${PODS_ROOT}/Headers/Public/JDStatusBarNotification\"",
+					"\"${PODS_ROOT}/Headers/Public/JVFloatLabeledTextField\"",
+					"\"${PODS_ROOT}/Headers/Public/MRProgress\"",
+					"\"${PODS_ROOT}/Headers/Public/Mantle\"",
+					"\"${PODS_ROOT}/Headers/Public/Nimbus\"",
+					"\"${PODS_ROOT}/Headers/Public/Parse\"",
+					"\"${PODS_ROOT}/Headers/Public/ParseFacebookUtils\"",
+					"\"${PODS_ROOT}/Headers/Public/ParseFacebookUtils/PFFacebookUtils\"",
+					"\"${PODS_ROOT}/Headers/Public/ParseUI\"",
+					"\"${PODS_ROOT}/Headers/Public/Reachability\"",
+					"\"${PODS_ROOT}/Headers/Public/ReactiveCocoa\"",
+					"\"${PODS_ROOT}/Headers/Public/ReactiveViewModel\"",
+					"\"${PODS_ROOT}/Headers/Public/SIAlertView\"",
+					"\"${PODS_ROOT}/Headers/Public/STPTransitions\"",
+					"\"${PODS_ROOT}/Headers/Public/TRVSMonitor\"",
+				);
+				INFOPLIST_FILE = PlayjaVu/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"$(OTHER_LDFLAGS)",
+					"-lz",
+					"-lsqlite3",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreText\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Parse\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"AudioToolbox\"",
+					"-weak_framework",
+					"\"CoreGraphics\"",
+					"-weak_framework",
+					"\"CoreLocation\"",
+					"-weak_framework",
+					"\"Foundation\"",
+					"-weak_framework",
+					"\"QuartzCore\"",
+					"-weak_framework",
+					"\"Security\"",
+					"-weak_framework",
+					"\"Social\"",
+					"-weak_framework",
+					"\"UIKit\"",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		F122B3911A55F18400A5BBCB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PlayjaVuTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayjaVu.app/PlayjaVu";
+			};
+			name = Debug;
+		};
+		F122B3921A55F18400A5BBCB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PlayjaVuTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayjaVu.app/PlayjaVu";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F122B3651A55F18400A5BBCB /* Build configuration list for PBXProject "PlayjaVu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F122B38B1A55F18400A5BBCB /* Debug */,
+				F122B38C1A55F18400A5BBCB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F122B38D1A55F18400A5BBCB /* Build configuration list for PBXNativeTarget "PlayjaVu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F122B38E1A55F18400A5BBCB /* Debug */,
+				F122B38F1A55F18400A5BBCB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F122B3901A55F18400A5BBCB /* Build configuration list for PBXNativeTarget "PlayjaVuTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F122B3911A55F18400A5BBCB /* Debug */,
+				F122B3921A55F18400A5BBCB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F122B3621A55F18400A5BBCB /* Project object */;
+}

@@ -1,0 +1,114 @@
+PlayjaVu Developer Notes
+========================
+
+
+
+To Do
+-----
+
+-   should disclaimer on first app run and require agreement
+-   Be sure to check for stale info from Facebook if the user logs in via FB as
+    their photo could change
+-   Add analytics for returned errors
+-   Be sure to check formatting on 4S screen size
+-   Always Harvest my time
+-   Turn email confirmation back on in Parse
+-   Convert Phonegap Foursquare and Google APIs to blocks and RACExtensions
+
+-   Use Mantle or Core Data/MagicalRecord for data?
+    -   use mantle at least for Foursquare and Google objects; 
+    -   if decide to use core data for Parse persistence, can still use Mantle as a translation layer apparenty between the API and the managed model objects of core data
+    
+-   Hardcode default rules in app instead of on Parse to make easier
+    -   RW tutorial on MagicalRecord shows how: http://www.raywenderlich.com/56879/magicalrecord-tutorial-ios
+        -   shows how to only load once, and even allows deleting defaults and not reloading unless want to
+        -   also includes a table view header search bar for searching records
+    -   note, the RW tut on Parse w/core data uses AFNetworking and Parse REST API, not it's SDK so may not use core data for anything other than storing default rules locally?
+-   make the pull down controller have a slight parallax on the background view controller like map on foursquare
+-   add a search bar for finding bars
+-   add results by foursquare logo
+
+
+Issues
+------
+
+-   
+
+
+
+Best Practices
+--------------
+
+-   All user-facing strings should be NSLocalizedStrings
+
+
+
+Examples/Snippets
+-----------------
+
+### Use RAC for NSNotificationCenter observing
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+RACSignal *notificationSignal = [[NSNotificationCenter defaultCenter] rac_addObserverForName:UIKeyboardWillShowNotification object:nil];
+[self rac_liftSelector:@selector(slideComponentsWithKeyboardNotification:up:) withObjects:notificationSignal, @YES];
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+### Perform some animations based on a UITableView's scroll offset with RAC
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[RACObserve(self.tableView, contentOffset) subscribeNext:^(NSValue *value) {
+    NSInteger y = floor(self.tableView.contentOffset.y);
+    [self.animator animate:y];
+}];
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+### Using SIAlertView
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Missing Information" andMessage:@"Make sure you fill out all of the information!"];
+
+[alertView addButtonWithTitle:@“OK" 
+                         type:SIAlertViewButtonTypeDefault
+                      handler:^(SIAlertView *alert) {
+                         NSLog(@"Button1 Clicked");
+}];
+    
+[alertView addButtonWithTitle:@"Button2"
+                         type:SIAlertViewButtonTypeDestructive
+                      handler:^(SIAlertView *alert) {
+                        NSLog(@"Button2 Clicked");
+}];
+
+[alertView addButtonWithTitle:@"Button3"
+                         type:SIAlertViewButtonTypeCancel
+                      handler:^(SIAlertView *alert) {
+                        NSLog(@"Button3 Clicked");
+}];
+
+alertView.willShowHandler = ^(SIAlertView *alertView) {
+    NSLog(@"%@, willShowHandler", alertView);
+};
+
+alertView.didShowHandler = ^(SIAlertView *alertView) {
+    NSLog(@"%@, didShowHandler", alertView);
+};
+
+alertView.willDismissHandler = ^(SIAlertView *alertView) {
+    NSLog(@"%@, willDismissHandler", alertView);
+};
+
+alertView.didDismissHandler = ^(SIAlertView *alertView) {
+    NSLog(@"%@, didDismissHandler", alertView);
+};
+
+alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
+[alertView show];
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  
+  
+

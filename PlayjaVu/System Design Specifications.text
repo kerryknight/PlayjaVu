@@ -1,0 +1,62 @@
+PlayjaVu System Design Specifications
+=====================================
+
+Workflow
+--------
+
+-   AppDelegate checks to see if a user is signed in
+
+    -   If a user is signed in, it loads the main interface/app
+
+    -   If a user is not signed in, it loads PVWelcomeViewController
+
+        -   PVWelcomeViewController then loads PVLoginViewController
+
+
+
+Views (in an app sense, not MVC/MVVM sense)
+-------------------------------------------
+
+### Login View
+
+-   All login logic is stored in PVLoginViewModel.m; PVLoginViewController.m
+    uses RAC bindings and signals to hook to the view model’s login logic
+
+-   Log In button should only be enabled if all of the following are met:
+
+    -   email address is a validly-formed email address
+
+    -   password is 7-20 characters and contains at least one number
+
+-   All buttons use RACCommands to bind to method selectors
+
+-   All textfields are instances of JVFloatLabeledTextFields
+
+
+
+### Sign Up View
+
+-   All validation logic is stored in PVSignUpViewModel.m;
+    PVSignUpViewController.m uses RAC bindings and signals to hook to the view
+    model’s validation and sign up logic
+
+-   Sign Up button should only be enabled if all of the following are met:
+
+    -   email address is a validly-formed email address
+
+    -   password is 7-20 characters and contains at least one number
+
+    -   confirm password field matches password field
+
+    -   display name is not blank and contains letters, numbers and underscores
+        only
+
+-   All buttons use RACCommands to bind to method selectors
+
+-   All textfields are instances of JVFloatLabeledTextFields
+
+-   Any errors raised in PVSignUpViewModel are passed along it’s sendErrorSignal
+    signal property to PVSignUpViewController where they are posted as a status
+    bar notification using PVStatusBarNotification, a subclass of
+    JDStatusBarNotification
+
