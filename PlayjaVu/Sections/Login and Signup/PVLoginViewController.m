@@ -16,6 +16,7 @@
 #import "MRProgress.h"
 #import "SIAlertView.h"
 #import "PVAppDelegate.h"
+#import "UIImage+Coloring.h"
 
 @interface PVLoginViewController () <UITextFieldDelegate>
 @property (strong, nonatomic) JVFloatLabeledTextField *usernameFloatTextField;
@@ -27,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIView *usernameBG;
 @property (weak, nonatomic) IBOutlet UIView *passwordBG;
 @property (weak, nonatomic) IBOutlet UIView *loginButtonBG;
+@property (weak, nonatomic) IBOutlet UIView *facebookButtonBG;
 @property (strong, nonatomic) PVLoginViewModel *viewModel;
 @end
 
@@ -118,10 +120,10 @@
                 [MRProgressOverlayView dismissOverlayForView:self.view animated:YES];
                 
                 //error logging in, show error message
-                NSString *message = [NSString stringWithFormat:NSLocalizedString(@"Welcome back, %@!", nil), user[@"displayName"]];
-                [PVStatusBarNotification showWithStatus:message dismissAfter:2.0 customStyleName:PVStatusBarSuccess];
+                [PVStatusBarNotification showWithStatus:NSLocalizedString(@"Welcome back!", nil) dismissAfter:2.0 customStyleName:PVStatusBarSuccess];
                 
-            } error:^(NSError *error) {
+            }
+            error:^(NSError *error) {
                 DLogRed(@"login error and show alert: %@", [error localizedDescription]);
                 
                 //dismiss the spinner regardless of outcome
@@ -130,7 +132,8 @@
                 //error logging in, show error message
                 NSString *message = [NSString stringWithFormat:NSLocalizedString(@"Error: %@", nil), [error localizedDescription]];
                 [PVStatusBarNotification showWithStatus:message dismissAfter:2.0 customStyleName:PVStatusBarError];
-            } completed:^{
+            }
+            completed:^{
                 DLog(@"log in completed successfully, so show main interface");
                 //successfully logged in
                 //post a notification that our main interface should show which our
@@ -147,10 +150,7 @@
     });
     
     return [[self.viewModel rac_logInWithFacebook]
-            subscribeNext:^(id x) {
-                DLog(@"rac_logInWithFacebook subscribeNext:");
-            }
-            error:^(NSError *error) {
+            subscribeError:^(NSError *error) {
                 NSString *message;
                 //dismiss the spinner regardless of outcome
                 [MRProgressOverlayView dismissOverlayForView:self.view animated:YES];
@@ -173,7 +173,8 @@
                 alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
                 [alertView show];
                 
-            } completed:^{
+            }
+            completed:^{
                 DLog(@"rac_logInWithFacebook completed successfully, so show main interface");
                 //successfully logged in
 
@@ -188,6 +189,8 @@
                 //menu view controller will observe and load as needed
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuShouldShowMainInterfaceNotification object:nil];
             }];
+    
+    return nil;
 }
 
 - (void)loadSignUpView {
@@ -215,6 +218,10 @@
     //set initially to appear disabled
     self.loginButtonBG.alpha = 0.05;
     
+    UIColor *drkFacebookBlue = [UIColor colorWithRed:48/255 green:73/255 blue:131/255 alpha:0.2];
+    UIImage *blueImage = [UIImage imageWithColor:drkFacebookBlue];
+    [self.facebookButton setBackgroundImage:blueImage forState:UIControlStateHighlighted];
+    
     // ********** FLOATING LABEL TEXT FIELDS ********************** //
     //add the username textfield
     self.usernameFloatTextField = [[JVFloatLabeledTextField alloc] initWithFrame:
@@ -231,8 +238,7 @@
     //set our placeholder text color
     UIColor *gray = [kMedWhite colorWithAlphaComponent:0.5];
     if ([self.usernameFloatTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
-        self.usernameFloatTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Email Address", nil)
-                                                                                            attributes:@{NSForegroundColorAttributeName: gray}];
+        self.usernameFloatTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Email Address", nil) attributes:@{NSForegroundColorAttributeName:gray}];
     }
     [self.container addSubview:self.usernameFloatTextField];
     
@@ -251,8 +257,7 @@
     
     //set our placeholder text color
     if ([self.passwordFloatTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
-        self.passwordFloatTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Password", nil)
-                                                                                            attributes:@{NSForegroundColorAttributeName: gray}];
+        self.passwordFloatTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Password", nil) attributes:@{NSForegroundColorAttributeName: gray}];
     }
     [self.container addSubview:self.passwordFloatTextField];
     

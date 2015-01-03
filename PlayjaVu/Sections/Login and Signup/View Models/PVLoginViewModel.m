@@ -29,22 +29,23 @@
 {
     __block id facebookRequestResult;
     
-	return [[[[[[PFFacebookUtils rac_logInWithPermissions:kFacebookPermissionsList]
-	           flattenMap: ^id (id value) {
-                   return [PFFacebookUtils rac_getCurrentFacebookUserConnectionInfo];
+    return [[[[[[PFFacebookUtils rac_logInWithPermissions:kFacebookPermissionsList]
+                flattenMap: ^id (id value) {
+                    return [PFFacebookUtils rac_getCurrentFacebookUserConnectionInfo];
+                }]
+               flattenMap: ^id (id result) {
+                   facebookRequestResult = result;
+                   NSString *facebookId = result[@"id"];
+                   return [PFFacebookUtils rac_getCurrentFacebookUsersProfilePicture:facebookId];
                }]
-	          flattenMap: ^id (id result) {
-                  facebookRequestResult = result;
-                  NSString *facebookId = result[@"id"];
-                  return [PFFacebookUtils rac_getCurrentFacebookUsersProfilePicture:facebookId];
+              flattenMap: ^id (id imageData) {
+                  return [self rac_savePFFileFromImageData:imageData];
               }]
-             flattenMap: ^id (id imageData) {
-                 return [self rac_savePFFileFromImageData:imageData];
-             }]
              flattenMap: ^id (PFFile *imageFile) {
                  facebookRequestResult[kUserProfilePicSmallKey] = imageFile;
                  return [PFFacebookUtils rac_saveFacebookUserDataToParseForCurrentUser:facebookRequestResult];
-             }] deliverOn:[RACScheduler mainThreadScheduler]];
+             }]
+            deliverOn:[RACScheduler mainThreadScheduler]];
     return nil;
 }
 

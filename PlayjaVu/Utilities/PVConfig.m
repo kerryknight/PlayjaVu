@@ -79,7 +79,6 @@ NSString *const kPushPayloadPhotoObjectIdKey                  = @"pid";
 // *********************************************** PARSE CLASSES *****************************************
 #pragma mark - PFObject User Class
 // Field keys
-NSString *const kUserDisplayNameKey                           = @"displayName";
 NSString *const kUserFacebookIDKey                            = @"facebookId";
 NSString *const kUserPhotoIDKey                               = @"photoId";
 NSString *const kUserProfilePicSmallKey                       = @"profilePictureSmall";

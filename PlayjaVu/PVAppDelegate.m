@@ -87,6 +87,8 @@
     [Parse setApplicationId:kParseApplicationID clientKey:kParseApplicationClientKey];
     [PFFacebookUtils initializeFacebook];
     
+    DLogOrange(@"fb session 1: %@", [PFFacebookUtils session]);
+    
     //Configure Parse setup
     PFACL *defaultACL = [PFACL ACL];
     // If you would like all objects to be private by default, remove this line.
@@ -143,7 +145,7 @@
     
 }
 
-#pragma mark - Facebook and Foursquare
+#pragma mark - Facebook and...
 // Facebook oauth callback
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
@@ -157,26 +159,23 @@
 }
 
 #pragma mark - PVAppDelegate
-							
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
+// ****************************************************************************
+// App switching methods to support Facebook Single Sign-On.
+// ****************************************************************************
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    /*
+     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+     */
     [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application
-{
+- (void)applicationWillTerminate:(UIApplication *)application {
+    /*
+     Called when the application is about to terminate.
+     Save data if appropriate.
+     See also applicationDidEnterBackground:.
+     */
+    [[PFFacebookUtils session] close];
 }
 
 @end

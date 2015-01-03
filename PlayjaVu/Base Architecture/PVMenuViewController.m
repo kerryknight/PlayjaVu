@@ -7,8 +7,11 @@
 
 #import "PVMenuViewController.h"
 #import "PVAllSTPTransitions.h"
+#import "PVWelcomeViewController.h"
+#import "PVPlaybackViewController.h"
+#import "PVMyProfileViewController.h"
 
-static NSString *const kMenuViewControllerCellReuseId = @"PVMenuCell";
+static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
 
 @interface PVMenuViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -19,10 +22,9 @@ static NSString *const kMenuViewControllerCellReuseId = @"PVMenuCell";
 @property (strong, nonatomic) ICSDrawerController *drawerController;
 @end
 
-
 @implementation PVMenuViewController
 
-#pragma mark - View Life Cycle and Lazy Instantiation
+#pragma mark - Life Cycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,11 +35,6 @@ static NSString *const kMenuViewControllerCellReuseId = @"PVMenuCell";
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMainInterface) name:kMenuShouldShowMainInterfaceNotification object:nil];
     }
     return self;
-}
-
-- (void)viewDidLoad
-{
-	[super viewDidLoad];
 }
 
 - (void)dealloc
@@ -74,18 +71,16 @@ static NSString *const kMenuViewControllerCellReuseId = @"PVMenuCell";
 - (void)showMainInterface
 {
     DLogOrange(@"SHOW THE MAIN INTERFACE!!!");
-//    //the scorecard view will be the first view shown by default
-//    PVMyScorecardViewController *scorecardVC = [[PVMyScorecardViewController alloc] init];
-//    self.toolbarPullDownController.frontController = scorecardVC;
-//    
-//    self.navController = [[PVNavigationController alloc] initWithRootViewController:self.toolbarPullDownController andTitle:@"Now Playing"];
-//    self.drawerController = [[ICSDrawerController alloc] initWithLeftViewController:self
-//                                                                     centerViewController:self.navController];
-//    
-//    //drawer needs to be the main interface view so it's top view can hold any
-//    //navigation controllers while the menu view controller is not part of a
-//    //nav controller; hence, we set the drawer to window's root
-//    PVAD.window.rootViewController = self.drawerController;
+    //the scorecard view will be the first view shown by default
+    PVPlaybackViewController *playbackVC = [[PVPlaybackViewController alloc] init];
+    self.navController = [[PVNavigationController alloc] initWithRootViewController:playbackVC andTitle:@"Now Playing"];
+    self.drawerController = [[ICSDrawerController alloc] initWithLeftViewController:self
+                                                                     centerViewController:self.navController];
+    
+    //drawer needs to be the main interface view so it's top view can hold any
+    //navigation controllers while the menu view controller is not part of a
+    //nav controller; hence, we set the drawer to window's root
+    PVAD.window.rootViewController = self.drawerController;
 }
 
 - (void)pushInNewViewController:(UIViewController *)vc withTitle:(NSString *)title
@@ -147,15 +142,12 @@ static NSString *const kMenuViewControllerCellReuseId = @"PVMenuCell";
 		[self.drawer close];
 	}
 	else {
-//        //close the toolbar pull down after it's offscreen
-//        [self closeToolbarPulldown];
-        
 		NSString *menuItem = self.menuItems[indexPath.row];
 		UIViewController *newVC;
 
 		if ([menuItem isEqualToString:@"Now Playing"]) {
             DLogOrange(@"LOAD NOW PLAYING VIEW");
-//			newVC = [[PVMyScorecardViewController alloc] init];
+			newVC = [[PVPlaybackViewController alloc] init];
 		}
 		else if ([menuItem isEqualToString:@"My Profile"]) {
 			newVC = [[PVMyProfileViewController alloc] init];

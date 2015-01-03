@@ -1,6 +1,6 @@
 //
 //  PFFacebookUtils+RACExtensions.m
-//  Bar Golf
+//  PlayjaVu
 //
 //  Created by Kerry Knight on 2/16/14.
 //  Copyright (c) 2014 Kerry Knight. All rights reserved.
@@ -14,7 +14,6 @@
 #import "PFRACErrors.h"
 
 @implementation PFFacebookUtils (RACExtensions)
-
 
 + (RACSignal *)rac_logInWithPermissions:(NSArray *)permissions {
     return [[[RACSignal
@@ -57,15 +56,15 @@
 
 + (RACSignal *)rac_saveFacebookUserDataToParseForCurrentUser:(id)facebookResult {
     NSString *facebookId = facebookResult[@"id"];
-    NSString *facebookName = facebookResult[@"username"];
+//    NSString *facebookName = facebookResult[@"username"];
     NSString *facebookEmail = facebookResult[@"email"];
     PFFile *profilePicSmall = facebookResult[kUserProfilePicSmallKey];
     
-//    DLogPurple(@"fb permissions list: %@", facebookResult);
+    DLogPurple(@"fb permissions list: %@", facebookResult);
     
-    if (facebookName && facebookName != 0) {
-        [[PFUser currentUser] setObject:facebookName forKey:kUserDisplayNameKey];
-    }
+//    if (facebookName && facebookName != 0) {
+//        [[PFUser currentUser] setObject:facebookName forKey:kUserDisplayNameKey];
+//    }
     
     if (facebookId && facebookId != 0) {
         [[PFUser currentUser] setObject:facebookId forKey:kUserFacebookIDKey];

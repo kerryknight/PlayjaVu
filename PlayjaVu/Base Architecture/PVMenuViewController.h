@@ -9,8 +9,6 @@
 #import "PVAppDelegate.h"
 #import "PVNavigationController.h"
 #import "ICSDrawerController.h"
-#import "PVWelcomeViewController.h"
-#import "PVMyProfileViewController.h"
 
 @interface PVMenuViewController : UIViewController <ICSDrawerControllerChild, ICSDrawerControllerPresenting>
 

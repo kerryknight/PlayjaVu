@@ -30,11 +30,12 @@
 		F145D8021A562F570000D472 /* PFRACCallbacks+PV_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA41D1A5621C500B19739 /* PFRACCallbacks+PV_Extensions.m */; };
 		F146F1F31A561A10002EDD15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F146F1F21A561A10002EDD15 /* AudioToolbox.framework */; };
 		F159E2F61A57B435009560A3 /* PVBaseOnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F159E2F51A57B435009560A3 /* PVBaseOnboardingViewController.m */; };
+		F159E2FE1A57C8FB009560A3 /* PVPlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F159E2FB1A57C8FB009560A3 /* PVPlaybackViewController.m */; };
+		F159E2FF1A57C8FB009560A3 /* PVPlaybackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F159E2FC1A57C8FB009560A3 /* PVPlaybackViewController.xib */; };
+		F159E3001A57D746009560A3 /* PFFacebookUtils+RACExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA4191A5621C500B19739 /* PFFacebookUtils+RACExtensions.m */; };
 		F1776FC31A55F572000BCCB2 /* PVMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F6E1A55F571000BCCB2 /* PVMenuViewController.xib */; };
 		F1776FC51A55F572000BCCB2 /* STPCardTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F741A55F571000BCCB2 /* STPCardTransition.m */; };
 		F1776FC61A55F572000BCCB2 /* STPSlideUpTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F761A55F571000BCCB2 /* STPSlideUpTransition.m */; };
-		F1776FC71A55F572000BCCB2 /* PVBarGolfToolbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F791A55F571000BCCB2 /* PVBarGolfToolbarViewController.m */; };
-		F1776FC81A55F572000BCCB2 /* PVBarGolfToolbarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F7A1A55F571000BCCB2 /* PVBarGolfToolbarViewController.xib */; };
 		F1776FC91A55F572000BCCB2 /* PVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F7C1A55F571000BCCB2 /* PVAppDelegate.m */; };
 		F1776FCA1A55F572000BCCB2 /* PVForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F801A55F571000BCCB2 /* PVForgotPasswordViewController.m */; };
 		F1776FCB1A55F572000BCCB2 /* PVForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F811A55F571000BCCB2 /* PVForgotPasswordViewController.xib */; };
@@ -117,6 +118,9 @@
 		F146F1F21A561A10002EDD15 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F159E2F41A57B435009560A3 /* PVBaseOnboardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVBaseOnboardingViewController.h; sourceTree = "<group>"; };
 		F159E2F51A57B435009560A3 /* PVBaseOnboardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVBaseOnboardingViewController.m; sourceTree = "<group>"; };
+		F159E2FA1A57C8FB009560A3 /* PVPlaybackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVPlaybackViewController.h; sourceTree = "<group>"; };
+		F159E2FB1A57C8FB009560A3 /* PVPlaybackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVPlaybackViewController.m; sourceTree = "<group>"; };
+		F159E2FC1A57C8FB009560A3 /* PVPlaybackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVPlaybackViewController.xib; sourceTree = "<group>"; };
 		F1776F6C1A55F571000BCCB2 /* PVMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVMenuViewController.h; sourceTree = "<group>"; };
 		F1776F6D1A55F571000BCCB2 /* PVMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVMenuViewController.m; sourceTree = "<group>"; };
 		F1776F6E1A55F571000BCCB2 /* PVMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVMenuViewController.xib; sourceTree = "<group>"; };
@@ -127,9 +131,6 @@
 		F1776F741A55F571000BCCB2 /* STPCardTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPCardTransition.m; sourceTree = "<group>"; };
 		F1776F751A55F571000BCCB2 /* STPSlideUpTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPSlideUpTransition.h; sourceTree = "<group>"; };
 		F1776F761A55F571000BCCB2 /* STPSlideUpTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPSlideUpTransition.m; sourceTree = "<group>"; };
-		F1776F781A55F571000BCCB2 /* PVBarGolfToolbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVBarGolfToolbarViewController.h; sourceTree = "<group>"; };
-		F1776F791A55F571000BCCB2 /* PVBarGolfToolbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVBarGolfToolbarViewController.m; sourceTree = "<group>"; };
-		F1776F7A1A55F571000BCCB2 /* PVBarGolfToolbarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVBarGolfToolbarViewController.xib; sourceTree = "<group>"; };
 		F1776F7B1A55F571000BCCB2 /* PVAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVAppDelegate.h; sourceTree = "<group>"; };
 		F1776F7C1A55F571000BCCB2 /* PVAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVAppDelegate.m; sourceTree = "<group>"; };
 		F1776F7F1A55F571000BCCB2 /* PVForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVForgotPasswordViewController.h; sourceTree = "<group>"; };
@@ -326,6 +327,32 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		F159E2F81A57C8FB009560A3 /* Playback */ = {
+			isa = PBXGroup;
+			children = (
+				F159E2F91A57C8FB009560A3 /* View Controllers */,
+				F159E2FD1A57C8FB009560A3 /* View Models */,
+			);
+			path = Playback;
+			sourceTree = "<group>";
+		};
+		F159E2F91A57C8FB009560A3 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F159E2FA1A57C8FB009560A3 /* PVPlaybackViewController.h */,
+				F159E2FB1A57C8FB009560A3 /* PVPlaybackViewController.m */,
+				F159E2FC1A57C8FB009560A3 /* PVPlaybackViewController.xib */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F159E2FD1A57C8FB009560A3 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
 		F1776F6B1A55F571000BCCB2 /* Base Architecture */ = {
 			isa = PBXGroup;
 			children = (
@@ -335,7 +362,6 @@
 				F1776F6F1A55F571000BCCB2 /* PVNavigationController.h */,
 				F1776F701A55F571000BCCB2 /* PVNavigationController.m */,
 				F1776F711A55F571000BCCB2 /* Transitions */,
-				F1776F771A55F571000BCCB2 /* Views */,
 			);
 			path = "Base Architecture";
 			sourceTree = "<group>";
@@ -350,16 +376,6 @@
 				F1776F761A55F571000BCCB2 /* STPSlideUpTransition.m */,
 			);
 			path = Transitions;
-			sourceTree = "<group>";
-		};
-		F1776F771A55F571000BCCB2 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				F1776F781A55F571000BCCB2 /* PVBarGolfToolbarViewController.h */,
-				F1776F791A55F571000BCCB2 /* PVBarGolfToolbarViewController.m */,
-				F1776F7A1A55F571000BCCB2 /* PVBarGolfToolbarViewController.xib */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		F1776F7D1A55F571000BCCB2 /* Sections */ = {
@@ -408,8 +424,9 @@
 		F1776F911A55F571000BCCB2 /* Menu Items */ = {
 			isa = PBXGroup;
 			children = (
-				F1776F921A55F571000BCCB2 /* Acknowledgements */,
+				F159E2F81A57C8FB009560A3 /* Playback */,
 				F1776F951A55F571000BCCB2 /* My Profile */,
+				F1776F921A55F571000BCCB2 /* Acknowledgements */,
 				F1776F9B1A55F571000BCCB2 /* Privacy Policy and TOS */,
 			);
 			path = "Menu Items";
@@ -667,9 +684,9 @@
 			files = (
 				F1776FCB1A55F572000BCCB2 /* PVForgotPasswordViewController.xib in Resources */,
 				F1776FD51A55F572000BCCB2 /* PVMyProfileViewController.xib in Resources */,
-				F1776FC81A55F572000BCCB2 /* PVBarGolfToolbarViewController.xib in Resources */,
 				F1776FCD1A55F572000BCCB2 /* PVLoginViewController.xib in Resources */,
 				F122B37E1A55F18400A5BBCB /* LaunchScreen.xib in Resources */,
+				F159E2FF1A57C8FB009560A3 /* PVPlaybackViewController.xib in Resources */,
 				F122B37B1A55F18400A5BBCB /* Images.xcassets in Resources */,
 				F11BB6E81A5767DF00A1185C /* BEFORE-DELETING in Resources */,
 				F1776FCF1A55F572000BCCB2 /* PVSignUpViewController.xib in Resources */,
@@ -730,10 +747,10 @@
 				F11BB6E01A5765F000A1185C /* PVMenuViewController.m in Sources */,
 				F1776FE31A55F572000BCCB2 /* PVUtility.m in Sources */,
 				F1776FCC1A55F572000BCCB2 /* PVLoginViewController.m in Sources */,
-				F1776FC71A55F572000BCCB2 /* PVBarGolfToolbarViewController.m in Sources */,
 				F1776FDC1A55F572000BCCB2 /* JVFloatLabeledTextField+LabelText.m in Sources */,
 				F11BB6E91A5767DF00A1185C /* ICSDrawerController.m in Sources */,
 				F10BA4371A5621C500B19739 /* PFObject+RACExtensions.m in Sources */,
+				F159E2FE1A57C8FB009560A3 /* PVPlaybackViewController.m in Sources */,
 				F1776FD41A55F572000BCCB2 /* PVMyProfileViewController.m in Sources */,
 				F1776FD31A55F572000BCCB2 /* PVSignUpViewModel.m in Sources */,
 				F159E2F61A57B435009560A3 /* PVBaseOnboardingViewController.m in Sources */,
@@ -762,6 +779,7 @@
 				F1776FD61A55F572000BCCB2 /* NSString+EmailAdditions.m in Sources */,
 				F1776FD91A55F572000BCCB2 /* UIImage+Colorization.m in Sources */,
 				F10BA43C1A5621C500B19739 /* PFUser+RACExtensions.m in Sources */,
+				F159E3001A57D746009560A3 /* PFFacebookUtils+RACExtensions.m in Sources */,
 				F10BA4351A5621C500B19739 /* PFCloud+RACExtensions.m in Sources */,
 				F10BA43A1A5621C500B19739 /* PFRACCallbacks.m in Sources */,
 			);

@@ -14,9 +14,7 @@
 @interface PVNavigationController : UINavigationController <ICSDrawerControllerChild, ICSDrawerControllerPresenting>
 
 @property (weak, nonatomic) ICSDrawerController *drawer;
+@property (strong, nonatomic) UILabel *titleLabel;
 
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController andTitle:(NSString *)title;
-- (void)setTitleLabelText:(NSString *)title;
-- (void)showUserAddressBarWithAddress:(NSString *)address;
-- (void)shouldShowRefreshButton:(BOOL)show;
 @end

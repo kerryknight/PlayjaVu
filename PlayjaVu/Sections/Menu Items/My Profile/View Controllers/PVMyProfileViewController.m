@@ -40,7 +40,7 @@ static NSString *const kProfileViewControllerCellReuseId = @"PVProfileCell";
     //have to set our custom nav controller's title by hand each time by
     //casting to it for forward and backward navigation compatibility
     PVNavigationController *navController = (PVNavigationController *)self.navigationController;
-    [navController setTitleLabelText:@"My Player Profile"];
+    navController.titleLabel.text = @"My Player Profile";
 }
 
 - (void)didReceiveMemoryWarning

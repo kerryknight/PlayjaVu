@@ -117,9 +117,9 @@
                 [PVStatusBarNotification showWithStatus:message dismissAfter:2.0 customStyleName:PVStatusBarError];
                 
             } completed: ^{
-                DLog(@"sign up completed successfully, so show main interface");
+                DLogSuccess(@"Sign up completed successfully; show main interface");
                 
-                [PVStatusBarNotification showWithStatus:NSLocalizedString(@"Success! Welcome, new bar golfer!", nil) dismissAfter:2.0 customStyleName:PVStatusBarSuccess];
+                [PVStatusBarNotification showWithStatus:NSLocalizedString(@"Success!", nil) dismissAfter:2.0 customStyleName:PVStatusBarSuccess];
                 //successfully logged in
                 
                 //post a notification that our main interface should show which our

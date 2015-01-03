@@ -68,7 +68,6 @@
             }];
         }
     }];
-    
 }
 
 - (void)rac_createCancelButtonSignal
@@ -107,14 +106,6 @@
                 
             }];
 }
-
-//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    [self dismissAnyKeyboard];
-//    [super touchesBegan:touches withEvent:event];
-//}
-
-
 
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

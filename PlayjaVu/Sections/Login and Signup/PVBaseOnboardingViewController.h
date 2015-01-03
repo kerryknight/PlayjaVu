@@ -12,6 +12,7 @@
 @interface PVBaseOnboardingViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *container;
+
 - (void)dismissAnyKeyboard;
 
 @end
