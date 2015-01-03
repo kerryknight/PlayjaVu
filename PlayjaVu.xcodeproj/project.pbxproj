@@ -60,6 +60,8 @@
 		F1776FE11A55F572000BCCB2 /* PVCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FBC1A55F572000BCCB2 /* PVCache.m */; };
 		F1776FE21A55F572000BCCB2 /* PVConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FBE1A55F572000BCCB2 /* PVConfig.m */; };
 		F1776FE31A55F572000BCCB2 /* PVUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FC11A55F572000BCCB2 /* PVUtility.m */; };
+		F1EF6FEC1A586C1E0082FD72 /* PVFBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F1EF6FEB1A586C1E0082FD72 /* PVFBUser.m */; };
+		F1EF6FF11A5873670082FD72 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,6 +181,9 @@
 		F1776FE41A55F5D2000BCCB2 /* NOTES.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = NOTES.text; path = PlayjaVu/NOTES.text; sourceTree = "<group>"; };
 		F1776FE51A55F5D2000BCCB2 /* System Design Specifications.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "System Design Specifications.text"; path = "PlayjaVu/System Design Specifications.text"; sourceTree = "<group>"; };
 		F1776FE81A55F930000BCCB2 /* PlayjaVu-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PlayjaVu-Prefix.pch"; sourceTree = "<group>"; };
+		F1EF6FEA1A586C1E0082FD72 /* PVFBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVFBUser.h; sourceTree = "<group>"; };
+		F1EF6FEB1A586C1E0082FD72 /* PVFBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVFBUser.m; sourceTree = "<group>"; };
+		F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +191,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1EF6FF11A5873670082FD72 /* libsqlite3.dylib in Frameworks */,
 				35D7DFD41DC8118759825112 /* libPods.a in Frameworks */,
 				F146F1F31A561A10002EDD15 /* AudioToolbox.framework in Frameworks */,
 			);
@@ -204,6 +210,7 @@
 		B34AB99F2F556C19B5621C38 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */,
 				F146F1F21A561A10002EDD15 /* AudioToolbox.framework */,
 				313A3FE2FFEDC96957BF0980 /* libPods.a */,
 			);
@@ -234,7 +241,8 @@
 				F10BA42F1A5621C500B19739 /* PFUser+RACExtensions.h */,
 				F10BA4301A5621C500B19739 /* PFUser+RACExtensions.m */,
 			);
-			path = "Parse+RACExtensions";
+			name = "Parse+RACExtensions";
+			path = "External/Non-Pod Libraries/Parse+RACExtensions";
 			sourceTree = "<group>";
 		};
 		F10BA4171A5621C500B19739 /* Categories */ = {
@@ -290,6 +298,8 @@
 				F1776F7B1A55F571000BCCB2 /* PVAppDelegate.h */,
 				F1776F7C1A55F571000BCCB2 /* PVAppDelegate.m */,
 				F1776F6B1A55F571000BCCB2 /* Base Architecture */,
+				F1EF6FE81A5864670082FD72 /* Networking (Other) */,
+				F1EF6FE91A586BF60082FD72 /* Models */,
 				F1776F7D1A55F571000BCCB2 /* Sections */,
 				F1776F9E1A55F571000BCCB2 /* Utilities */,
 				F122B36D1A55F18400A5BBCB /* Supporting Files */,
@@ -571,7 +581,6 @@
 			isa = PBXGroup;
 			children = (
 				F11BB6E21A5767DF00A1185C /* ICSDrawerController */,
-				F10BA4161A5621C500B19739 /* Parse+RACExtensions */,
 			);
 			path = "Non-Pod Libraries";
 			sourceTree = "<group>";
@@ -583,6 +592,32 @@
 				F1776FBA1A55F572000BCCB2 /* PVStatusBarNotification.m */,
 			);
 			path = Subclasses;
+			sourceTree = "<group>";
+		};
+		F1EF6FE81A5864670082FD72 /* Networking (Other) */ = {
+			isa = PBXGroup;
+			children = (
+				F10BA4161A5621C500B19739 /* Parse+RACExtensions */,
+			);
+			name = "Networking (Other)";
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F1EF6FE91A586BF60082FD72 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F1EF6FEE1A586F6C0082FD72 /* PFObjects */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F1EF6FEE1A586F6C0082FD72 /* PFObjects */ = {
+			isa = PBXGroup;
+			children = (
+				F1EF6FEA1A586C1E0082FD72 /* PVFBUser.h */,
+				F1EF6FEB1A586C1E0082FD72 /* PVFBUser.m */,
+			);
+			name = PFObjects;
 			sourceTree = "<group>";
 		};
 		FF506B5B7C805457BAFEE33B /* Pods */ = {
@@ -606,6 +641,7 @@
 				F122B3671A55F18400A5BBCB /* Frameworks */,
 				F122B3681A55F18400A5BBCB /* Resources */,
 				2038CFDA1906577CD9E9D459 /* Copy Pods Resources */,
+				F1EF6FF21A587DC80082FD72 /* Parse Symbolication Upload Run Script */,
 			);
 			buildRules = (
 			);
@@ -734,6 +770,20 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		F1EF6FF21A587DC80082FD72 /* Parse Symbolication Upload Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Parse Symbolication Upload Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=/usr/local/bin:$PATH\ncd /Users/keknight/Desktop/Kerry_Apps/Kerry_Apps/PlayjaVu/parse\n\nparse symbols \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -765,6 +815,7 @@
 				F11BB6E11A57677F00A1185C /* PVNavigationController.m in Sources */,
 				F10BA43B1A5621C500B19739 /* PFRACErrors.m in Sources */,
 				F10BA4341A5621C500B19739 /* PFAnonymousUtils+RACExtensions.m in Sources */,
+				F1EF6FEC1A586C1E0082FD72 /* PVFBUser.m in Sources */,
 				F1776FCE1A55F572000BCCB2 /* PVSignUpViewController.m in Sources */,
 				F10BA4391A5621C500B19739 /* PFQuery+RACExtensions.m in Sources */,
 				F122B3701A55F18400A5BBCB /* main.m in Sources */,

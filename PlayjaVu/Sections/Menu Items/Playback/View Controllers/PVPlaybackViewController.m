@@ -29,6 +29,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self configureUI];
+    
+    // Fetches the config at most once every 12 hours per app runtime
+    const NSTimeInterval configRefreshInterval = 12.0 * 60.0 * 60.0;
+    static NSDate *lastFetchedDate;
+    if (lastFetchedDate == nil ||
+        [lastFetchedDate timeIntervalSinceNow] * -1.0 > configRefreshInterval) {
+        [PFConfig getConfigInBackgroundWithBlock:^(PFConfig *config, NSError *error) {
+            DLogGreen(@"PFConfig: %@", [PFConfig currentConfig]);
+        }];
+        lastFetchedDate = [NSDate date];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

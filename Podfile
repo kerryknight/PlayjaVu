@@ -10,6 +10,7 @@ pod 'MRProgress', '0.8.1' # for modal spinner views
 #pod 'JazzHands', '0.0.3' #for intro tours
 #pod 'RevMob', '7.4.6' #advertising
 pod 'Parse', '1.6.1'
+pod 'ParseCrashReporting', '1.6.1'
 pod 'ParseUI', '1.0.2'
 pod 'Reachability', '3.2'
 pod 'JVFloatLabeledTextField', '1.0.0' # for animating placeholder text above line in textfields

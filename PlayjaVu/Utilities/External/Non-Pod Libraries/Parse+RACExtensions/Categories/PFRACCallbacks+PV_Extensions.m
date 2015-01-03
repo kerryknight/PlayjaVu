@@ -14,24 +14,23 @@
 // Parse errors include only a generic "error" key. This function ensures that
 // generic error gets assigned under NSLocalizedDescriptionKey.
 static NSError *PFRACNormalizeError(NSError *error) {
-	if (error == nil) return [NSError errorWithDomain:PFRACErrorDomain code:PFRACUnknownError userInfo:nil];
+    if (error == nil) return [NSError errorWithDomain:PFRACErrorDomain code:PFRACUnknownError userInfo:nil];
     
-	if (error.userInfo[@"error"] == nil) return error;
+    if (error.userInfo[@"error"] == nil) return error;
     
-	NSMutableDictionary *userInfo = [error.userInfo mutableCopy];
-	userInfo[NSLocalizedDescriptionKey] = userInfo[@"error"];
-	return [NSError errorWithDomain:error.domain code:error.code userInfo:userInfo];
+    NSMutableDictionary *userInfo = [error.userInfo mutableCopy];
+    userInfo[NSLocalizedDescriptionKey] = userInfo[@"error"];
+    return [NSError errorWithDomain:error.domain code:error.code userInfo:userInfo];
 }
 
 FBRequestHandler PFRACFBRequestCallback(id<RACSubscriber> subscriber) {
-	return ^(FBRequestConnection *connection,
-             id result,
-             NSError *error) {
-		if (error == nil) {
-			[subscriber sendNext:result];
-			[subscriber sendCompleted];
-		} else {
-			[subscriber sendError:PFRACNormalizeError(error)];
-		}
-	};
+    return ^(FBRequestConnection *connection, id result, NSError *error) {
+        if (error == nil) {
+            DLogOrange(@"old request type result: %@", result);
+            [subscriber sendNext:result];
+            [subscriber sendCompleted];
+        } else {
+            [subscriber sendError:PFRACNormalizeError(error)];
+        }
+    };
 }

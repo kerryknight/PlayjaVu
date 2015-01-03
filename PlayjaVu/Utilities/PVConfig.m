@@ -78,17 +78,22 @@ NSString *const kPushPayloadPhotoObjectIdKey                  = @"pid";
 
 // *********************************************** PARSE CLASSES *****************************************
 #pragma mark - PFObject User Class
-// Field keys
-NSString *const kUserFacebookIDKey                            = @"facebookId";
-NSString *const kUserPhotoIDKey                               = @"photoId";
-NSString *const kUserProfilePicSmallKey                       = @"profilePictureSmall";
-NSString *const kUserProfilePicMediumKey                      = @"profilePictureMedium";
-NSString *const kUserFacebookFriendsKey                       = @"facebookFriends";
+NSString *const kUserFacebookUserKey                          = @"facebookUser";
+NSString *const kUserProfilePicURLKey                         = @"profilePictureURL";
 NSString *const kUserPrivateChannelKey                        = @"channel";
-NSString *const kUserFacebookProfileKey                       = @"profile";
 NSString *const kUserEmailKey                                 = @"email";
-NSString *const kUserUsernameKey                              = @"username";
 NSString *const kUserEmailVerifiedKey                         = @"emailVerified";
-NSString *const kUserTwitterIdKey                             = @"twitterId";
+
+#pragma mark - PFObject FacebookUser Class
+NSString *const kFacebookUserIdKey                            = @"facebookId";
+NSString *const kFacebookUserFriendsKey                       = @"friends";
+NSString *const kFacebookUserUsernameKey                      = @"username";
+NSString *const kFacebookUserProfilePicURLKey                 = @"profilePictureURL";
+NSString *const kFacebookUserGenderKey                        = @"gender";
+NSString *const kFacebookUserTimezoneKey                      = @"timezone";
+NSString *const kFacebookUserLocationKey                      = @"location";
+NSString *const kFacebookUserBirthdayKey                      = @"birthday";
+NSString *const kFacebookUserEmailKey                         = @"email";
+NSString *const kFacebookUserProfileLinkKey                   = @"profileLink";
 
 

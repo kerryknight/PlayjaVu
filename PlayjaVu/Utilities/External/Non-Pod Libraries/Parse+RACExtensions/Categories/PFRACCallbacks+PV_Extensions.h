@@ -12,4 +12,4 @@
 #import "FBRequestConnection.h"
 
 @protocol RACSubscriber;
-FBRequestHandler PFRACFBRequestCallback(id<RACSubscriber> subscriber);
+//FBRequestHandler PFRACFBRequestCallback(id<RACSubscriber> subscriber);

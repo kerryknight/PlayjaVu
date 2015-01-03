@@ -61,7 +61,6 @@ void alertMessage ( NSString *format, ... ) {
     }
     
     if (mediumImageData.length > 0) {
-//        DLog(@"Uploading Medium Profile Picture");
         PFFile *fileMediumImage = [PFFile fileWithData:mediumImageData];
         
         // Request a background execution task to allow us to finish uploading the photo even if the app is backgrounded
@@ -74,7 +73,7 @@ void alertMessage ( NSString *format, ... ) {
         [fileMediumImage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (!error) {
                 DLog(@"Uploaded Medium Profile Picture");
-                [[PFUser currentUser] setObject:fileMediumImage forKey:kUserProfilePicMediumKey];
+//                [[PFUser currentUser] setObject:fileMediumImage forKey:kUserProfilePicMediumKey];
                 //ensure the UI updates itself even if we haven't officially saved the photo to parse yet since we've set it to the currentUser's photov
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAccountViewLoadProfilePhoto" object:nil];
                 [[PFUser currentUser] saveEventually];
@@ -104,8 +103,8 @@ void alertMessage ( NSString *format, ... ) {
         [fileSmallRoundedImage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (!error) {
                 DLog(@"Uploaded Profile Picture Thumbnail");
-                [[PFUser currentUser] setObject:fileSmallRoundedImage forKey:kUserProfilePicSmallKey];
-                [[PFUser currentUser] saveEventually];
+//                [[PFUser currentUser] setObject:fileSmallRoundedImage forKey:kUserProfilePicSmallKey];
+//                [[PFUser currentUser] saveEventually];
             } else {
                 DLog(@"Photo failed to save: %@", error);
                 //knightka replaced a regular alert view with our custom subclass
@@ -159,16 +158,20 @@ void alertMessage ( NSString *format, ... ) {
 }
 
 + (BOOL)userHasValidFacebookData:(PFUser *)user {
-    NSString *facebookId = [user objectForKey:kUserFacebookIDKey];
-    return (facebookId && facebookId.length > 0);
+//    NSString *facebookId = [user objectForKey:kUserFacebookIDKey];
+//    return (facebookId && facebookId.length > 0);
+    
+    return NO;
 }
 
 + (BOOL)userHasProfilePictures:(PFUser *)user {
     DLog(@"");
-    PFFile *profilePictureMedium = [user objectForKey:kUserProfilePicMediumKey];
-    PFFile *profilePictureSmall = [user objectForKey:kUserProfilePicSmallKey];
+//    PFFile *profilePictureMedium = [user objectForKey:kUserProfilePicMediumKey];
+//    PFFile *profilePictureSmall = [user objectForKey:kUserProfilePicSmallKey];
+//    
+//    return (profilePictureMedium && profilePictureSmall);
     
-    return (profilePictureMedium && profilePictureSmall);
+    return NO;
 }
 
 #pragma mark Display Name

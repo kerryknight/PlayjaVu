@@ -70,7 +70,6 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
 #pragma mark - Private Methods that Create and/or Push New View Controllers
 - (void)showMainInterface
 {
-    DLogOrange(@"SHOW THE MAIN INTERFACE!!!");
     //the scorecard view will be the first view shown by default
     PVPlaybackViewController *playbackVC = [[PVPlaybackViewController alloc] init];
     self.navController = [[PVNavigationController alloc] initWithRootViewController:playbackVC andTitle:@"Now Playing"];
@@ -154,7 +153,6 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
 		}
 		else if ([menuItem isEqualToString:@"Log Out"]) {
 			[self.drawer close];
-            DLogOrange(@"log user out");
 			[PVAD logOut];
             
             //show the welcome view

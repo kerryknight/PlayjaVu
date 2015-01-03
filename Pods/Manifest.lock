@@ -40,6 +40,8 @@ PODS:
   - Nimbus/Core (1.2.0)
   - Parse (1.6.1):
     - Bolts (~> 1.1.3)
+  - ParseCrashReporting (1.6.1):
+    - Parse (~> 1.6.1)
   - ParseFacebookUtils (1.6.1):
     - Facebook-iOS-SDK (~> 3.20)
     - Parse (~> 1.6.1)
@@ -68,6 +70,7 @@ DEPENDENCIES:
   - Nimbus/AttributedLabel (= 1.2.0)
   - Nimbus/Core (= 1.2.0)
   - Parse (= 1.6.1)
+  - ParseCrashReporting
   - ParseUI (= 1.0.2)
   - Reachability (= 3.2)
   - ReactiveViewModel (= 0.3)
@@ -84,6 +87,7 @@ SPEC CHECKSUMS:
   MRProgress: cd12726e001ea25dec133322d34cc4754cbc58f8
   Nimbus: 14fd6f034c5f53d3dccef6cfd5763959497289a9
   Parse: b0ec7666167e212edb6fc94f60ba170248bd1869
+  ParseCrashReporting: 28fc412d554828f3e892e9e99817e3a9a348e751
   ParseFacebookUtils: 7659dcda0fa59f67234ab7ba5a82a9b05073c59a
   ParseUI: 0eed358b238dcd66949ebc22513eba603e110087
   Reachability: 1ef8adf5c4e3d362f96515d4278f68dad3c26930

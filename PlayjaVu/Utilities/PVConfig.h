@@ -26,9 +26,7 @@ extern NSString *const kTwitterConsumerSecret;
 
 
 #pragma mark - NSUserDefaults
-extern NSString *const kUserDefaultsActivityFeedViewControllerLastRefreshKey;
 extern NSString *const kUserDefaultsCacheFacebookFriendsKey;
-
 
 #pragma mark - Default App Settings
 extern int const kMinimumPasswordLength;
@@ -66,33 +64,26 @@ extern NSString *const kAPNSSoundKey;
 extern NSString *const kPushPayloadPayloadTypeKey;
 extern NSString *const kPushPayloadPayloadTypeActivityKey;
 
-extern NSString *const kPushPayloadActivityTypeKey;
-extern NSString *const kPushPayloadActivityLikeKey;
-extern NSString *const kPushPayloadActivityCommentKey;
-extern NSString *const kPushPayloadActivityFollowKey;
-
-extern NSString *const kPushPayloadFromUserObjectIdKey;
-extern NSString *const kPushPayloadToUserObjectIdKey;
-extern NSString *const kPushPayloadPhotoObjectIdKey;
-
 //// *********************************************** PARSE CLOUD CODE **************************************
 //extern NSString *const kCloudCodeDeleteUserKey;
 
 // *********************************************** PARSE CLASSES *****************************************
 #pragma mark - PFObject User Class
 // Field keys
-//displayName: name user signs up with or that comes from FB at signup; default
-//that's displayed on scorecard
-extern NSString *const kUserDisplayNameKey;
-extern NSString *const kUserFacebookIDKey;
-extern NSString *const kUserPhotoIDKey;
-extern NSString *const kUserProfilePicSmallKey;
-extern NSString *const kUserProfilePicMediumKey;
-extern NSString *const kUserFacebookFriendsKey;
+extern NSString *const kUserFacebookUserKey;
+extern NSString *const kUserProfilePicURLKey;
 extern NSString *const kUserPrivateChannelKey;
-extern NSString *const kUserFacebookProfileKey;
 extern NSString *const kUserEmailKey;
-extern NSString *const kUserUsernameKey;
 extern NSString *const kUserEmailVerifiedKey;
-extern NSString *const kUserTwitterIdKey;
 
+#pragma mark - PFObject FacebookUser Class
+extern NSString *const kFacebookUserIdKey;
+extern NSString *const kFacebookUserFriendsKey;
+extern NSString *const kFacebookUserUsernameKey;
+extern NSString *const kFacebookUserProfilePicURLKey;
+extern NSString *const kFacebookUserGenderKey;
+extern NSString *const kFacebookUserTimezoneKey;
+extern NSString *const kFacebookUserLocationKey;
+extern NSString *const kFacebookUserBirthdayKey;
+extern NSString *const kFacebookUserEmailKey;
+extern NSString *const kFacebookUserProfileLinkKey;

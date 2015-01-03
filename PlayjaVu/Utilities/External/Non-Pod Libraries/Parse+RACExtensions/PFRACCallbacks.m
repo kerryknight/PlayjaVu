@@ -25,6 +25,7 @@ static NSError *PFRACNormalizeError(NSError *error) {
 
 PFBooleanResultBlock PFRACBooleanCallback(id<RACSubscriber> subscriber) {
 	return ^(BOOL succeeded, NSError *error) {
+        DLogSuccess(@"SUCCESS");
 		if (succeeded) {
 			[subscriber sendCompleted];
 		} else {

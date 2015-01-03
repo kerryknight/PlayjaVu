@@ -18,5 +18,8 @@ DerivedData
 *.ipa
 *.xcuserstate
 
+## Parse
+parse/config
+
 ## CocoaPods
 #Pods/

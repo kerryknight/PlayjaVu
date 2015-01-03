@@ -543,6 +543,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 See https://www.parse.com/about/terms
 
+## ParseCrashReporting
+
+See https://www.parse.com/about/terms
+
 ## ParseFacebookUtils
 
 See https://www.parse.com/about/terms

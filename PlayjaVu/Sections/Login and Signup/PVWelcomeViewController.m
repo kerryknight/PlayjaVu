@@ -30,6 +30,7 @@
     /**************************************************************************************************/
     /**************************************************************************************************/
     
+    
     // If not logged in, present login view controller
     if (![PFUser currentUser]) {
         DLogOrange(@"no current user at welcome so show login view");
@@ -58,7 +59,6 @@
     
     //check what type of login we have
     if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
-        DLogSuccess(@"LOGGED IN WITH FB");
         //we're logged in with Facebook
         // Check if user is missing a Facebook ID
         if ([PVUtility userHasValidFacebookData:[PFUser currentUser]]) {

@@ -13,6 +13,7 @@
 #import "MRProgress.h"
 #import "PVStatusBarNotification.h"
 #import "PVNavigationController.h"
+#import <ParseCrashReporting/ParseCrashReporting.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 #import "PVLoginViewController.h"
 
@@ -83,17 +84,27 @@
 - (void)configure3rdParties
 {
     // START 3RD PARTY INSTANTIATIONS ********************************************************
-    // Parse
-    [Parse setApplicationId:kParseApplicationID clientKey:kParseApplicationClientKey];
-    [PFFacebookUtils initializeFacebook];
-    
-    DLogOrange(@"fb session 1: %@", [PFFacebookUtils session]);
-    
-    //Configure Parse setup
-    PFACL *defaultACL = [PFACL ACL];
-    // If you would like all objects to be private by default, remove this line.
-    [defaultACL setPublicReadAccess:YES];
-    [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+    // Parse stuff that can be done on background queue
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // Enable crash reporting on Parse
+        [ParseCrashReporting enable];
+        
+        // enable Parse local sqlite data store
+        [Parse enableLocalDatastore];
+        
+        // enable logging
+        [Parse setLogLevel:PFLogLevelDebug];
+        
+        // initialize everything
+        [Parse setApplicationId:kParseApplicationID clientKey:kParseApplicationClientKey];
+        [PFFacebookUtils initializeFacebook];
+        
+        //Configure Parse setup
+        PFACL *defaultACL = [PFACL ACL];
+        // If you would like all objects to be private by default, remove this line.
+        [defaultACL setPublicReadAccess:YES];
+        [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+    });
     
     // END 3RD PARTY
     // INSTANTIATIONS **********************************************************
@@ -113,16 +124,18 @@
 #pragma mark - Reachability
 - (void)monitorReachability
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
-    
-    self.hostReach = [Reachability reachabilityWithHostname:@"api.parse.com"];
-    [self.hostReach startNotifier];
-    
-    self.internetReach = [Reachability reachabilityForInternetConnection];
-    [self.internetReach startNotifier];
-    
-    self.wifiReach = [Reachability reachabilityForLocalWiFi];
-    [self.wifiReach startNotifier];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+        
+        self.hostReach = [Reachability reachabilityWithHostname:@"api.parse.com"];
+        [self.hostReach startNotifier];
+        
+        self.internetReach = [Reachability reachabilityForInternetConnection];
+        [self.internetReach startNotifier];
+        
+        self.wifiReach = [Reachability reachabilityForLocalWiFi];
+        [self.wifiReach startNotifier];
+    });
 }
 
 // Called by Reachability whenever status changes.
@@ -163,19 +176,19 @@
 // App switching methods to support Facebook Single Sign-On.
 // ****************************************************************************
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     */
-    [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
+//    /*
+//     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+//     */
+//    [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    /*
-     Called when the application is about to terminate.
-     Save data if appropriate.
-     See also applicationDidEnterBackground:.
-     */
-    [[PFFacebookUtils session] close];
+//    /*
+//     Called when the application is about to terminate.
+//     Save data if appropriate.
+//     See also applicationDidEnterBackground:.
+//     */
+//    [[PFFacebookUtils session] close];
 }
 
 @end

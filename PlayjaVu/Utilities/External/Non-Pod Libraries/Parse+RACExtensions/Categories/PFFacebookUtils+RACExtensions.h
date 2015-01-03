@@ -27,22 +27,14 @@
 + (RACSignal *)rac_logInWithPermissions:(NSArray *)permissions;
 
 /// Simple method to make a graph API request for user info (/me), creates an <FBRequest>
-/// then uses an <FBRequestConnection> object to start the connection with Facebook. The
+/// then uses an <FBRequest> object to start the connection with Facebook. The
 /// request uses the active session represented by `[FBSession activeSession]`.
 ///
-/// @see +startForMeWithCompletionHandler::
+/// @see +startWithCompletionHandler:
 ///
 /// @return A signal that completes on success.
-+ (RACSignal *)rac_getCurrentFacebookUserConnectionInfo;
++ (RACSignal *)rac_makeRequestForMe;
 
-
-+ (RACSubject *)rac_getCurrentFacebookUsersProfilePicture:(NSString *)facebookId;
-
-/// Takes the returned Facebook session information and saves the FB id to current Parse user
-///
-///
-/// @param facebookResults the result object of calling getCurrentFacebookUserConnectionInfo
-/// @return A signal that completes on success.
-+ (RACSignal *)rac_saveFacebookUserDataToParseForCurrentUser:(id)facebookResult;
++ (RACSubject *)rac_profilePictureForUserId:(NSString *)facebookId;
 
 @end
