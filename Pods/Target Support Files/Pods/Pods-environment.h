@@ -90,18 +90,6 @@
 #define COCOAPODS_VERSION_MINOR_MRProgress_Stopable 8
 #define COCOAPODS_VERSION_PATCH_MRProgress_Stopable 1
 
-// Mantle
-#define COCOAPODS_POD_AVAILABLE_Mantle
-#define COCOAPODS_VERSION_MAJOR_Mantle 1
-#define COCOAPODS_VERSION_MINOR_Mantle 5
-#define COCOAPODS_VERSION_PATCH_Mantle 1
-
-// Mantle/extobjc
-#define COCOAPODS_POD_AVAILABLE_Mantle_extobjc
-#define COCOAPODS_VERSION_MAJOR_Mantle_extobjc 1
-#define COCOAPODS_VERSION_MINOR_Mantle_extobjc 5
-#define COCOAPODS_VERSION_PATCH_Mantle_extobjc 1
-
 // Nimbus/AttributedLabel
 #define COCOAPODS_POD_AVAILABLE_Nimbus_AttributedLabel
 #define COCOAPODS_VERSION_MAJOR_Nimbus_AttributedLabel 1
@@ -191,4 +179,10 @@
 #define COCOAPODS_VERSION_MAJOR_TRVSMonitor 0
 #define COCOAPODS_VERSION_MINOR_TRVSMonitor 0
 #define COCOAPODS_VERSION_PATCH_TRVSMonitor 3
+
+// iOS-Slide-Menu
+#define COCOAPODS_POD_AVAILABLE_iOS_Slide_Menu
+#define COCOAPODS_VERSION_MAJOR_iOS_Slide_Menu 1
+#define COCOAPODS_VERSION_MINOR_iOS_Slide_Menu 4
+#define COCOAPODS_VERSION_PATCH_iOS_Slide_Menu 4
 

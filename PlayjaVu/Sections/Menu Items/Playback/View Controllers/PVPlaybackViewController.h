@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PVBaseSlidingViewController.h"
 
-@interface PVPlaybackViewController : UIViewController 
+@interface PVPlaybackViewController : PVBaseSlidingViewController 
 
 @end

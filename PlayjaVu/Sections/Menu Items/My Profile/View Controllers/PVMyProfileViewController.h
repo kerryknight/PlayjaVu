@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PVMyProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+#import "PVBaseSlidingViewController.h"
+
+@interface PVMyProfileViewController : PVBaseSlidingViewController <UITableViewDataSource, UITableViewDelegate>
 
 @end

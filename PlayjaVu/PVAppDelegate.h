@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PVNavigationController.h"
 
 @interface PVAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -15,7 +14,6 @@
 @property (assign, nonatomic, readonly) int networkStatus;
 
 - (BOOL)isParseReachable;
-- (void)logOut;
 - (void)showSpinnerWithMessage:(NSString *)message;
 - (void)hideSpinner;
 

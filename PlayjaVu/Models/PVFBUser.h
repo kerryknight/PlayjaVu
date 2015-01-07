@@ -25,4 +25,5 @@ typedef enum {
 @property (copy, nonatomic) NSString *profileLink;
 @property (strong, nonatomic) NSNumber *timezone;
 @property (assign, nonatomic) PVGenderType gender;
+
 @end

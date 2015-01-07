@@ -30,8 +30,8 @@
     [self registerSubclass];
 }
 
-- (NSString *)description {
-    return self.username;
-}
+//- (NSString *)description {
+//    return self.username;
+//}
 
 @end

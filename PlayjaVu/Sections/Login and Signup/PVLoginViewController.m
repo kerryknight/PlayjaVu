@@ -60,6 +60,10 @@
     RAC(self.viewModel, username) = self.usernameFloatTextField.rac_textSignal;
     RAC(self.viewModel, password) = self.passwordFloatTextField.rac_textSignal;
     
+#pragma mark - REMOVE THIS HARDCODE
+    self.viewModel.username = @"kerry.a.knight@gmail.com";
+    self.viewModel.password = @"H2C1spar";
+    
     self.loginButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^(id _) {
         [self logIn];
         return [RACSignal empty];
@@ -143,6 +147,7 @@
 }
 
 - (RACDisposable *)logInWithFacebook {
+    
     dispatch_async(dispatch_get_main_queue(), ^(void) {
         //show the spinner
         MRProgressOverlayView *spinnerView = [MRProgressOverlayView showOverlayAddedTo:self.view title:NSLocalizedString(@"Logging in...", Nil) mode:MRProgressOverlayViewModeIndeterminate animated:YES];
@@ -151,6 +156,7 @@
     
     return [[self.viewModel rac_logInWithFacebook]
             subscribeError:^(NSError *error) {
+                DLogError(@"Error: %@", error);
                 NSString *message;
                 //dismiss the spinner regardless of outcome
                 [MRProgressOverlayView dismissOverlayForView:self.view animated:YES];

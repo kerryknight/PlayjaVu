@@ -7,201 +7,122 @@
 //
 
 #import "PVUtility.h"
-#import "UIImage+ResizeAdditions.h"
-#import "SIAlertView.h"
-
-// convenient for alert messages, with variadic format
-void alertMessage ( NSString *format, ... ) {
-    va_list args;
-    va_start(args, format);
-    
-    NSString *outstr = [[NSString alloc] initWithFormat:format arguments:args];
-    va_end(args);
-    
-    //be sure we only ever call this from the main thread //kak 09Feb2012
-    dispatch_async(dispatch_get_main_queue(), ^{
-        //knightka replaced a regular alert view with our custom subclass
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:NSLocalizedString(kAlertTitle, nil) andMessage:NSLocalizedString(outstr, nil)];
-        [alertView addButtonWithTitle:@"OK"
-                                 type:SIAlertViewButtonTypeCancel
-                              handler:^(SIAlertView *alert) {
-                                  NSLog(@"OK Clicked");
-                              }];
-        
-        alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
-        [alertView show];
-    });
-}
+#import <ParseCrashReporting/ParseCrashReporting.h>
+#import "PVCache.h"
 
 @interface PVUtility ()
-+ (BOOL)saveProfileImageToParse:(UIImage *)profileImage;
 @end
 
 @implementation PVUtility
 
-#pragma mark - Parse Account Profile Picture
-+ (BOOL)processLocalProfilePicture:(UIImage *)profileImage {
-    return [self saveProfileImageToParse:profileImage];
+#pragma mark - Public Methods
+#pragma mark Parse-related
++ (void)configureParseWithLaunchOptions:(NSDictionary *)options
+{
+    // START 3RD PARTY INSTANTIATIONS ********************************************************
+    // Parse stuff that can be done on background queue
+    
+    // Enable crash reporting on Parse
+    [ParseCrashReporting enable];
+    
+//    // enable Parse local sqlite data store
+//    [Parse enableLocalDatastore];
+    
+    // NOT SURE IF I SHOULD KEEP THESE ON OR NOT
+    [Parse errorMessagesEnabled:YES];
+    [Parse offlineMessagesEnabled:YES];
+    
+    // enable logging
+    [Parse setLogLevel:PFLogLevelDebug];
+    
+    // initialize everything
+    [Parse setApplicationId:kParseApplicationID clientKey:kParseApplicationClientKey];
+    [PFFacebookUtils initializeFacebook];
+    
+    //Configure Parse setup
+    PFACL *defaultACL = [PFACL ACL];
+    // If you would like all objects to be private by default, remove this line.
+    [defaultACL setPublicReadAccess:YES];
+    [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+    
+    // analytics
+    [PFAnalytics trackAppOpenedWithLaunchOptionsInBackground:options block:nil];
+    
+    // END 3RD PARTY
+    // INSTANTIATIONS **********************************************************
 }
 
-+ (BOOL)saveProfileImageToParse:(UIImage *)profileImage {
-    NSLog(@"%s", __FUNCTION__);
-    
-    UIImage *image = profileImage;
-    UIImage *mediumImage = [image thumbnailImage:280 transparentBorder:0 cornerRadius:0 interpolationQuality:kCGInterpolationHigh];
-    UIImage *smallRoundedImage = [image thumbnailImage:64 transparentBorder:0 cornerRadius:9 interpolationQuality:kCGInterpolationLow];
-    
-    NSData *mediumImageData = UIImageJPEGRepresentation(mediumImage, 0.5); // using JPEG for larger pictures
-    NSData *smallRoundedImageData = UIImagePNGRepresentation(smallRoundedImage);
-    
-    //check to ensure we have proper image data to upload
-    //we're doing this as a check to make sure we can alert the user if uploading a profile pic fails
-    if (!mediumImageData || !smallRoundedImageData) {
-        return NO;
-    }
-    
-    if (mediumImageData.length > 0) {
-        PFFile *fileMediumImage = [PFFile fileWithData:mediumImageData];
-        
-        // Request a background execution task to allow us to finish uploading the photo even if the app is backgrounded
-        UIBackgroundTaskIdentifier fileUploadBackgroundTaskId = 0;
-        fileUploadBackgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-            [[UIApplication sharedApplication] endBackgroundTask:fileUploadBackgroundTaskId];
-        }];
-        
-        DLog(@"Requested background expiration task with id %lu for PlayjaVu profile photo upload", (unsigned long)fileUploadBackgroundTaskId);
-        [fileMediumImage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (!error) {
-                DLog(@"Uploaded Medium Profile Picture");
-//                [[PFUser currentUser] setObject:fileMediumImage forKey:kUserProfilePicMediumKey];
-                //ensure the UI updates itself even if we haven't officially saved the photo to parse yet since we've set it to the currentUser's photov
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAccountViewLoadProfilePhoto" object:nil];
-                [[PFUser currentUser] saveEventually];
-                [[UIApplication sharedApplication] endBackgroundTask:fileUploadBackgroundTaskId];
-                
-            } else {
-                DLog(@"Photo failed to save: %@", error);
-                [[UIApplication sharedApplication] endBackgroundTask:fileUploadBackgroundTaskId];
-                
-                //knightka replaced a regular alert view with our custom subclass
-                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops. Something happened.", nil) andMessage:NSLocalizedString(@"Couldn't post your photo. Please try again.", nil)];
-                [alertView addButtonWithTitle:NSLocalizedString(@"Dismiss", nil)
-                                         type:SIAlertViewButtonTypeCancel
-                                      handler:^(SIAlertView *alert) {
-                                          NSLog(@"Dismiss Clicked");
-                                      }];
-                
-                alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
-                [alertView show];
-            }
-        }];
-    }
-    
-    if (smallRoundedImageData.length > 0) {
-//        DLog(@"Uploading Profile Picture Thumbnail");
-        PFFile *fileSmallRoundedImage = [PFFile fileWithData:smallRoundedImageData];
-        [fileSmallRoundedImage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (!error) {
-                DLog(@"Uploaded Profile Picture Thumbnail");
-//                [[PFUser currentUser] setObject:fileSmallRoundedImage forKey:kUserProfilePicSmallKey];
-//                [[PFUser currentUser] saveEventually];
-            } else {
-                DLog(@"Photo failed to save: %@", error);
-                //knightka replaced a regular alert view with our custom subclass
-                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops. Something happened.", nil) andMessage:NSLocalizedString(@"Couldn't post your photo. Please try again.", nil)];
-                [alertView addButtonWithTitle:NSLocalizedString(@"Dismiss", nil)
-                                         type:SIAlertViewButtonTypeCancel
-                                      handler:^(SIAlertView *alert) {
-                                          NSLog(@"Dismiss Clicked");
-                                      }];
-                
-                alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
-                [alertView show];
-            }
-        }];
-    }
-    
-    return YES;
++ (void)updateCurrentParseUser
+{
+    // Refresh current user with server side data -- checks if user is still valid and so on
+    [[PFUser currentUser] fetchInBackgroundWithTarget:self selector:@selector(_refreshCurrentUserCallbackWithResult:error:)];
 }
 
-#pragma mark - Facebook
++ (void)logOut
+{
+    [[PVCache sharedCache] clear];
+    
+    // clear NSUserDefaults
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUserDefaultsCacheFacebookFriendsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    // Unsubscribe from push notifications by clearing the channels key (leaving only broadcast enabled).
+    [[PFInstallation currentInstallation] setObject:@[@""] forKey:kInstallationChannelsKey];
+    [[PFInstallation currentInstallation] removeObjectForKey:kInstallationUserKey];
+    [[PFInstallation currentInstallation] saveInBackground];
+    
+    // Log out
+    [PFUser logOut];
+    
+    // close FB
+    [[PFFacebookUtils session] close];
+    
+    // clean up local data store
+    [PFObject unpinAllObjectsInBackground];
+}
 
-+ (void)processFacebookProfilePictureData:(NSData *)newProfilePictureData {
-    if (newProfilePictureData.length == 0) {
-        DLog(@"Profile picture did not download successfully.");
+#pragma mark Facebook-related
++ (BOOL)userHasValidFacebookData:(PFUser *)user {
+    return [user objectForKey:kUserFacebookUserKey] != nil;
+}
+
+#pragma mark - Private Methods
++ (void)_refreshCurrentUserCallbackWithResult:(PFObject *)refreshedObject error:(NSError *)error
+{
+    DLogBlue(@"MAKE SURE THIS GETS CALLED !!!!");
+    // A kPFErrorObjectNotFound error on currentUser refresh signals a deleted user
+    if (error && error.code == kPFErrorObjectNotFound) {
+        DLog(@"User does not exist.");
+        
+        [self logOut];
         return;
     }
     
-    // The user's Facebook profile picture is cached to disk. Check if the cached profile picture data matches the incoming profile picture. If it does, avoid uploading this data to Parse.
-    
-    NSURL *cachesDirectoryURL = [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject]; // iOS Caches directory
-    
-    NSURL *profilePictureCacheURL = [cachesDirectoryURL URLByAppendingPathComponent:@"FacebookProfilePicture.jpg"];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:[profilePictureCacheURL path]]) {
-        // We have a cached Facebook profile picture
-        
-        NSData *oldProfilePictureData = [NSData dataWithContentsOfFile:[profilePictureCacheURL path]];
-        
-        if ([oldProfilePictureData isEqualToData:newProfilePictureData]) {
-            DLog(@"Cached profile picture matches incoming profile picture. Will not update.");
-            return;
+    //check what type of login we have
+    if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+        //we're logged in with Facebook
+        // Check if user is missing a Facebook ID
+        if ([PVUtility userHasValidFacebookData:[PFUser currentUser]]) {
+            // User has Facebook ID.
+            
+            DLogGreen(@"user has facebook id so request friend list");
+            //            // refresh Facebook friends on each launch
+            //            PF_FBRequest *request = [PF_FBRequest requestForMyFriends];
+            //            [request setDelegate:(PVAppDelegate*)[[UIApplication sharedApplication] delegate]];
+            //            [request startWithCompletionHandler:nil];
+        } else {
+            DLogGreen(@"User missing Facebook ID; Should check to see if they connected via Facebook first before querying again.");
+            //            PF_FBRequest *request = [PF_FBRequest requestForGraphPath:@"me/?fields=name,picture,email"];
+            //            [request setDelegate:(PVAppDelegate*)[[UIApplication sharedApplication] delegate]];
+            //            [request startWithCompletionHandler:nil];
         }
+        /*else if ([PFTwitterUtils isLinkedWithUser:[PFUser currentUser]] ) {
+         //we're logged in with Twitter //TODO:
+         } */
+    } else {
+        DLogSuccess(@"LOGGED IN WITH PARSE");
+        //we're logged with via a Parse account
     }
-    
-    BOOL cachedToDisk = [[NSFileManager defaultManager] createFileAtPath:[profilePictureCacheURL path] contents:newProfilePictureData attributes:nil];
-    DLog(@"Wrote profile picture to disk cache: %d", cachedToDisk);
-    
-    UIImage *image = [UIImage imageWithData:newProfilePictureData];
-    
-    [self saveProfileImageToParse:image];
-}
-
-+ (BOOL)userHasValidFacebookData:(PFUser *)user {
-//    NSString *facebookId = [user objectForKey:kUserFacebookIDKey];
-//    return (facebookId && facebookId.length > 0);
-    
-    return NO;
-}
-
-+ (BOOL)userHasProfilePictures:(PFUser *)user {
-    DLog(@"");
-//    PFFile *profilePictureMedium = [user objectForKey:kUserProfilePicMediumKey];
-//    PFFile *profilePictureSmall = [user objectForKey:kUserProfilePicSmallKey];
-//    
-//    return (profilePictureMedium && profilePictureSmall);
-    
-    return NO;
-}
-
-#pragma mark Display Name
-
-+ (NSString *)firstNameForDisplayName:(NSString *)displayName {
-    if (!displayName || displayName.length == 0) {
-        return @"Someone";
-    }
-    
-    NSArray *displayNameComponents = [displayName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    NSString *firstName = [displayNameComponents objectAtIndex:0];
-    
-    if (firstName.length > 100) {
-        // truncate to 100 so that it fits in a Push payload
-        firstName = [firstName substringToIndex:100];
-    }
-    return firstName;
-}
-
-#pragma mark - Non-Parse Utilities
-+ (UIImage *)imageFromColor:(UIColor *)color {
-    CGRect rect = CGRectMake(0, 0, 1, 1);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    //  [[UIColor colorWithRed:222./255 green:227./255 blue: 229./255 alpha:1] CGColor]) ;
-    CGContextFillRect(context, rect);
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return img;
 }
 
 @end

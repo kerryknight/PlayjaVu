@@ -37,10 +37,10 @@ static NSString *const kProfileViewControllerCellReuseId = @"PVProfileCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //have to set our custom nav controller's title by hand each time by
-    //casting to it for forward and backward navigation compatibility
-    PVNavigationController *navController = (PVNavigationController *)self.navigationController;
-    navController.titleLabel.text = @"My Player Profile";
+//    //have to set our custom nav controller's title by hand each time by
+//    //casting to it for forward and backward navigation compatibility
+//    PVNavigationController *navController = (PVNavigationController *)self.navigationController;
+//    navController.titleLabel.text = @"My Player Profile";
 }
 
 - (void)didReceiveMemoryWarning

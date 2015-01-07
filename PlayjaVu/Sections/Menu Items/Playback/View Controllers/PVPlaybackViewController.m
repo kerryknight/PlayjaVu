@@ -7,14 +7,16 @@
 //
 
 #import "PVPlaybackViewController.h"
-#import "PVNavigationController.h"
+#import "PVPlaybackViewModel.h"
+#import "SlideNavigationController.h"
 
-@interface PVPlaybackViewController ()
-
+@interface PVPlaybackViewController ()<SlideNavigationControllerDelegate>
+@property (strong, nonatomic) PVPlaybackViewModel *viewModel;
 @end
 
 @implementation PVPlaybackViewController
 
+#pragma mark - Life Cycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -26,9 +28,15 @@
 
 - (void)viewDidLoad
 {
+    DLogYellow(@"");
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self configureUI];
+    
+    // set up view model
+    self.viewModel = [[PVPlaybackViewModel alloc] init];
+    
+    // ensure our bg is colored
+    self.view.backgroundColor = kMedGray;
     
     // Fetches the config at most once every 12 hours per app runtime
     const NSTimeInterval configRefreshInterval = 12.0 * 60.0 * 60.0;
@@ -36,27 +44,15 @@
     if (lastFetchedDate == nil ||
         [lastFetchedDate timeIntervalSinceNow] * -1.0 > configRefreshInterval) {
         [PFConfig getConfigInBackgroundWithBlock:^(PFConfig *config, NSError *error) {
-            DLogGreen(@"PFConfig: %@", [PFConfig currentConfig]);
+            // no op
+//            DLogGreen(@"PFConfig: %@", [PFConfig currentConfig]);
         }];
         lastFetchedDate = [NSDate date];
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    //have to set our custom nav controller's title by hand each time by
-    //casting to it for forward and backward navigation compatibility
-    PVNavigationController *navController = (PVNavigationController *)self.navigationController;
-    navController.titleLabel.text = NSLocalizedString(@"PlayjaVu", nil);
-}
-
 #pragma mark - Public Methods
 
 #pragma mark - Private Methods
-- (void)configureUI
-{
-    self.view.backgroundColor = kMedGray;
-}
 
 @end

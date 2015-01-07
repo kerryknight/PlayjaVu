@@ -1,3 +1,0 @@
-knightka 07Mar2014
-
-I had to modify ICSDrawerController.h/.m considerable to meet my needs so ensure nothing gets lost in case there are further updates to the cocoapods version which may add additional functionality I need; some functionality I add was the ability to user controllers other than view controllers as top views, such as uinavigation controllers and other custom controllers

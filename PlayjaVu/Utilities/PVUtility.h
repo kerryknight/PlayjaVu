@@ -6,19 +6,14 @@
 //  Copyright (c) 2012 Kerry Knight. All rights reserved.
 //
 
-static NSString * const kAlertTitle = @"Alert";
-void alertMessage ( NSString *format, ... );
-
 @interface PVUtility : NSObject
 
-+ (BOOL)processLocalProfilePicture:(UIImage *)profileImage;
-+ (void)processFacebookProfilePictureData:(NSData *)newProfilePictureData;
+// Parse-related
++ (void)configureParseWithLaunchOptions:(NSDictionary *)options;
++ (void)updateCurrentParseUser;
++ (void)logOut; // log out of everything, really
 
+// Facebook-related
 + (BOOL)userHasValidFacebookData:(PFUser *)user;
-+ (BOOL)userHasProfilePictures:(PFUser *)user;
 
-+ (NSString *)firstNameForDisplayName:(NSString *)displayName;
-
-
-+ (UIImage *)imageFromColor:(UIColor *)color;
 @end

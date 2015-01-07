@@ -19,7 +19,7 @@ pod 'STPTransitions', '0.0.2' # for animated transitions between view controller
 pod 'Nimbus/Core', '= 1.2.0'
 pod 'Nimbus/AttributedLabel', '= 1.2.0'
 pod 'TRVSMonitor', '0.0.3' # for unit testing async operations
-pod 'Mantle', '1.5.1' # for json parsing
+pod 'iOS-Slide-Menu', '~> 1.4.0'
 
 # if permissions error, try:
 # sudo chown -R knight Pods

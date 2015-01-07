@@ -15,14 +15,6 @@
 
 @implementation PVForgotPasswordViewModel
 
-#pragma mark - Life Cycle
-- (instancetype)init
-{
-    self = [super init];
-    if (self == nil) return nil;
-    return self;
-}
-
 #pragma mark - Public
 - (RACSignal *)rac_sendResetPasswordLink
 {

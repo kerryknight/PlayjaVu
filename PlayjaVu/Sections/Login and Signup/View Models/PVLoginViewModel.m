@@ -48,8 +48,6 @@
         return [self rac_saveFacebookDataForUserToParse:result];
     }]
     deliverOn:[RACScheduler mainThreadScheduler]];
-    
-    return nil;
 }
 
 #pragma mark - Private Methods
@@ -87,7 +85,7 @@
 //    NSString *facebookEmail = facebookResult[@"email"];
 //    NSString *profilePicURL = facebookResult[kUserProfilePicSmallKey];
     
-    DLogGreen(@"fb result: %@", facebookResult);
+//    DLogGreen(@"fb result: %@", facebookResult);
     PVFBUser *fbUser = [PVFBUser object];
     fbUser.facebookId = facebookResult[@"id"];
     fbUser.firstName = facebookResult[@"first_name"];
@@ -95,30 +93,40 @@
     fbUser.username = facebookResult[@"name"];
     fbUser.email = facebookResult[@"email"];
     fbUser.profileLink = facebookResult[@"link"];
-//    fbUser.birthday = facebookResult[@"birthday"];
+    fbUser.birthday = [self dateFromJSONString:facebookResult[@"birthday"]];
     fbUser.timezone = facebookResult[@"timezone"];
     fbUser.location = facebookResult[@"location"][@"name"];
     fbUser.gender = [facebookResult[@"gender"] isEqualToString:@"male"] ? PVGenderTypeMale : PVGenderTypeFemale;
     
+    DLogCyan(@"user: %@", fbUser);
+    
     [[PFUser currentUser] setObject:fbUser forKey:@"facebookUser"];
     
-    //    if (facebookName && facebookName != 0) {
-    //        [[PFUser currentUser] setObject:facebookName forKey:kUserDisplayNameKey];
-    //    }
+    if (![[PFUser currentUser] objectForKey:kUserEmailKey]) {
+        [[PFUser currentUser] setObject:fbUser.email forKey:@"email"];
+    }
     
-//    if (facebookId && facebookId != 0) {
-//        [[PFUser currentUser] setObject:facebookId forKey:kUserFacebookIDKey];
-//    }
-//    
-//    if (facebookEmail && facebookEmail != 0) {
-//        [[PFUser currentUser] setObject:facebookEmail forKey:kUserEmailKey];
-//    }
-//    
+    DLogCyan(@"[PFUser currentUser]: %@", [PFUser currentUser]);
+//
 //    if (profilePicSmall) {
 //        [[PFUser currentUser] setObject:profilePicSmall forKey:kUserProfilePicSmallKey];
 //    }
     
-    return [[PFUser currentUser] rac_save];
+    return [[PFUser currentUser] rac_saveEventually];
+}
+
+- (NSDate *)dateFromJSONString:(NSString *)dateString
+{
+    return [[[self class] dateFormatter] dateFromString:dateString];
+}
+
++ (NSDateFormatter *)dateFormatter {
+    static NSDateFormatter *formatter = nil;
+    if (!formatter) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+    }
+    return formatter;
 }
 
 #pragma mark - Public Signal Properties

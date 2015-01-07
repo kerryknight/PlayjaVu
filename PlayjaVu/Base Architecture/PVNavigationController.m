@@ -10,40 +10,39 @@
 #import "ReactiveCocoa.h"
 #import "RACEXTScope.h"
 
+@interface PVNavigationController ()
+@property (strong, nonatomic) UILabel *titleLabel;
+@end
+
 @implementation PVNavigationController
 
-- (instancetype)initWithRootViewController:(UIViewController *)rootViewController andTitle:(NSString *)title
+- (instancetype)init
 {
-    self = [super initWithRootViewController:rootViewController];
+    self = [super init];
     if (self) {
         // Custom initialization
-        [self configureUI];
-        _titleLabel.text = title;
+        [self _configureUI];
     }
     return self;
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 #pragma mark - Public Methods
 
-#pragma mark - Private Methods
-- (void)configureUI
+- (void)resetToRootViewController:(UIViewController *)vc title:(NSString *)title
 {
-    [self configureNavBar];
-    self.view.backgroundColor = kMedGray;
+    [self setViewControllers:@[vc]];
+    self.titleLabel.text = title;
 }
 
-- (void)configureNavBar
+#pragma mark - Private Methods
+- (void)_configureUI
 {
+    // nav bar
     self.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationBar.barTintColor = kLtGray;
     
     //add the custom title label
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, 200, self.navigationBar.frame.size.height)];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.navigationBar.frame.size.width, self.navigationBar.frame.size.height)];
     [self.titleLabel setBackgroundColor:[UIColor clearColor]];
     [self.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [self.titleLabel setContentMode:UIViewContentModeCenter];
@@ -53,23 +52,25 @@
     [self.titleLabel setShadowOffset:CGSizeMake(0, 1)];
     
     [self.navigationBar addSubview:self.titleLabel];
+    
+    self.view.backgroundColor = kMedGray;
 }
 
-#pragma mark - ICSDrawerControllerPresenting
-- (void)drawerControllerWillOpen:(ICSDrawerController *)drawerController
-{
-    self.view.userInteractionEnabled = NO;
-}
-
-- (void)drawerControllerDidClose:(ICSDrawerController *)drawerController
-{
-    self.view.userInteractionEnabled = YES;
-}
-
-#pragma mark - Open drawer button
-- (void)openDrawer:(id)sender
-{
-    [self.drawer open];
-}
+//#pragma mark - ICSDrawerControllerPresenting
+//- (void)drawerControllerWillOpen:(ICSDrawerController *)drawerController
+//{
+//    self.view.userInteractionEnabled = NO;
+//}
+//
+//- (void)drawerControllerDidClose:(ICSDrawerController *)drawerController
+//{
+//    self.view.userInteractionEnabled = YES;
+//}
+//
+//#pragma mark - Open drawer button
+//- (void)openDrawer:(id)sender
+//{
+//    [self.drawer open];
+//}
 
 @end

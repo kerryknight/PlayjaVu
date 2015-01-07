@@ -18,11 +18,10 @@
 		F10BA43A1A5621C500B19739 /* PFRACCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA42C1A5621C500B19739 /* PFRACCallbacks.m */; };
 		F10BA43B1A5621C500B19739 /* PFRACErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA42E1A5621C500B19739 /* PFRACErrors.m */; };
 		F10BA43C1A5621C500B19739 /* PFUser+RACExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA4301A5621C500B19739 /* PFUser+RACExtensions.m */; };
-		F11BB6E01A5765F000A1185C /* PVMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F6D1A55F571000BCCB2 /* PVMenuViewController.m */; };
+		F10ED4781A5CF4E10077CEAE /* PVPlaybackViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F10ED4771A5CF4E10077CEAE /* PVPlaybackViewModel.m */; };
+		F10ED4811A5D1ADE0077CEAE /* PVBaseSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F10ED4801A5D1ADE0077CEAE /* PVBaseSlidingViewController.m */; };
+		F11BB6E01A5765F000A1185C /* PVLeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F6D1A55F571000BCCB2 /* PVLeftMenuViewController.m */; };
 		F11BB6E11A57677F00A1185C /* PVNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F701A55F571000BCCB2 /* PVNavigationController.m */; };
-		F11BB6E81A5767DF00A1185C /* BEFORE-DELETING in Resources */ = {isa = PBXBuildFile; fileRef = F11BB6E31A5767DF00A1185C /* BEFORE-DELETING */; };
-		F11BB6E91A5767DF00A1185C /* ICSDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F11BB6E51A5767DF00A1185C /* ICSDrawerController.m */; };
-		F11BB6EA1A5767DF00A1185C /* ICSDropShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F11BB6E71A5767DF00A1185C /* ICSDropShadowView.m */; };
 		F122B3701A55F18400A5BBCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F122B36F1A55F18400A5BBCB /* main.m */; };
 		F122B37B1A55F18400A5BBCB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F122B37A1A55F18400A5BBCB /* Images.xcassets */; };
 		F122B37E1A55F18400A5BBCB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F122B37C1A55F18400A5BBCB /* LaunchScreen.xib */; };
@@ -33,7 +32,7 @@
 		F159E2FE1A57C8FB009560A3 /* PVPlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F159E2FB1A57C8FB009560A3 /* PVPlaybackViewController.m */; };
 		F159E2FF1A57C8FB009560A3 /* PVPlaybackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F159E2FC1A57C8FB009560A3 /* PVPlaybackViewController.xib */; };
 		F159E3001A57D746009560A3 /* PFFacebookUtils+RACExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA4191A5621C500B19739 /* PFFacebookUtils+RACExtensions.m */; };
-		F1776FC31A55F572000BCCB2 /* PVMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F6E1A55F571000BCCB2 /* PVMenuViewController.xib */; };
+		F1776FC31A55F572000BCCB2 /* PVLeftMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F6E1A55F571000BCCB2 /* PVLeftMenuViewController.xib */; };
 		F1776FC51A55F572000BCCB2 /* STPCardTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F741A55F571000BCCB2 /* STPCardTransition.m */; };
 		F1776FC61A55F572000BCCB2 /* STPSlideUpTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F761A55F571000BCCB2 /* STPSlideUpTransition.m */; };
 		F1776FC91A55F572000BCCB2 /* PVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F7C1A55F571000BCCB2 /* PVAppDelegate.m */; };
@@ -43,7 +42,6 @@
 		F1776FCD1A55F572000BCCB2 /* PVLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F841A55F571000BCCB2 /* PVLoginViewController.xib */; };
 		F1776FCE1A55F572000BCCB2 /* PVSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F861A55F571000BCCB2 /* PVSignUpViewController.m */; };
 		F1776FCF1A55F572000BCCB2 /* PVSignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F871A55F571000BCCB2 /* PVSignUpViewController.xib */; };
-		F1776FD01A55F572000BCCB2 /* PVWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F891A55F571000BCCB2 /* PVWelcomeViewController.m */; };
 		F1776FD11A55F572000BCCB2 /* PVForgotPasswordViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F8C1A55F571000BCCB2 /* PVForgotPasswordViewModel.m */; };
 		F1776FD21A55F572000BCCB2 /* PVLoginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F8E1A55F571000BCCB2 /* PVLoginViewModel.m */; };
 		F1776FD31A55F572000BCCB2 /* PVSignUpViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F901A55F571000BCCB2 /* PVSignUpViewModel.m */; };
@@ -60,6 +58,7 @@
 		F1776FE11A55F572000BCCB2 /* PVCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FBC1A55F572000BCCB2 /* PVCache.m */; };
 		F1776FE21A55F572000BCCB2 /* PVConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FBE1A55F572000BCCB2 /* PVConfig.m */; };
 		F1776FE31A55F572000BCCB2 /* PVUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FC11A55F572000BCCB2 /* PVUtility.m */; };
+		F1AB3F831A5CB57000B55058 /* PVLeftMenuViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1AB3F821A5CB57000B55058 /* PVLeftMenuViewModel.m */; };
 		F1EF6FEC1A586C1E0082FD72 /* PVFBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = F1EF6FEB1A586C1E0082FD72 /* PVFBUser.m */; };
 		F1EF6FF11A5873670082FD72 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
@@ -103,11 +102,10 @@
 		F10BA42E1A5621C500B19739 /* PFRACErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFRACErrors.m; sourceTree = "<group>"; };
 		F10BA42F1A5621C500B19739 /* PFUser+RACExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFUser+RACExtensions.h"; sourceTree = "<group>"; };
 		F10BA4301A5621C500B19739 /* PFUser+RACExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFUser+RACExtensions.m"; sourceTree = "<group>"; };
-		F11BB6E31A5767DF00A1185C /* BEFORE-DELETING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "BEFORE-DELETING"; sourceTree = "<group>"; };
-		F11BB6E41A5767DF00A1185C /* ICSDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICSDrawerController.h; sourceTree = "<group>"; };
-		F11BB6E51A5767DF00A1185C /* ICSDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICSDrawerController.m; sourceTree = "<group>"; };
-		F11BB6E61A5767DF00A1185C /* ICSDropShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICSDropShadowView.h; sourceTree = "<group>"; };
-		F11BB6E71A5767DF00A1185C /* ICSDropShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICSDropShadowView.m; sourceTree = "<group>"; };
+		F10ED4761A5CF4E10077CEAE /* PVPlaybackViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVPlaybackViewModel.h; sourceTree = "<group>"; };
+		F10ED4771A5CF4E10077CEAE /* PVPlaybackViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVPlaybackViewModel.m; sourceTree = "<group>"; };
+		F10ED47F1A5D1ADE0077CEAE /* PVBaseSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVBaseSlidingViewController.h; sourceTree = "<group>"; };
+		F10ED4801A5D1ADE0077CEAE /* PVBaseSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVBaseSlidingViewController.m; sourceTree = "<group>"; };
 		F122B36A1A55F18400A5BBCB /* PlayjaVu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayjaVu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F122B36E1A55F18400A5BBCB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F122B36F1A55F18400A5BBCB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -123,9 +121,9 @@
 		F159E2FA1A57C8FB009560A3 /* PVPlaybackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVPlaybackViewController.h; sourceTree = "<group>"; };
 		F159E2FB1A57C8FB009560A3 /* PVPlaybackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVPlaybackViewController.m; sourceTree = "<group>"; };
 		F159E2FC1A57C8FB009560A3 /* PVPlaybackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVPlaybackViewController.xib; sourceTree = "<group>"; };
-		F1776F6C1A55F571000BCCB2 /* PVMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVMenuViewController.h; sourceTree = "<group>"; };
-		F1776F6D1A55F571000BCCB2 /* PVMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVMenuViewController.m; sourceTree = "<group>"; };
-		F1776F6E1A55F571000BCCB2 /* PVMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVMenuViewController.xib; sourceTree = "<group>"; };
+		F1776F6C1A55F571000BCCB2 /* PVLeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVLeftMenuViewController.h; sourceTree = "<group>"; };
+		F1776F6D1A55F571000BCCB2 /* PVLeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVLeftMenuViewController.m; sourceTree = "<group>"; };
+		F1776F6E1A55F571000BCCB2 /* PVLeftMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVLeftMenuViewController.xib; sourceTree = "<group>"; };
 		F1776F6F1A55F571000BCCB2 /* PVNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVNavigationController.h; sourceTree = "<group>"; };
 		F1776F701A55F571000BCCB2 /* PVNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVNavigationController.m; sourceTree = "<group>"; };
 		F1776F721A55F571000BCCB2 /* PVAllSTPTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVAllSTPTransitions.h; sourceTree = "<group>"; };
@@ -144,8 +142,6 @@
 		F1776F851A55F571000BCCB2 /* PVSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVSignUpViewController.h; sourceTree = "<group>"; };
 		F1776F861A55F571000BCCB2 /* PVSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVSignUpViewController.m; sourceTree = "<group>"; };
 		F1776F871A55F571000BCCB2 /* PVSignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVSignUpViewController.xib; sourceTree = "<group>"; };
-		F1776F881A55F571000BCCB2 /* PVWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVWelcomeViewController.h; sourceTree = "<group>"; };
-		F1776F891A55F571000BCCB2 /* PVWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVWelcomeViewController.m; sourceTree = "<group>"; };
 		F1776F8B1A55F571000BCCB2 /* PVForgotPasswordViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVForgotPasswordViewModel.h; sourceTree = "<group>"; };
 		F1776F8C1A55F571000BCCB2 /* PVForgotPasswordViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVForgotPasswordViewModel.m; sourceTree = "<group>"; };
 		F1776F8D1A55F571000BCCB2 /* PVLoginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVLoginViewModel.h; sourceTree = "<group>"; };
@@ -181,6 +177,8 @@
 		F1776FE41A55F5D2000BCCB2 /* NOTES.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = NOTES.text; path = PlayjaVu/NOTES.text; sourceTree = "<group>"; };
 		F1776FE51A55F5D2000BCCB2 /* System Design Specifications.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "System Design Specifications.text"; path = "PlayjaVu/System Design Specifications.text"; sourceTree = "<group>"; };
 		F1776FE81A55F930000BCCB2 /* PlayjaVu-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PlayjaVu-Prefix.pch"; sourceTree = "<group>"; };
+		F1AB3F811A5CB57000B55058 /* PVLeftMenuViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVLeftMenuViewModel.h; path = "View Models/PVLeftMenuViewModel.h"; sourceTree = "<group>"; };
+		F1AB3F821A5CB57000B55058 /* PVLeftMenuViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PVLeftMenuViewModel.m; path = "View Models/PVLeftMenuViewModel.m"; sourceTree = "<group>"; };
 		F1EF6FEA1A586C1E0082FD72 /* PVFBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVFBUser.h; sourceTree = "<group>"; };
 		F1EF6FEB1A586C1E0082FD72 /* PVFBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVFBUser.m; sourceTree = "<group>"; };
 		F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -258,18 +256,6 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		F11BB6E21A5767DF00A1185C /* ICSDrawerController */ = {
-			isa = PBXGroup;
-			children = (
-				F11BB6E31A5767DF00A1185C /* BEFORE-DELETING */,
-				F11BB6E41A5767DF00A1185C /* ICSDrawerController.h */,
-				F11BB6E51A5767DF00A1185C /* ICSDrawerController.m */,
-				F11BB6E61A5767DF00A1185C /* ICSDropShadowView.h */,
-				F11BB6E71A5767DF00A1185C /* ICSDropShadowView.m */,
-			);
-			path = ICSDrawerController;
-			sourceTree = "<group>";
-		};
 		F122B3611A55F18400A5BBCB = {
 			isa = PBXGroup;
 			children = (
@@ -340,8 +326,8 @@
 		F159E2F81A57C8FB009560A3 /* Playback */ = {
 			isa = PBXGroup;
 			children = (
-				F159E2F91A57C8FB009560A3 /* View Controllers */,
 				F159E2FD1A57C8FB009560A3 /* View Models */,
+				F159E2F91A57C8FB009560A3 /* View Controllers */,
 			);
 			path = Playback;
 			sourceTree = "<group>";
@@ -359,6 +345,8 @@
 		F159E2FD1A57C8FB009560A3 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				F10ED4761A5CF4E10077CEAE /* PVPlaybackViewModel.h */,
+				F10ED4771A5CF4E10077CEAE /* PVPlaybackViewModel.m */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -366,11 +354,8 @@
 		F1776F6B1A55F571000BCCB2 /* Base Architecture */ = {
 			isa = PBXGroup;
 			children = (
-				F1776F6C1A55F571000BCCB2 /* PVMenuViewController.h */,
-				F1776F6D1A55F571000BCCB2 /* PVMenuViewController.m */,
-				F1776F6E1A55F571000BCCB2 /* PVMenuViewController.xib */,
-				F1776F6F1A55F571000BCCB2 /* PVNavigationController.h */,
-				F1776F701A55F571000BCCB2 /* PVNavigationController.m */,
+				F1AB3F7F1A5CB53700B55058 /* View Models */,
+				F1AB3F801A5CB53E00B55058 /* View Controllers */,
 				F1776F711A55F571000BCCB2 /* Transitions */,
 			);
 			path = "Base Architecture";
@@ -411,8 +396,6 @@
 				F1776F851A55F571000BCCB2 /* PVSignUpViewController.h */,
 				F1776F861A55F571000BCCB2 /* PVSignUpViewController.m */,
 				F1776F871A55F571000BCCB2 /* PVSignUpViewController.xib */,
-				F1776F881A55F571000BCCB2 /* PVWelcomeViewController.h */,
-				F1776F891A55F571000BCCB2 /* PVWelcomeViewController.m */,
 				F1776F8A1A55F571000BCCB2 /* View Models */,
 			);
 			path = "Login and Signup";
@@ -561,7 +544,6 @@
 			isa = PBXGroup;
 			children = (
 				F1776FAE1A55F572000BCCB2 /* Cocoapod Categories */,
-				F1776FB11A55F572000BCCB2 /* Non-Pod Libraries */,
 				F1776FB81A55F572000BCCB2 /* Subclasses */,
 			);
 			path = External;
@@ -577,14 +559,6 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		F1776FB11A55F572000BCCB2 /* Non-Pod Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				F11BB6E21A5767DF00A1185C /* ICSDrawerController */,
-			);
-			path = "Non-Pod Libraries";
-			sourceTree = "<group>";
-		};
 		F1776FB81A55F572000BCCB2 /* Subclasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -592,6 +566,29 @@
 				F1776FBA1A55F572000BCCB2 /* PVStatusBarNotification.m */,
 			);
 			path = Subclasses;
+			sourceTree = "<group>";
+		};
+		F1AB3F7F1A5CB53700B55058 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				F1AB3F811A5CB57000B55058 /* PVLeftMenuViewModel.h */,
+				F1AB3F821A5CB57000B55058 /* PVLeftMenuViewModel.m */,
+			);
+			name = "View Models";
+			sourceTree = "<group>";
+		};
+		F1AB3F801A5CB53E00B55058 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F1776F6C1A55F571000BCCB2 /* PVLeftMenuViewController.h */,
+				F1776F6D1A55F571000BCCB2 /* PVLeftMenuViewController.m */,
+				F1776F6E1A55F571000BCCB2 /* PVLeftMenuViewController.xib */,
+				F1776F6F1A55F571000BCCB2 /* PVNavigationController.h */,
+				F1776F701A55F571000BCCB2 /* PVNavigationController.m */,
+				F10ED47F1A5D1ADE0077CEAE /* PVBaseSlidingViewController.h */,
+				F10ED4801A5D1ADE0077CEAE /* PVBaseSlidingViewController.m */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		F1EF6FE81A5864670082FD72 /* Networking (Other) */ = {
@@ -724,9 +721,8 @@
 				F122B37E1A55F18400A5BBCB /* LaunchScreen.xib in Resources */,
 				F159E2FF1A57C8FB009560A3 /* PVPlaybackViewController.xib in Resources */,
 				F122B37B1A55F18400A5BBCB /* Images.xcassets in Resources */,
-				F11BB6E81A5767DF00A1185C /* BEFORE-DELETING in Resources */,
 				F1776FCF1A55F572000BCCB2 /* PVSignUpViewController.xib in Resources */,
-				F1776FC31A55F572000BCCB2 /* PVMenuViewController.xib in Resources */,
+				F1776FC31A55F572000BCCB2 /* PVLeftMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -794,23 +790,23 @@
 				F1776FCA1A55F572000BCCB2 /* PVForgotPasswordViewController.m in Sources */,
 				F1776FD21A55F572000BCCB2 /* PVLoginViewModel.m in Sources */,
 				F145D8021A562F570000D472 /* PFRACCallbacks+PV_Extensions.m in Sources */,
-				F11BB6E01A5765F000A1185C /* PVMenuViewController.m in Sources */,
+				F11BB6E01A5765F000A1185C /* PVLeftMenuViewController.m in Sources */,
+				F10ED4781A5CF4E10077CEAE /* PVPlaybackViewModel.m in Sources */,
 				F1776FE31A55F572000BCCB2 /* PVUtility.m in Sources */,
+				F10ED4811A5D1ADE0077CEAE /* PVBaseSlidingViewController.m in Sources */,
 				F1776FCC1A55F572000BCCB2 /* PVLoginViewController.m in Sources */,
 				F1776FDC1A55F572000BCCB2 /* JVFloatLabeledTextField+LabelText.m in Sources */,
-				F11BB6E91A5767DF00A1185C /* ICSDrawerController.m in Sources */,
 				F10BA4371A5621C500B19739 /* PFObject+RACExtensions.m in Sources */,
 				F159E2FE1A57C8FB009560A3 /* PVPlaybackViewController.m in Sources */,
 				F1776FD41A55F572000BCCB2 /* PVMyProfileViewController.m in Sources */,
 				F1776FD31A55F572000BCCB2 /* PVSignUpViewModel.m in Sources */,
 				F159E2F61A57B435009560A3 /* PVBaseOnboardingViewController.m in Sources */,
 				F1776FD81A55F572000BCCB2 /* UIImage+Coloring.m in Sources */,
-				F1776FD01A55F572000BCCB2 /* PVWelcomeViewController.m in Sources */,
 				F1776FD71A55F572000BCCB2 /* UIImage+AlphaAdditions.m in Sources */,
-				F11BB6EA1A5767DF00A1185C /* ICSDropShadowView.m in Sources */,
 				F1776FDB1A55F572000BCCB2 /* UIImage+RoundedCornerAdditions.m in Sources */,
 				F1776FC61A55F572000BCCB2 /* STPSlideUpTransition.m in Sources */,
 				F10BA4381A5621C500B19739 /* PFPush+RACExtensions.m in Sources */,
+				F1AB3F831A5CB57000B55058 /* PVLeftMenuViewModel.m in Sources */,
 				F1776FE21A55F572000BCCB2 /* PVConfig.m in Sources */,
 				F11BB6E11A57677F00A1185C /* PVNavigationController.m in Sources */,
 				F10BA43B1A5621C500B19739 /* PFRACErrors.m in Sources */,
