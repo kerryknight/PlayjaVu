@@ -12,12 +12,10 @@
 #import "PVMyProfileViewController.h"
 #import "PVLeftMenuViewModel.h"
 #import "SlideNavigationController.h"
-#import "PVNavigationController.h"
 
 static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
 
 @interface PVLeftMenuViewController () <UITableViewDelegate, UITableViewDataSource>
-//@property (strong, nonatomic) PVNavigationController *navController;
 @property (strong, nonatomic) PVLeftMenuViewModel *viewModel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (assign, nonatomic) BOOL slideOutAnimationEnabled;
@@ -34,11 +32,8 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
         
         _slideOutAnimationEnabled = YES;
         self.view.backgroundColor = kDrkGray;
-        
-//        // nav bar creation
-//        PVLoginViewController *loginViewController = [[PVLoginViewController alloc] init];
-//        _navController = [[PVNavigationController alloc] initWithRootViewController:loginViewController];
-//        _navController.toolbarHidden = YES;
+        // by default, hide pertinent items from view during transitions
+        [self _shouldHideVisibleContent:YES];
         
         // view model set up
         _viewModel = [[PVLeftMenuViewModel alloc] init];
@@ -47,7 +42,10 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
         // automatically sets our login view as our root view
         [self _configureSlideNavigationController];
         [self _configureNavBar];
-        
+
+#if DEVELOPER_BYPASS_LOGIN_MODE
+        [self _showMainInterface];
+#else
         // If logged in, present login view controller
         if ([PFUser currentUser]) {
             // logged in already
@@ -56,6 +54,7 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
             // update our user info in the background
             [PVUtility updateCurrentParseUser];
         }
+#endif
         
         // Custom initialization this is the only observer need to have
         //immediately at instantiation; the others can and should wait to be
@@ -79,6 +78,9 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
 #pragma mark - Private Methods
 - (void)_showLoginView
 {
+    // hide pertinent items from view during transitions
+    [self _shouldHideVisibleContent:YES];
+    
     // hide the navigation bar and set our custom
     // transitions navigation delegate
     [self _configureForMainInterface:NO];
@@ -89,10 +91,15 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
 
 - (void)_showMainInterface
 {
+    // make sure we display everything in this view
+    [self _shouldHideVisibleContent:NO];
+    
     //the scorecard view will be the first view shown by default
     PVPlaybackViewController *playbackVC = [[PVPlaybackViewController alloc] init];
     [self _configureForMainInterface:YES];
     [[SlideNavigationController sharedInstance] setViewControllers:@[playbackVC]];
+    [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:YES];
+    
     self.navBarTitleLabel.text = @"Now Playing";
 }
 
@@ -109,7 +116,6 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
 - (void)_configureForMainInterface:(BOOL)isMainInterface
 {
     // nav bar
-    [SlideNavigationController sharedInstance].delegate = isMainInterface ? STPTransitionCenter.sharedInstance : nil;
     [SlideNavigationController sharedInstance].navigationBarHidden = !isMainInterface;
     [SlideNavigationController sharedInstance].enableSwipeGesture = isMainInterface;
 }
@@ -134,7 +140,6 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
 
 - (void)_configureNavBar
 {
-    DLogOrange(@"");
     // nav bar
     [SlideNavigationController sharedInstance].navigationBar.tintColor = [UIColor whiteColor];
     [SlideNavigationController sharedInstance].navigationBar.barTintColor = kLtGray;
@@ -152,13 +157,20 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
     __weak typeof(self) weakSelf = self;
     [[SlideNavigationController sharedInstance].navigationBar addSubview:weakSelf.navBarTitleLabel];
     
-    // Creating a custom bar button for left menu
-#warning this button doesn't do anything yet; i don't have the image nor the method defined
-    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    [button setImage:[UIImage imageNamed:@"gear"] forState:UIControlStateNormal];
+    // Creating a custom bar hamburger button for left menu
+    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 34)];
+    [button setImage:[UIImage imageNamed:@"hamburgerButton"] forState:UIControlStateNormal];
     [button addTarget:[SlideNavigationController sharedInstance] action:@selector(toggleLeftMenu) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     [SlideNavigationController sharedInstance].leftBarButtonItem = leftBarButtonItem;
+}
+
+- (void)_shouldHideVisibleContent:(BOOL)shouldHide
+{
+    // only when we've logged in successfully should we show
+    // the left menu view's table view; otherwise, it'll be visible
+    // during transitions in the onboarding workflow
+    self.tableView.hidden = shouldHide;
 }
 
 #pragma mark - Table view data source
@@ -205,9 +217,6 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
             newVC = [[PVMyProfileViewController alloc] init];
             break;
         case PVMenuRowLogOut: {
-            // close the drawer, if it's still open
-//            [self.drawer close];
-            
             [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
             [self _showLoginView];
             

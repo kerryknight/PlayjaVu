@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Kerry Knight. All rights reserved.
 //
 
-#import "RVMViewModel.h"
+#import <Foundation/Foundation.h>
 
-@interface PVPlaybackViewModel : RVMViewModel
+@interface PVPlaybackViewModel : NSObject
 
 @end

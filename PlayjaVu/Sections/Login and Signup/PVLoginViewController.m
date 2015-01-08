@@ -39,16 +39,13 @@
     // Do any additional setup after loading the view.
     
     [self configureUI];
-    [self configureViewModel];
+    
+    self.viewModel = [[PVLoginViewModel alloc] init];
+    
     [self rac_addButtonCommands];
 }
 
 #pragma mark - Private Methods
-- (void)configureViewModel {
-    self.viewModel = [[PVLoginViewModel alloc] init];
-    self.viewModel.active = YES;
-}
-
 - (void)rac_addButtonCommands {
     [self rac_createLoginButtonAndTextFieldViewModelBindings];
     [self rac_createForgotPasswordButtonSignal];
@@ -60,7 +57,7 @@
     RAC(self.viewModel, username) = self.usernameFloatTextField.rac_textSignal;
     RAC(self.viewModel, password) = self.passwordFloatTextField.rac_textSignal;
     
-#pragma mark - REMOVE THIS HARDCODE
+#pragma mark - REMOVE THIS HARDCODE LOGIN
     self.viewModel.username = @"kerry.a.knight@gmail.com";
     self.viewModel.password = @"H2C1spar";
     

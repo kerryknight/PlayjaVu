@@ -19,7 +19,7 @@ pod 'STPTransitions', '0.0.2' # for animated transitions between view controller
 pod 'Nimbus/Core', '= 1.2.0'
 pod 'Nimbus/AttributedLabel', '= 1.2.0'
 pod 'TRVSMonitor', '0.0.3' # for unit testing async operations
-pod 'iOS-Slide-Menu', '~> 1.4.0'
+pod 'iOS-Slide-Menu', '~> 1.4.0' # slide out, left menu architecture
 
 # if permissions error, try:
 # sudo chown -R knight Pods

@@ -21,7 +21,6 @@
 		F10ED4781A5CF4E10077CEAE /* PVPlaybackViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F10ED4771A5CF4E10077CEAE /* PVPlaybackViewModel.m */; };
 		F10ED4811A5D1ADE0077CEAE /* PVBaseSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F10ED4801A5D1ADE0077CEAE /* PVBaseSlidingViewController.m */; };
 		F11BB6E01A5765F000A1185C /* PVLeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F6D1A55F571000BCCB2 /* PVLeftMenuViewController.m */; };
-		F11BB6E11A57677F00A1185C /* PVNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F701A55F571000BCCB2 /* PVNavigationController.m */; };
 		F122B3701A55F18400A5BBCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F122B36F1A55F18400A5BBCB /* main.m */; };
 		F122B37B1A55F18400A5BBCB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F122B37A1A55F18400A5BBCB /* Images.xcassets */; };
 		F122B37E1A55F18400A5BBCB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F122B37C1A55F18400A5BBCB /* LaunchScreen.xib */; };
@@ -124,8 +123,6 @@
 		F1776F6C1A55F571000BCCB2 /* PVLeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVLeftMenuViewController.h; sourceTree = "<group>"; };
 		F1776F6D1A55F571000BCCB2 /* PVLeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVLeftMenuViewController.m; sourceTree = "<group>"; };
 		F1776F6E1A55F571000BCCB2 /* PVLeftMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVLeftMenuViewController.xib; sourceTree = "<group>"; };
-		F1776F6F1A55F571000BCCB2 /* PVNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVNavigationController.h; sourceTree = "<group>"; };
-		F1776F701A55F571000BCCB2 /* PVNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVNavigationController.m; sourceTree = "<group>"; };
 		F1776F721A55F571000BCCB2 /* PVAllSTPTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVAllSTPTransitions.h; sourceTree = "<group>"; };
 		F1776F731A55F571000BCCB2 /* STPCardTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPCardTransition.h; sourceTree = "<group>"; };
 		F1776F741A55F571000BCCB2 /* STPCardTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPCardTransition.m; sourceTree = "<group>"; };
@@ -179,6 +176,7 @@
 		F1776FE81A55F930000BCCB2 /* PlayjaVu-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PlayjaVu-Prefix.pch"; sourceTree = "<group>"; };
 		F1AB3F811A5CB57000B55058 /* PVLeftMenuViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVLeftMenuViewModel.h; path = "View Models/PVLeftMenuViewModel.h"; sourceTree = "<group>"; };
 		F1AB3F821A5CB57000B55058 /* PVLeftMenuViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PVLeftMenuViewModel.m; path = "View Models/PVLeftMenuViewModel.m"; sourceTree = "<group>"; };
+		F1B9150E1A5EF54700CD168A /* PVRuntimeSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRuntimeSettings.h; sourceTree = "<group>"; };
 		F1EF6FEA1A586C1E0082FD72 /* PVFBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVFBUser.h; sourceTree = "<group>"; };
 		F1EF6FEB1A586C1E0082FD72 /* PVFBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVFBUser.m; sourceTree = "<group>"; };
 		F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -281,13 +279,13 @@
 		F122B36C1A55F18400A5BBCB /* PlayjaVu */ = {
 			isa = PBXGroup;
 			children = (
+				F1776F9E1A55F571000BCCB2 /* Utilities */,
 				F1776F7B1A55F571000BCCB2 /* PVAppDelegate.h */,
 				F1776F7C1A55F571000BCCB2 /* PVAppDelegate.m */,
 				F1776F6B1A55F571000BCCB2 /* Base Architecture */,
 				F1EF6FE81A5864670082FD72 /* Networking (Other) */,
 				F1EF6FE91A586BF60082FD72 /* Models */,
 				F1776F7D1A55F571000BCCB2 /* Sections */,
-				F1776F9E1A55F571000BCCB2 /* Utilities */,
 				F122B36D1A55F18400A5BBCB /* Supporting Files */,
 			);
 			path = PlayjaVu;
@@ -385,18 +383,8 @@
 		F1776F7E1A55F571000BCCB2 /* Login and Signup */ = {
 			isa = PBXGroup;
 			children = (
-				F159E2F41A57B435009560A3 /* PVBaseOnboardingViewController.h */,
-				F159E2F51A57B435009560A3 /* PVBaseOnboardingViewController.m */,
-				F1776F7F1A55F571000BCCB2 /* PVForgotPasswordViewController.h */,
-				F1776F801A55F571000BCCB2 /* PVForgotPasswordViewController.m */,
-				F1776F811A55F571000BCCB2 /* PVForgotPasswordViewController.xib */,
-				F1776F821A55F571000BCCB2 /* PVLoginViewController.h */,
-				F1776F831A55F571000BCCB2 /* PVLoginViewController.m */,
-				F1776F841A55F571000BCCB2 /* PVLoginViewController.xib */,
-				F1776F851A55F571000BCCB2 /* PVSignUpViewController.h */,
-				F1776F861A55F571000BCCB2 /* PVSignUpViewController.m */,
-				F1776F871A55F571000BCCB2 /* PVSignUpViewController.xib */,
 				F1776F8A1A55F571000BCCB2 /* View Models */,
+				F1B9150F1A5F043A00CD168A /* View Controllers */,
 			);
 			path = "Login and Signup";
 			sourceTree = "<group>";
@@ -502,6 +490,7 @@
 			children = (
 				F1776F9F1A55F572000BCCB2 /* Categories */,
 				F1776FAD1A55F572000BCCB2 /* External */,
+				F1B9150E1A5EF54700CD168A /* PVRuntimeSettings.h */,
 				F1776FBB1A55F572000BCCB2 /* PVCache.h */,
 				F1776FBC1A55F572000BCCB2 /* PVCache.m */,
 				F1776FBD1A55F572000BCCB2 /* PVConfig.h */,
@@ -583,10 +572,26 @@
 				F1776F6C1A55F571000BCCB2 /* PVLeftMenuViewController.h */,
 				F1776F6D1A55F571000BCCB2 /* PVLeftMenuViewController.m */,
 				F1776F6E1A55F571000BCCB2 /* PVLeftMenuViewController.xib */,
-				F1776F6F1A55F571000BCCB2 /* PVNavigationController.h */,
-				F1776F701A55F571000BCCB2 /* PVNavigationController.m */,
 				F10ED47F1A5D1ADE0077CEAE /* PVBaseSlidingViewController.h */,
 				F10ED4801A5D1ADE0077CEAE /* PVBaseSlidingViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F1B9150F1A5F043A00CD168A /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F159E2F41A57B435009560A3 /* PVBaseOnboardingViewController.h */,
+				F159E2F51A57B435009560A3 /* PVBaseOnboardingViewController.m */,
+				F1776F7F1A55F571000BCCB2 /* PVForgotPasswordViewController.h */,
+				F1776F801A55F571000BCCB2 /* PVForgotPasswordViewController.m */,
+				F1776F811A55F571000BCCB2 /* PVForgotPasswordViewController.xib */,
+				F1776F821A55F571000BCCB2 /* PVLoginViewController.h */,
+				F1776F831A55F571000BCCB2 /* PVLoginViewController.m */,
+				F1776F841A55F571000BCCB2 /* PVLoginViewController.xib */,
+				F1776F851A55F571000BCCB2 /* PVSignUpViewController.h */,
+				F1776F861A55F571000BCCB2 /* PVSignUpViewController.m */,
+				F1776F871A55F571000BCCB2 /* PVSignUpViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -778,7 +783,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=/usr/local/bin:$PATH\ncd /Users/keknight/Desktop/Kerry_Apps/Kerry_Apps/PlayjaVu/parse\n\nparse symbols \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"";
+			shellScript = "#export PATH=/usr/local/bin:$PATH\n#cd /Users/keknight/Desktop/Kerry_Apps/Kerry_Apps/PlayjaVu/parse\n\n#parse symbols \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -808,7 +813,6 @@
 				F10BA4381A5621C500B19739 /* PFPush+RACExtensions.m in Sources */,
 				F1AB3F831A5CB57000B55058 /* PVLeftMenuViewModel.m in Sources */,
 				F1776FE21A55F572000BCCB2 /* PVConfig.m in Sources */,
-				F11BB6E11A57677F00A1185C /* PVNavigationController.m in Sources */,
 				F10BA43B1A5621C500B19739 /* PFRACErrors.m in Sources */,
 				F10BA4341A5621C500B19739 /* PFAnonymousUtils+RACExtensions.m in Sources */,
 				F1EF6FEC1A586C1E0082FD72 /* PVFBUser.m in Sources */,

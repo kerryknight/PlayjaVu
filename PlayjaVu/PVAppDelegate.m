@@ -31,9 +31,11 @@
     // set up and configure Parse
     [PVUtility configureParseWithLaunchOptions:launchOptions];
     
+#if !OFFLINE_MODE
     // connect Reachability; not sure I like doing this in the
     // app delegate or not...should probably move this later
     [self _monitorReachability];
+#endif
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = kDrkGray;

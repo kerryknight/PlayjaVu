@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Kerry Knight. All rights reserved.
 //
 
-#import "RVMViewModel.h"
+#import <Foundation/Foundation.h>
 
-@interface PVForgotPasswordViewModel : RVMViewModel
+@interface PVForgotPasswordViewModel : NSObject
 
 @property (copy, nonatomic) NSString *email;
 @property (strong, nonatomic, readonly) RACSignal *emailIsValidEmailSignal;

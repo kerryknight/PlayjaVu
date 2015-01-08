@@ -21,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cHd-TT-w5I">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cHd-TT-w5I">
                     <rect key="frame" x="20" y="66" width="280" height="435"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Required sign up details:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lcc-OO-gvl">
@@ -73,9 +73,17 @@
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="0.1215686275" green="0.17254901959999999" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="280" id="TKb-CB-vmx"/>
+                        <constraint firstAttribute="height" constant="435" id="Zdn-4N-d7R"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="0.1215686275" green="0.17254901959999999" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="cHd-TT-w5I" secondAttribute="centerX" id="AAJ-mj-33g"/>
+                <constraint firstAttribute="centerY" secondItem="cHd-TT-w5I" secondAttribute="centerY" id="EWg-9C-hDm"/>
+            </constraints>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

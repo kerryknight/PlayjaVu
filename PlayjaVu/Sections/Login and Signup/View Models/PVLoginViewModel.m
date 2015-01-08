@@ -23,11 +23,26 @@
 #pragma mark - Public Methods
 - (RACSignal *)rac_logIn
 {
+#if DEVELOPER_BYPASS_LOGIN_MODE
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        [subscriber sendNext:subscriber];
+        [subscriber sendCompleted];
+        return nil;
+    }];
+#endif
     return [PFUser rac_logInWithUsername:self.username password:self.password];
 }
 
 - (RACSignal *)rac_logInWithFacebook
 {
+#if DEVELOPER_BYPASS_LOGIN_MODE
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        [subscriber sendNext:subscriber];
+        [subscriber sendCompleted];
+        return nil;
+    }];
+#endif
+    
 //    __block id facebookRequestResult;
     
     return

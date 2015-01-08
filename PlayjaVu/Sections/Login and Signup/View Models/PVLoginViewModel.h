@@ -5,9 +5,10 @@
 //  Created by Kerry Knight on 2/7/14.
 //  Copyright (c) 2014 Kerry Knight. All rights reserved.
 //
-#import "RVMViewModel.h"
 
-@interface PVLoginViewModel : RVMViewModel
+#import <Foundation/Foundation.h>
+
+@interface PVLoginViewModel : NSObject
 
 @property (copy, nonatomic) NSString *username;
 @property (copy, nonatomic) NSString *password;

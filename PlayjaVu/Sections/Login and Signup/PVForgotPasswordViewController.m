@@ -25,17 +25,13 @@
 	// Do any additional setup after loading the view.
     
     [self configureUI];
-    [self configureViewModel];
+    
+    self.viewModel = [[PVForgotPasswordViewModel alloc] init];
+    
     [self rac_addButtonCommands];
 }
 
 #pragma mark - Private Methods
-- (void)configureViewModel
-{
-    self.viewModel = [[PVForgotPasswordViewModel alloc] init];
-    self.viewModel.active = YES;
-}
-
 - (void)rac_addButtonCommands
 {
     [self rac_createResetLinkButtonAndTextFieldViewModelBindings];

@@ -10,6 +10,6 @@
 
 #import "PVBaseSlidingViewController.h"
 
-@interface PVMyProfileViewController : PVBaseSlidingViewController <UITableViewDataSource, UITableViewDelegate>
+@interface PVMyProfileViewController : PVBaseSlidingViewController 
 
 @end

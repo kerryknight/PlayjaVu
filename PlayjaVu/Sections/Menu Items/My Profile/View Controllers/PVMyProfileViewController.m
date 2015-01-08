@@ -7,46 +7,21 @@
 //
 
 #import "PVMyProfileViewController.h"
-#import "PVNavigationController.h"
 
 static NSString *const kProfileViewControllerCellReuseId = @"PVProfileCell";
 
-@interface PVMyProfileViewController ()
+@interface PVMyProfileViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
 @implementation PVMyProfileViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self configureUI];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-//    //have to set our custom nav controller's title by hand each time by
-//    //casting to it for forward and backward navigation compatibility
-//    PVNavigationController *navController = (PVNavigationController *)self.navigationController;
-//    navController.titleLabel.text = @"My Player Profile";
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Public Methods
@@ -77,17 +52,13 @@ static NSString *const kProfileViewControllerCellReuseId = @"PVProfileCell";
 	if (cell == nil) {
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kProfileViewControllerCellReuseId];
 	}
-    
-	cell.textLabel.text = [NSString stringWithFormat:@"Cell: %li", (long)indexPath.row];
+
+    cell.textLabel.text = [NSString stringWithFormat:@"Cell: %li", (long)indexPath.row];
 	cell.textLabel.textColor = [UIColor whiteColor];
     cell.backgroundColor = kMedGray;
     
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.bounds] ;
     cell.selectedBackgroundView.backgroundColor = kDrkGray;
-    
-    //TODO: remove then when ready to start dev on this view
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.alpha = 0.0;
     
 	return cell;
 }

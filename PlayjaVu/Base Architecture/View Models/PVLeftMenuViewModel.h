@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Kerry Knight. All rights reserved.
 //
 
-#import "RVMViewModel.h"
+#import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, PVMenuRow) {
     PVMenuRowNowPlaying = 0,
@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, PVMenuRow) {
     PVMenuRowCount // this is a handy accessor for the total row count
 };
 
-@interface PVLeftMenuViewModel : RVMViewModel
+@interface PVLeftMenuViewModel : NSObject
 
 - (NSString *)displayStringForMenuRow:(PVMenuRow)row;
 

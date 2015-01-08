@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="gUw-Fw-wMK">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="gUw-Fw-wMK">
                     <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -27,7 +27,14 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" red="0.1215686275" green="0.17254901959999999" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="gUw-Fw-wMK" firstAttribute="leading" secondItem="Yyt-61-WNH" secondAttribute="leading" id="89U-EP-6h3"/>
+                <constraint firstAttribute="bottom" secondItem="gUw-Fw-wMK" secondAttribute="bottom" id="b43-OP-LH5"/>
+                <constraint firstItem="gUw-Fw-wMK" firstAttribute="top" secondItem="Yyt-61-WNH" secondAttribute="top" constant="20" id="cWU-nP-MmX"/>
+                <constraint firstAttribute="trailing" secondItem="gUw-Fw-wMK" secondAttribute="trailing" id="gXV-ye-imj"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="-31" y="368"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
