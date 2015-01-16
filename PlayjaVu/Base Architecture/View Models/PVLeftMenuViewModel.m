@@ -25,7 +25,7 @@
         case PVMenuRowLogOut:
             return NSLocalizedString(@"Log Out", @"Log Out");
         default:
-            NSAssert(false, @"We should always have as many row name strings as rows.");
+            NSAssert(FALSE, @"We should always have as many row name strings as rows.");
             return nil;
     }
 }

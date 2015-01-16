@@ -218,7 +218,6 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
             break;
         case PVMenuRowLogOut: {
             [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-            [self _showLoginView];
             
             // have our view model log us out and perform any cleanup
             [PVUtility logOut];

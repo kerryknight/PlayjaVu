@@ -22,6 +22,7 @@
 //#import "VTAcknowledgementsViewController.h"
 //#import <RevMobAds/RevMobAds.h>
 #import <Parse/Parse.h>
+#import <ParseCrashReporting/ParseCrashReporting.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 #import "Parse-RACExtensions.h"
 

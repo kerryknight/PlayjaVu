@@ -153,7 +153,8 @@
     
     return [[self.viewModel rac_logInWithFacebook]
             subscribeError:^(NSError *error) {
-                DLogError(@"Error: %@", error);
+                DLogError(@"Friendly ERROR: %@",  [FBErrorUtility userMessageForError:error]);
+                DLogError(@"ERROR: %@",  error);
                 NSString *message;
                 //dismiss the spinner regardless of outcome
                 [MRProgressOverlayView dismissOverlayForView:self.view animated:YES];
@@ -161,7 +162,7 @@
                 //check if the error was caused by the use disallowing FB integration within their device settings
                 if ([[error userInfo][@"com.facebook.sdk:ErrorLoginFailedReason"] isEqualToString:@"com.facebook.sdk:SystemLoginDisallowedWithoutError"]) {
                     //alert user to allow facebook integration in Settings > Facebook > ApplicationName (NO)
-                    message = NSLocalizedString(@"Enable logging into Bar Golf with Facebook by going to Settings > Facebook > and ensuring Bar Golf is turned ON.", nil);
+                    message = NSLocalizedString(@"Enable logging into PlayjaVu with Facebook by going to Settings > Facebook > and ensuring PlayjaVu is turned ON.", nil);
                 } else {
                     //error logging in, show error message
                     message = [NSString stringWithFormat:NSLocalizedString(@"Error: %@ \n\nPlease try again.", nil), [error localizedDescription]];

@@ -9,7 +9,7 @@
 #ifndef PlayjaVu_PVRuntimeSettings_h
 #define PlayjaVu_PVRuntimeSettings_h
 
-#define DEVELOPER_BYPASS_LOGIN_MODE 1
-#define OFFLINE_MODE                1
+#define DEVELOPER_BYPASS_LOGIN_MODE 0
+#define OFFLINE_MODE                0
 
 #endif

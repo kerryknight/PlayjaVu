@@ -62,14 +62,14 @@ PODS:
 
 DEPENDENCIES:
   - iOS-Slide-Menu (~> 1.4.0)
-  - JDStatusBarNotification (= 1.4.9)
+  - JDStatusBarNotification (~> 1.4.9)
   - JVFloatLabeledTextField (= 1.0.0)
   - MRProgress (= 0.8.1)
   - Nimbus/AttributedLabel (= 1.2.0)
   - Nimbus/Core (= 1.2.0)
-  - Parse (= 1.6.1)
-  - ParseCrashReporting (= 1.6.1)
-  - ParseUI (= 1.0.2)
+  - Parse (~> 1.6.1)
+  - ParseCrashReporting (~> 1.6.1)
+  - ParseUI (~> 1.0.2)
   - Reachability (= 3.2)
   - ReactiveViewModel (= 0.3)
   - SIAlertView (= 1.3)

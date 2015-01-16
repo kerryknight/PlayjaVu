@@ -10,8 +10,6 @@
 #import "Reachability.h"
 #import "MRProgress.h"
 #import "PVStatusBarNotification.h"
-#import <ParseCrashReporting/ParseCrashReporting.h>
-#import <ParseFacebookUtils/PFFacebookUtils.h>
 #import "PVLeftMenuViewController.h"
 #import "SlideNavigationController.h"
 
@@ -28,14 +26,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // set up and configure Parse
-    [PVUtility configureParseWithLaunchOptions:launchOptions];
-    
 #if !OFFLINE_MODE
     // connect Reachability; not sure I like doing this in the
     // app delegate or not...should probably move this later
     [self _monitorReachability];
 #endif
+    
+    // set up and configure Parse
+    [PVUtility configureParseWithLaunchOptions:launchOptions];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = kDrkGray;
@@ -114,13 +112,9 @@
 // Facebook oauth callback
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    DLogBlue(@"sourceapplication: %@", sourceApplication);
-    
-    if ([sourceApplication isEqualToString:@"Facebook"]) {
-        return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication withSession:[PFFacebookUtils session]];
-    }
-    
-    return YES;
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication
+                        withSession:[PFFacebookUtils session]];
 }
 
 #pragma mark - PVAppDelegate

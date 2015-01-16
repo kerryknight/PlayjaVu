@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="container" destination="cHd-TT-w5I" id="538-IM-tsB"/>
                 <outlet property="facebookButton" destination="8y3-fe-MaS" id="MCD-TO-wqg"/>
+                <outlet property="facebookButtonBG" destination="YSR-B2-8NN" id="FMA-ZA-4VP"/>
                 <outlet property="forgotPasswordButton" destination="odh-Yi-q1G" id="160-nu-BZk"/>
                 <outlet property="loginButton" destination="Kcm-p8-VT1" id="9iK-TW-cvV"/>
                 <outlet property="loginButtonBG" destination="h8y-7D-aV6" id="gKw-is-bHf"/>

@@ -20,33 +20,38 @@
 + (void)configureParseWithLaunchOptions:(NSDictionary *)options
 {
     // START 3RD PARTY INSTANTIATIONS ********************************************************
-    // Parse stuff that can be done on background queue
     
-    // Enable crash reporting on Parse
-    [ParseCrashReporting enable];
-    
-//    // enable Parse local sqlite data store
-//    [Parse enableLocalDatastore];
-    
-    // NOT SURE IF I SHOULD KEEP THESE ON OR NOT
-    [Parse errorMessagesEnabled:YES];
-    [Parse offlineMessagesEnabled:YES];
-    
-    // enable logging
-    [Parse setLogLevel:PFLogLevelDebug];
-    
-    // initialize everything
-    [Parse setApplicationId:kParseApplicationID clientKey:kParseApplicationClientKey];
-    [PFFacebookUtils initializeFacebook];
-    
-    //Configure Parse setup
-    PFACL *defaultACL = [PFACL ACL];
-    // If you would like all objects to be private by default, remove this line.
-    [defaultACL setPublicReadAccess:YES];
-    [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
-    
-    // analytics
-    [PFAnalytics trackAppOpenedWithLaunchOptionsInBackground:options block:nil];
+    // do everything we possibly can in the background like a good citizen
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // Parse stuff that can be done on background queue
+        
+        // Enable crash reporting on Parse
+        [ParseCrashReporting enable];
+        
+        // NOT SURE IF I SHOULD KEEP THESE ON OR NOT AS THEY
+        // MAY ONLY WORK IF USING A CUSTOM PARSE UI VIEW/VC
+        [Parse errorMessagesEnabled:YES];
+        [Parse offlineMessagesEnabled:YES];
+        
+        // enable logging
+        [Parse setLogLevel:PFLogLevelDebug];
+        
+        // enable Parse local sqlite data store
+        [Parse enableLocalDatastore];
+        
+        // initialize everything
+        [Parse setApplicationId:kParseApplicationID clientKey:kParseApplicationClientKey];
+        [PFFacebookUtils initializeFacebook];
+        
+        //Configure Parse default setup
+        PFACL *defaultACL = [PFACL ACL];
+        // If you would like all objects to be private by default, remove this line.
+        [defaultACL setPublicReadAccess:YES];
+        [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+        
+        // analytics
+        [PFAnalytics trackAppOpenedWithLaunchOptionsInBackground:options block:nil];
+    });
     
     // END 3RD PARTY
     // INSTANTIATIONS **********************************************************
@@ -60,25 +65,27 @@
 
 + (void)logOut
 {
-    [[PVCache sharedCache] clear];
-    
-    // clear NSUserDefaults
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUserDefaultsCacheFacebookFriendsKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    // Unsubscribe from push notifications by clearing the channels key (leaving only broadcast enabled).
-    [[PFInstallation currentInstallation] setObject:@[@""] forKey:kInstallationChannelsKey];
-    [[PFInstallation currentInstallation] removeObjectForKey:kInstallationUserKey];
-    [[PFInstallation currentInstallation] saveInBackground];
-    
-    // Log out
-    [PFUser logOut];
-    
-    // close FB
-    [[PFFacebookUtils session] close];
-    
-    // clean up local data store
-    [PFObject unpinAllObjectsInBackground];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[PVCache sharedCache] clear];
+        
+        // clear NSUserDefaults
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUserDefaultsCacheFacebookFriendsKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        // Unsubscribe from push notifications by clearing the channels key (leaving only broadcast enabled).
+        [[PFInstallation currentInstallation] setObject:@[@""] forKey:kInstallationChannelsKey];
+        [[PFInstallation currentInstallation] removeObjectForKey:kInstallationUserKey];
+        [[PFInstallation currentInstallation] saveInBackground];
+        
+        // Log out
+        [PFUser logOut];
+        
+        // close FB
+        [[PFFacebookUtils session] close];
+        
+        // clean up local data store
+        [PFObject unpinAllObjectsInBackground];
+    });
 }
 
 #pragma mark Facebook-related

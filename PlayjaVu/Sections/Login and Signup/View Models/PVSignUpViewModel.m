@@ -49,7 +49,7 @@
     BOOL underLimit = (self.password.length < kMaximumPasswordLength);
     
     if (!underLimit) {
-        NSString *characterLimit = [NSString stringWithFormat:NSLocalizedString(@"Passwords are limited to %i characters", nil), kMaximumDisplayNameLength];
+        NSString *characterLimit = [NSString stringWithFormat:NSLocalizedString(@"Passwords are limited to %i characters", nil), kMaximumPasswordLength];
         [(RACSubject *)self.sendErrorSignal sendNext:characterLimit];
     }
     

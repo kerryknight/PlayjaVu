@@ -56,7 +56,7 @@
 #define kWelcomeTextFieldMargin     15
 
 // Facebook permissions
-#define kFacebookPermissionsList @[@"public_profile", @"email", @"user_friends"]
+#define kFacebookPermissionsList @[@"public_profile", @"email"]
 
 
 // xcodecolors xcode plugin logger

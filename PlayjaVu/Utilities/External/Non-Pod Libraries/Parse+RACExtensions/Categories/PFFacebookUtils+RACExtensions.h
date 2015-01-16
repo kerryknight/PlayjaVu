@@ -1,6 +1,6 @@
 //
 //  PFFacebookUtils+RACExtensions.h
-//  Bar Golf
+//  PlayjaVu
 //
 //  Created by Kerry Knight on 2/16/14.
 //  Copyright (c) 2014 Kerry Knight. All rights reserved.

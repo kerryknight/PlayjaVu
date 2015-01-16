@@ -30,8 +30,6 @@ NSString *const kUserDefaultsCacheFacebookFriendsKey          = @"com.kerryknigh
 #pragma mark - Default App Settings
 int const kMinimumPasswordLength                              =   7;
 int const kMaximumPasswordLength                              =   20;
-int const kMinimumDisplayNameLength                           =   1;
-int const kMaximumDisplayNameLength                           =   20;
 
 #pragma mark - Launch URLs
 NSString *const kLaunchURLHostTakePicture                     = @"camera";
