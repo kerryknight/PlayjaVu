@@ -36,18 +36,6 @@
     
     // ensure our bg is colored
     self.view.backgroundColor = kMedGray;
-    
-    // Fetches the config at most once every 12 hours per app runtime
-    const NSTimeInterval configRefreshInterval = 12.0 * 60.0 * 60.0;
-    static NSDate *lastFetchedDate;
-    if (lastFetchedDate == nil ||
-        [lastFetchedDate timeIntervalSinceNow] * -1.0 > configRefreshInterval) {
-        [PFConfig getConfigInBackgroundWithBlock:^(PFConfig *config, NSError *error) {
-            // no op
-//            DLogGreen(@"PFConfig: %@", [PFConfig currentConfig]);
-        }];
-        lastFetchedDate = [NSDate date];
-    }
 }
 
 #pragma mark - Public Methods

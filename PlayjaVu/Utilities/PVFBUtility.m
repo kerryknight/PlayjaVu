@@ -184,10 +184,6 @@ typedef enum {
         [[PFUser currentUser] setObject:result[@"birthday"] forKey:kUserBirthdayKey];
     }
     
-    if (result[@"location"][@"name"]) {
-        [[PFUser currentUser] setObject:result[@"location"][@"name"] forKey:kUserLocationKey];
-    }
-    
     if (result[@"gender"]) {
         PVGenderType gender = [result[@"gender"] isEqualToString:@"male"] ? PVGenderTypeMale : PVGenderTypeFemale;
         [[PFUser currentUser] setObject:@(gender) forKey:kUserGenderKey];

@@ -62,6 +62,15 @@
 		F198FC6E1A6A468800E07A2C /* PVFBFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = F198FC6D1A6A468800E07A2C /* PVFBFriend.m */; };
 		F1AB3F831A5CB57000B55058 /* PVLeftMenuViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1AB3F821A5CB57000B55058 /* PVLeftMenuViewModel.m */; };
 		F1EF6FF11A5873670082FD72 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */; };
+		F1F5C74F1A6B01AD0061C101 /* AutoScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F5C7401A6B01AD0061C101 /* AutoScrollLabel.m */; };
+		F1F5C7511A6B01AD0061C101 /* BeamMPMusicPlayerProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F5C7441A6B01AD0061C101 /* BeamMPMusicPlayerProvider.m */; };
+		F1F5C7521A6B01AD0061C101 /* BeamMusicPlayerTransparentToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F5C7481A6B01AD0061C101 /* BeamMusicPlayerTransparentToolbar.m */; };
+		F1F5C7531A6B01AD0061C101 /* BeamMusicPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F5C74A1A6B01AD0061C101 /* BeamMusicPlayerViewController.m */; };
+		F1F5C7541A6B01AD0061C101 /* BeamMusicPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1F5C74B1A6B01AD0061C101 /* BeamMusicPlayerViewController.xib */; };
+		F1F5C7561A6B01AD0061C101 /* NSDateFormatter+Duration.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F5C74E1A6B01AD0061C101 /* NSDateFormatter+Duration.m */; };
+		F1F5C7581A6B03C50061C101 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F5C7571A6B03C50061C101 /* AVFoundation.framework */; };
+		F1F5C75A1A6B040A0061C101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F5C7591A6B040A0061C101 /* CoreAudio.framework */; };
+		F1F5C75C1A6B04150061C101 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F5C75B1A6B04150061C101 /* MediaPlayer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,6 +197,22 @@
 		F1EF6FEA1A586C1E0082FD72 /* PVUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVUser.h; sourceTree = "<group>"; };
 		F1EF6FEB1A586C1E0082FD72 /* PVUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVUser.m; sourceTree = "<group>"; };
 		F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		F1F5C73F1A6B01AD0061C101 /* AutoScrollLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoScrollLabel.h; sourceTree = "<group>"; };
+		F1F5C7401A6B01AD0061C101 /* AutoScrollLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoScrollLabel.m; sourceTree = "<group>"; };
+		F1F5C7431A6B01AD0061C101 /* BeamMPMusicPlayerProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeamMPMusicPlayerProvider.h; sourceTree = "<group>"; };
+		F1F5C7441A6B01AD0061C101 /* BeamMPMusicPlayerProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeamMPMusicPlayerProvider.m; sourceTree = "<group>"; };
+		F1F5C7451A6B01AD0061C101 /* BeamMusicPlayerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeamMusicPlayerDataSource.h; sourceTree = "<group>"; };
+		F1F5C7461A6B01AD0061C101 /* BeamMusicPlayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeamMusicPlayerDelegate.h; sourceTree = "<group>"; };
+		F1F5C7471A6B01AD0061C101 /* BeamMusicPlayerTransparentToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeamMusicPlayerTransparentToolbar.h; sourceTree = "<group>"; };
+		F1F5C7481A6B01AD0061C101 /* BeamMusicPlayerTransparentToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeamMusicPlayerTransparentToolbar.m; sourceTree = "<group>"; };
+		F1F5C7491A6B01AD0061C101 /* BeamMusicPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeamMusicPlayerViewController.h; path = ../BeamMusicPlayerViewController.h; sourceTree = "<group>"; };
+		F1F5C74A1A6B01AD0061C101 /* BeamMusicPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeamMusicPlayerViewController.m; path = ../BeamMusicPlayerViewController.m; sourceTree = "<group>"; };
+		F1F5C74B1A6B01AD0061C101 /* BeamMusicPlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BeamMusicPlayerViewController.xib; path = ../BeamMusicPlayerViewController.xib; sourceTree = "<group>"; };
+		F1F5C74D1A6B01AD0061C101 /* NSDateFormatter+Duration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+Duration.h"; sourceTree = "<group>"; };
+		F1F5C74E1A6B01AD0061C101 /* NSDateFormatter+Duration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+Duration.m"; sourceTree = "<group>"; };
+		F1F5C7571A6B03C50061C101 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		F1F5C7591A6B040A0061C101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		F1F5C75B1A6B04150061C101 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +220,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1F5C75C1A6B04150061C101 /* MediaPlayer.framework in Frameworks */,
+				F1F5C75A1A6B040A0061C101 /* CoreAudio.framework in Frameworks */,
+				F1F5C7581A6B03C50061C101 /* AVFoundation.framework in Frameworks */,
 				F1EF6FF11A5873670082FD72 /* libsqlite3.dylib in Frameworks */,
 				35D7DFD41DC8118759825112 /* libPods.a in Frameworks */,
 				F146F1F31A561A10002EDD15 /* AudioToolbox.framework in Frameworks */,
@@ -214,6 +242,9 @@
 		B34AB99F2F556C19B5621C38 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F1F5C75B1A6B04150061C101 /* MediaPlayer.framework */,
+				F1F5C7591A6B040A0061C101 /* CoreAudio.framework */,
+				F1F5C7571A6B03C50061C101 /* AVFoundation.framework */,
 				F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */,
 				F146F1F21A561A10002EDD15 /* AudioToolbox.framework */,
 				313A3FE2FFEDC96957BF0980 /* libPods.a */,
@@ -262,6 +293,19 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		F119E3BE1A6B1CF600365507 /* Other Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F1F5C73F1A6B01AD0061C101 /* AutoScrollLabel.h */,
+				F1F5C7401A6B01AD0061C101 /* AutoScrollLabel.m */,
+				F1F5C7471A6B01AD0061C101 /* BeamMusicPlayerTransparentToolbar.h */,
+				F1F5C7481A6B01AD0061C101 /* BeamMusicPlayerTransparentToolbar.m */,
+				F1F5C74D1A6B01AD0061C101 /* NSDateFormatter+Duration.h */,
+				F1F5C74E1A6B01AD0061C101 /* NSDateFormatter+Duration.m */,
+			);
+			name = "Other Classes";
+			sourceTree = "<group>";
+		};
 		F122B3611A55F18400A5BBCB = {
 			isa = PBXGroup;
 			children = (
@@ -287,9 +331,10 @@
 		F122B36C1A55F18400A5BBCB /* PlayjaVu */ = {
 			isa = PBXGroup;
 			children = (
-				F1776F9E1A55F571000BCCB2 /* Utilities */,
 				F1776F7B1A55F571000BCCB2 /* PVAppDelegate.h */,
 				F1776F7C1A55F571000BCCB2 /* PVAppDelegate.m */,
+				F198FC671A6A1A4800E07A2C /* Configuration */,
+				F1776F9E1A55F571000BCCB2 /* Utilities */,
 				F1776F6B1A55F571000BCCB2 /* Base Architecture */,
 				F1EF6FE81A5864670082FD72 /* Networking */,
 				F1EF6FE91A586BF60082FD72 /* Models */,
@@ -332,6 +377,11 @@
 		F159E2F81A57C8FB009560A3 /* Playback */ = {
 			isa = PBXGroup;
 			children = (
+				F119E3BE1A6B1CF600365507 /* Other Classes */,
+				F1F5C7451A6B01AD0061C101 /* BeamMusicPlayerDataSource.h */,
+				F1F5C7461A6B01AD0061C101 /* BeamMusicPlayerDelegate.h */,
+				F1F5C7431A6B01AD0061C101 /* BeamMPMusicPlayerProvider.h */,
+				F1F5C7441A6B01AD0061C101 /* BeamMPMusicPlayerProvider.m */,
 				F159E2FD1A57C8FB009560A3 /* View Models */,
 				F159E2F91A57C8FB009560A3 /* View Controllers */,
 			);
@@ -341,6 +391,9 @@
 		F159E2F91A57C8FB009560A3 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F1F5C7491A6B01AD0061C101 /* BeamMusicPlayerViewController.h */,
+				F1F5C74A1A6B01AD0061C101 /* BeamMusicPlayerViewController.m */,
+				F1F5C74B1A6B01AD0061C101 /* BeamMusicPlayerViewController.xib */,
 				F159E2FA1A57C8FB009560A3 /* PVPlaybackViewController.h */,
 				F159E2FB1A57C8FB009560A3 /* PVPlaybackViewController.m */,
 				F159E2FC1A57C8FB009560A3 /* PVPlaybackViewController.xib */,
@@ -496,11 +549,10 @@
 		F1776F9E1A55F571000BCCB2 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				F198FC671A6A1A4800E07A2C /* Configuration */,
+				F198FC701A6ACBDC00E07A2C /* Data Persistence */,
+				F198FC6F1A6ACBD000E07A2C /* General */,
 				F1776F9F1A55F572000BCCB2 /* Categories */,
 				F1776FAD1A55F572000BCCB2 /* 3rd Party */,
-				F198FC631A69FDC700E07A2C /* PVUtility.h */,
-				F198FC641A69FDC700E07A2C /* PVUtility.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -574,13 +626,12 @@
 			isa = PBXGroup;
 			children = (
 				F1B9150E1A5EF54700CD168A /* PVRuntimeSettings.h */,
-				F1776FBB1A55F572000BCCB2 /* PVCache.h */,
-				F1776FBC1A55F572000BCCB2 /* PVCache.m */,
+				F1776FBF1A55F572000BCCB2 /* PVMacros.h */,
 				F1776FBD1A55F572000BCCB2 /* PVConfig.h */,
 				F1776FBE1A55F572000BCCB2 /* PVConfig.m */,
-				F1776FBF1A55F572000BCCB2 /* PVMacros.h */,
 			);
 			name = Configuration;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		F198FC6B1A6A465D00E07A2C /* PVObjects */ = {
@@ -590,6 +641,24 @@
 				F198FC6D1A6A468800E07A2C /* PVFBFriend.m */,
 			);
 			name = PVObjects;
+			sourceTree = "<group>";
+		};
+		F198FC6F1A6ACBD000E07A2C /* General */ = {
+			isa = PBXGroup;
+			children = (
+				F198FC631A69FDC700E07A2C /* PVUtility.h */,
+				F198FC641A69FDC700E07A2C /* PVUtility.m */,
+			);
+			name = General;
+			sourceTree = "<group>";
+		};
+		F198FC701A6ACBDC00E07A2C /* Data Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				F1776FBB1A55F572000BCCB2 /* PVCache.h */,
+				F1776FBC1A55F572000BCCB2 /* PVCache.m */,
+			);
+			name = "Data Persistence";
 			sourceTree = "<group>";
 		};
 		F1AB3F7F1A5CB53700B55058 /* View Models */ = {
@@ -763,6 +832,7 @@
 				F1776FD51A55F572000BCCB2 /* PVMyProfileViewController.xib in Resources */,
 				F1776FCD1A55F572000BCCB2 /* PVLoginViewController.xib in Resources */,
 				F122B37E1A55F18400A5BBCB /* LaunchScreen.xib in Resources */,
+				F1F5C7541A6B01AD0061C101 /* BeamMusicPlayerViewController.xib in Resources */,
 				F159E2FF1A57C8FB009560A3 /* PVPlaybackViewController.xib in Resources */,
 				F122B37B1A55F18400A5BBCB /* Images.xcassets in Resources */,
 				F1776FCF1A55F572000BCCB2 /* PVSignUpViewController.xib in Resources */,
@@ -839,10 +909,13 @@
 				F1776FE31A55F572000BCCB2 /* PVNetworkingUtility.m in Sources */,
 				F10ED4811A5D1ADE0077CEAE /* PVBaseSlidingViewController.m in Sources */,
 				F1776FCC1A55F572000BCCB2 /* PVLoginViewController.m in Sources */,
+				F1F5C74F1A6B01AD0061C101 /* AutoScrollLabel.m in Sources */,
 				F1776FDC1A55F572000BCCB2 /* JVFloatLabeledTextField+LabelText.m in Sources */,
 				F10BA4371A5621C500B19739 /* PFObject+RACExtensions.m in Sources */,
 				F159E2FE1A57C8FB009560A3 /* PVPlaybackViewController.m in Sources */,
+				F1F5C7531A6B01AD0061C101 /* BeamMusicPlayerViewController.m in Sources */,
 				F1776FD41A55F572000BCCB2 /* PVMyProfileViewController.m in Sources */,
+				F1F5C7561A6B01AD0061C101 /* NSDateFormatter+Duration.m in Sources */,
 				F1776FD31A55F572000BCCB2 /* PVSignUpViewModel.m in Sources */,
 				F159E2F61A57B435009560A3 /* PVBaseOnboardingViewController.m in Sources */,
 				F1776FD81A55F572000BCCB2 /* UIImage+Coloring.m in Sources */,
@@ -861,6 +934,8 @@
 				F122B3701A55F18400A5BBCB /* main.m in Sources */,
 				F1776FE01A55F572000BCCB2 /* PVStatusBarNotification.m in Sources */,
 				F198FC6A1A6A1B8200E07A2C /* PVFBUtility.m in Sources */,
+				F1F5C7521A6B01AD0061C101 /* BeamMusicPlayerTransparentToolbar.m in Sources */,
+				F1F5C7511A6B01AD0061C101 /* BeamMPMusicPlayerProvider.m in Sources */,
 				F1776FDA1A55F572000BCCB2 /* UIImage+ResizeAdditions.m in Sources */,
 				F10BA4321A5621C500B19739 /* PFFile+RACExtensions.m in Sources */,
 				F1776FD11A55F572000BCCB2 /* PVForgotPasswordViewModel.m in Sources */,

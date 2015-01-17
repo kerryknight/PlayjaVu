@@ -20,6 +20,7 @@ pod 'Nimbus/Core', '= 1.2.0'
 pod 'Nimbus/AttributedLabel', '= 1.2.0'
 pod 'TRVSMonitor', '0.0.3' # for unit testing async operations
 pod 'iOS-Slide-Menu', '~> 1.4.0' # slide out, left menu architecture
+#pod 'BeamMusicPlayerViewController', '0.2.1' # ready-to-use music player
 
 # if permissions error, try:
 # sudo chown -R knight Pods

@@ -7,6 +7,6 @@
 
 @interface NSString (EmailAdditions)
 
-
 - (BOOL)isValidEmail;
+
 @end

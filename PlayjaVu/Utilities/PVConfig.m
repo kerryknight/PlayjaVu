@@ -72,7 +72,6 @@ NSString *const kUserFBLargeProfilePicURLKey                    = @"fbLargeProfi
 NSString *const kUserFBSmallProfilePicURLKey                    = @"fbSmallProfilePictureURL";
 NSString *const kUserGenderKey                                  = @"gender";
 NSString *const kUserTimezoneKey                                = @"timezone";
-NSString *const kUserLocationKey                                = @"location";
 NSString *const kUserBirthdayKey                                = @"birthday";
 NSString *const kUserFBProfileLinkKey                           = @"fbProfileLink";
 

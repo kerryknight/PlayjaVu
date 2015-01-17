@@ -64,7 +64,6 @@ extern NSString *const kUserFBLargeProfilePicURLKey;
 extern NSString *const kUserFBSmallProfilePicURLKey;
 extern NSString *const kUserGenderKey;
 extern NSString *const kUserTimezoneKey;
-extern NSString *const kUserLocationKey;
 extern NSString *const kUserBirthdayKey;
 extern NSString *const kUserFBProfileLinkKey;
 

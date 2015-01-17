@@ -153,7 +153,7 @@
     
     return [[self.viewModel rac_logInWithFacebook]
             subscribeError:^(NSError *error) {
-                DLogError(@"Friendly ERROR: %@",  [FBErrorUtility userMessageForError:error]);
+                DLogError(@"Facebook-friendly ERROR: %@",  [FBErrorUtility userMessageForError:error]);
                 DLogError(@"ERROR: %@",  error);
                 NSString *message;
                 //dismiss the spinner regardless of outcome
