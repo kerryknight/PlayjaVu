@@ -28,8 +28,8 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
     if (self) {
-        
         _slideOutAnimationEnabled = YES;
         self.view.backgroundColor = kDrkGray;
         // by default, hide pertinent items from view during transitions
@@ -43,23 +43,21 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
         [self _configureSlideNavigationController];
         [self _configureNavBar];
 
-#if DEVELOPER_BYPASS_LOGIN_MODE
-        [self _showMainInterface];
-#else
-        // If logged in, present login view controller
-        if ([PFUser currentUser]) {
-            // logged in already
-            [self _showMainInterface];
-            
-            // update our user info in the background
-            [PVUtility updateCurrentParseUser];
-        }
-#endif
-        
         // Custom initialization this is the only observer need to have
         //immediately at instantiation; the others can and should wait to be
         //added in the -addNotificationObservers method
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_showLoginView) name:kMenuShouldShowLoginNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_showMainInterface) name:kMenuShouldShowMainInterfaceNotification object:nil];
+        
+#if DEVELOPER_BYPASS_LOGIN_MODE
+        // go directly to main view
+        [self _showMainInterface];
+#else
+        // check if we're already logged in; if so, this method
+        // will post a notification letting us know to show main view
+        [[PVNetworkingUtility sharedUtility] verifyUserLoginStatus];
+#endif
+        
     }
     return self;
 }
@@ -78,6 +76,7 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
 #pragma mark - Private Methods
 - (void)_showLoginView
 {
+    NSAssert([[NSThread currentThread] isMainThread], @"Must show login view this on the main thread.");
     // hide pertinent items from view during transitions
     [self _shouldHideVisibleContent:YES];
     
@@ -91,6 +90,7 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
 
 - (void)_showMainInterface
 {
+    NSAssert([[NSThread currentThread] isMainThread], @"Must show main interface this on the main thread.");
     // make sure we display everything in this view
     [self _shouldHideVisibleContent:NO];
     
@@ -101,6 +101,9 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
     [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:YES];
     
     self.navBarTitleLabel.text = @"Now Playing";
+    
+    // update our user info in the background
+    [[PVNetworkingUtility sharedUtility] refreshUser];
 }
 
 // this one's called whenever we touch on a menu option
@@ -125,8 +128,8 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
     // this instance does nothing other than ensure we set up our slide nav
     // controller's singleton; it's essentially a bug workaround here to
     // prevent the 'unused variable' yellow flag from the compiler
-    PVLoginViewController *loginViewController = [[PVLoginViewController alloc] init];
-    SlideNavigationController *slideNavController = [[SlideNavigationController alloc] initWithRootViewController:loginViewController];
+    UIViewController *emptyVC = [[UIViewController alloc] init];
+    SlideNavigationController *slideNavController = [[SlideNavigationController alloc] initWithRootViewController:emptyVC];
     slideNavController = nil;
     
     // this singleton is who does all the work
@@ -220,10 +223,8 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
             [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
             
             // have our view model log us out and perform any cleanup
-            [PVUtility logOut];
+            [[PVNetworkingUtility sharedUtility] logOutOfEverything];
             
-            //show the welcome view
-            [self _showLoginView];
             return;
         }
         default:

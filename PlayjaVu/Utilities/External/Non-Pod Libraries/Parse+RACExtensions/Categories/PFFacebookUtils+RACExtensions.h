@@ -26,15 +26,4 @@
 /// @return A signal that completes on success.
 + (RACSignal *)rac_logInWithPermissions:(NSArray *)permissions;
 
-/// Simple method to make a graph API request for user info (/me), creates an <FBRequest>
-/// then uses an <FBRequest> object to start the connection with Facebook. The
-/// request uses the active session represented by `[FBSession activeSession]`.
-///
-/// @see +startWithCompletionHandler:
-///
-/// @return A signal that completes on success.
-+ (RACSignal *)rac_makeRequestForMe;
-
-+ (RACSubject *)rac_profilePictureForUserId:(NSString *)facebookId;
-
 @end

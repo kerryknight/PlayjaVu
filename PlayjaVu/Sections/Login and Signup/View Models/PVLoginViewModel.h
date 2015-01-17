@@ -17,5 +17,4 @@
 
 - (RACSignal *)rac_logIn;
 - (RACSignal *)rac_logInWithFacebook;
-
 @end

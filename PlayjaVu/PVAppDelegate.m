@@ -12,6 +12,7 @@
 #import "PVStatusBarNotification.h"
 #import "PVLeftMenuViewController.h"
 #import "SlideNavigationController.h"
+#import "PVUtility.h"
 
 @interface PVAppDelegate ()
 @property (strong, nonatomic) Reachability *hostReach;
@@ -33,7 +34,7 @@
 #endif
     
     // set up and configure Parse
-    [PVUtility configureParseWithLaunchOptions:launchOptions];
+    [[PVUtility sharedUtility] configureParseWithLaunchOptions:launchOptions];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = kDrkGray;

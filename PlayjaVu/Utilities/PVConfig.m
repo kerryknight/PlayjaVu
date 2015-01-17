@@ -38,7 +38,8 @@ NSString *const kLaunchURLHostTakePicture                     = @"camera";
 #pragma mark - NSNotification
 
 NSString *const kAppDelegateApplicationDidReceiveRemoteNotification = @"com.kerryknight.playjavu.appDelegate.applicationDidReceiveRemoteNotification";
-NSString *const kMenuShouldShowMainInterfaceNotification      = @"PVMenuShouldShowMainInterfaceNotification";
+NSString *const kMenuShouldShowMainInterfaceNotification      = @"kMenuShouldShowMainInterfaceNotification";
+NSString *const kMenuShouldShowLoginNotification              = @"kMenuShouldShowLoginNotification";
 
 #pragma mark - Installation Class
 
@@ -76,22 +77,21 @@ NSString *const kPushPayloadPhotoObjectIdKey                  = @"pid";
 
 // *********************************************** PARSE CLASSES *****************************************
 #pragma mark - PFObject User Class
-NSString *const kUserFacebookUserKey                          = @"facebookUser";
-NSString *const kUserProfilePicURLKey                         = @"profilePictureURL";
-NSString *const kUserPrivateChannelKey                        = @"channel";
-NSString *const kUserEmailKey                                 = @"email";
-NSString *const kUserEmailVerifiedKey                         = @"emailVerified";
-
-#pragma mark - PFObject FacebookUser Class
-NSString *const kFacebookUserIdKey                            = @"facebookId";
-NSString *const kFacebookUserFriendsKey                       = @"friends";
-NSString *const kFacebookUserUsernameKey                      = @"username";
-NSString *const kFacebookUserProfilePicURLKey                 = @"profilePictureURL";
-NSString *const kFacebookUserGenderKey                        = @"gender";
-NSString *const kFacebookUserTimezoneKey                      = @"timezone";
-NSString *const kFacebookUserLocationKey                      = @"location";
-NSString *const kFacebookUserBirthdayKey                      = @"birthday";
-NSString *const kFacebookUserEmailKey                         = @"email";
-NSString *const kFacebookUserProfileLinkKey                   = @"profileLink";
+NSString *const kUserFBIdKey                                    = @"fbId";
+NSString *const kUserPrivateChannelKey                          = @"channel";
+NSString *const kUserEmailKey                                   = @"email";
+NSString *const kUserEmailVerifiedKey                           = @"emailVerified";
+NSString *const kUserFBFriendsKey                               = @"fbFriends";
+NSString *const kUserUsernameKey                                = @"username";
+NSString *const kUserDisplayNameKey                             = @"displayName";
+NSString *const kUserFirstNameKey                               = @"firstName";
+NSString *const kUserLastNameKey                                = @"lastName";
+NSString *const kUserFBLargeProfilePicURLKey                    = @"fbLargeProfilePictureURL";
+NSString *const kUserFBSmallProfilePicURLKey                    = @"fbSmallProfilePictureURL";
+NSString *const kUserGenderKey                                  = @"gender";
+NSString *const kUserTimezoneKey                                = @"timezone";
+NSString *const kUserLocationKey                                = @"location";
+NSString *const kUserBirthdayKey                                = @"birthday";
+NSString *const kUserFBProfileLinkKey                           = @"fbProfileLink";
 
 

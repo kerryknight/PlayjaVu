@@ -9,7 +9,12 @@
 #ifndef PlayjaVu_PVRuntimeSettings_h
 #define PlayjaVu_PVRuntimeSettings_h
 
+// turn this one on to skip login screens
+// and go directly to the main interface
 #define DEVELOPER_BYPASS_LOGIN_MODE 0
+
+// turn this one on to turn off Reachability and
+// operate as if there is no internet connection
 #define OFFLINE_MODE                0
 
 #endif

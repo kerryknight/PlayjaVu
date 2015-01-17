@@ -55,10 +55,6 @@
 #define kWelcomeButtonWidth         270
 #define kWelcomeTextFieldMargin     15
 
-// Facebook permissions
-#define kFacebookPermissionsList @[@"public_profile", @"email"]
-
-
 // xcodecolors xcode plugin logger
 #ifdef DEBUG
 #ifdef XCODE_COLORS

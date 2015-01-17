@@ -7,8 +7,7 @@
 //
 
 #import "PVUtility.h"
-#import <ParseCrashReporting/ParseCrashReporting.h>
-#import "PVCache.h"
+#import "PFRACErrors.h"
 
 @interface PVUtility ()
 @end
@@ -16,17 +15,23 @@
 @implementation PVUtility
 
 #pragma mark - Public Methods
-#pragma mark Parse-related
-+ (void)configureParseWithLaunchOptions:(NSDictionary *)options
++ (PVUtility *)sharedUtility {
+    static PVUtility * _sharedUtility = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedUtility = [[PVUtility alloc] init];
+    });
+    
+    return _sharedUtility;
+}
+
+- (void)configureParseWithLaunchOptions:(NSDictionary *)options
 {
     // START 3RD PARTY INSTANTIATIONS ********************************************************
     
     // do everything we possibly can in the background like a good citizen
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         // Parse stuff that can be done on background queue
-        
-        // Enable crash reporting on Parse
-        [ParseCrashReporting enable];
         
         // NOT SURE IF I SHOULD KEEP THESE ON OR NOT AS THEY
         // MAY ONLY WORK IF USING A CUSTOM PARSE UI VIEW/VC
@@ -35,6 +40,10 @@
         
         // enable logging
         [Parse setLogLevel:PFLogLevelDebug];
+        
+#warning BE SURE TO TURN THE RUN SCRIPT BACK ON TOO FOR SYMBOL UPLOAD
+        // Enable crash reporting on Parse
+        [ParseCrashReporting enable];
         
         // enable Parse local sqlite data store
         [Parse enableLocalDatastore];
@@ -57,79 +66,36 @@
     // INSTANTIATIONS **********************************************************
 }
 
-+ (void)updateCurrentParseUser
+# pragma mark Date Manipulation
+- (NSDate *)dateFromJSONString:(NSString *)dateString
 {
-    // Refresh current user with server side data -- checks if user is still valid and so on
-    [[PFUser currentUser] fetchInBackgroundWithTarget:self selector:@selector(_refreshCurrentUserCallbackWithResult:error:)];
+    return [[self dateFormatter] dateFromString:dateString];
 }
 
-+ (void)logOut
+#pragma mark Error Handling
+- (NSError *)normalizeRACError:(NSError *)error
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[PVCache sharedCache] clear];
-        
-        // clear NSUserDefaults
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUserDefaultsCacheFacebookFriendsKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        // Unsubscribe from push notifications by clearing the channels key (leaving only broadcast enabled).
-        [[PFInstallation currentInstallation] setObject:@[@""] forKey:kInstallationChannelsKey];
-        [[PFInstallation currentInstallation] removeObjectForKey:kInstallationUserKey];
-        [[PFInstallation currentInstallation] saveInBackground];
-        
-        // Log out
-        [PFUser logOut];
-        
-        // close FB
-        [[PFFacebookUtils session] close];
-        
-        // clean up local data store
-        [PFObject unpinAllObjectsInBackground];
-    });
-}
-
-#pragma mark Facebook-related
-+ (BOOL)userHasValidFacebookData:(PFUser *)user {
-    return [user objectForKey:kUserFacebookUserKey] != nil;
+    if (error == nil)
+        return [NSError errorWithDomain:PFRACErrorDomain code:PFRACUnknownError userInfo:nil];
+    
+    if (error.userInfo[@"error"] == nil)
+        return error;
+    
+    NSMutableDictionary *userInfo = [error.userInfo mutableCopy];
+    userInfo[NSLocalizedDescriptionKey] = userInfo[@"error"];
+    
+    return [NSError errorWithDomain:error.domain code:error.code userInfo:userInfo];
 }
 
 #pragma mark - Private Methods
-+ (void)_refreshCurrentUserCallbackWithResult:(PFObject *)refreshedObject error:(NSError *)error
-{
-    DLogBlue(@"MAKE SURE THIS GETS CALLED !!!!");
-    // A kPFErrorObjectNotFound error on currentUser refresh signals a deleted user
-    if (error && error.code == kPFErrorObjectNotFound) {
-        DLog(@"User does not exist.");
-        
-        [self logOut];
-        return;
+# pragma mark Date Manipulation
+- (NSDateFormatter *)dateFormatter {
+    static NSDateFormatter *formatter = nil;
+    if (!formatter) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
     }
-    
-    //check what type of login we have
-    if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
-        //we're logged in with Facebook
-        // Check if user is missing a Facebook ID
-        if ([PVUtility userHasValidFacebookData:[PFUser currentUser]]) {
-            // User has Facebook ID.
-            
-            DLogGreen(@"user has facebook id so request friend list");
-            //            // refresh Facebook friends on each launch
-            //            PF_FBRequest *request = [PF_FBRequest requestForMyFriends];
-            //            [request setDelegate:(PVAppDelegate*)[[UIApplication sharedApplication] delegate]];
-            //            [request startWithCompletionHandler:nil];
-        } else {
-            DLogGreen(@"User missing Facebook ID; Should check to see if they connected via Facebook first before querying again.");
-            //            PF_FBRequest *request = [PF_FBRequest requestForGraphPath:@"me/?fields=name,picture,email"];
-            //            [request setDelegate:(PVAppDelegate*)[[UIApplication sharedApplication] delegate]];
-            //            [request startWithCompletionHandler:nil];
-        }
-        /*else if ([PFTwitterUtils isLinkedWithUser:[PFUser currentUser]] ) {
-         //we're logged in with Twitter //TODO:
-         } */
-    } else {
-        DLogSuccess(@"LOGGED IN WITH PARSE");
-        //we're logged with via a Parse account
-    }
+    return formatter;
 }
 
 @end

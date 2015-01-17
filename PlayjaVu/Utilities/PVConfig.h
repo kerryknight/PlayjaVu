@@ -40,6 +40,7 @@ extern NSString *const kLaunchURLHostTakePicture;
 #pragma mark - NSNotification
 extern NSString *const kAppDelegateApplicationDidReceiveRemoteNotification;
 extern NSString *const kMenuShouldShowMainInterfaceNotification;
+extern NSString *const kMenuShouldShowLoginNotification;
 
 
 #pragma mark - Installation Class
@@ -68,20 +69,20 @@ extern NSString *const kPushPayloadPayloadTypeActivityKey;
 // *********************************************** PARSE CLASSES *****************************************
 #pragma mark - PFObject User Class
 // Field keys
-extern NSString *const kUserFacebookUserKey;
-extern NSString *const kUserProfilePicURLKey;
+extern NSString *const kUserFBIdKey;
 extern NSString *const kUserPrivateChannelKey;
 extern NSString *const kUserEmailKey;
 extern NSString *const kUserEmailVerifiedKey;
+extern NSString *const kUserFBFriendsKey;
+extern NSString *const kUserUsernameKey;
+extern NSString *const kUserDisplayNameKey;
+extern NSString *const kUserFirstNameKey;
+extern NSString *const kUserLastNameKey;
+extern NSString *const kUserFBLargeProfilePicURLKey;
+extern NSString *const kUserFBSmallProfilePicURLKey;
+extern NSString *const kUserGenderKey;
+extern NSString *const kUserTimezoneKey;
+extern NSString *const kUserLocationKey;
+extern NSString *const kUserBirthdayKey;
+extern NSString *const kUserFBProfileLinkKey;
 
-#pragma mark - PFObject FacebookUser Class
-extern NSString *const kFacebookUserIdKey;
-extern NSString *const kFacebookUserFriendsKey;
-extern NSString *const kFacebookUserUsernameKey;
-extern NSString *const kFacebookUserProfilePicURLKey;
-extern NSString *const kFacebookUserGenderKey;
-extern NSString *const kFacebookUserTimezoneKey;
-extern NSString *const kFacebookUserLocationKey;
-extern NSString *const kFacebookUserBirthdayKey;
-extern NSString *const kFacebookUserEmailKey;
-extern NSString *const kFacebookUserProfileLinkKey;

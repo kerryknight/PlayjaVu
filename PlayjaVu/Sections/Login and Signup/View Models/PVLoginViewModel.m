@@ -11,7 +11,7 @@
 #import "PFFacebookUtils+RACExtensions.h"
 #import "PFFile+RACExtensions.h"
 #import "UIImage+ResizeAdditions.h"
-#import "PVFBUser.h"
+#import "PVUser.h"
 
 @interface PVLoginViewModel ()
 @property (strong, nonatomic) RACSignal *usernameIsValidEmailSignal;
@@ -43,58 +43,11 @@
     }];
 #endif
     
-    return
-    [[[[PFFacebookUtils rac_logInWithPermissions:kFacebookPermissionsList]
-    flattenMap: ^id (id value) {
-        return [PFFacebookUtils rac_makeRequestForMe];
-    }]
-    flattenMap: ^id (id result) {
-        return [self rac_saveFacebookDataForUserToParse:result];
-    }]
+    return [[PFFacebookUtils rac_logInWithPermissions:@[@"public_profile", @"email", @"user_friends"]]
     deliverOn:[RACScheduler mainThreadScheduler]];
 }
 
-#pragma mark - Private Methods
-- (RACSignal *)rac_saveFacebookDataForUserToParse:(NSDictionary *)facebookResult {
-//    NSString *facebookName = facebookResult[@"username"];
-//    NSString *profilePicURL = facebookResult[kUserProfilePicSmallKey];
-    
-    PVFBUser *fbUser = [PVFBUser object];
-    fbUser.facebookId = facebookResult[@"id"];
-    fbUser.firstName = facebookResult[@"first_name"];
-    fbUser.lastName = facebookResult[@"last_name"];
-    fbUser.username = facebookResult[@"name"];
-    fbUser.email = facebookResult[@"email"];
-    fbUser.profileLink = facebookResult[@"link"];
-    fbUser.birthday = [self dateFromJSONString:facebookResult[@"birthday"]];
-    fbUser.timezone = facebookResult[@"timezone"];
-    fbUser.location = facebookResult[@"location"][@"name"];
-    fbUser.gender = [facebookResult[@"gender"] isEqualToString:@"male"] ? PVGenderTypeMale : PVGenderTypeFemale;
-    
-//    DLogCyan(@"fbUser: %@", fbUser);
-    
-    [[PFUser currentUser] setObject:fbUser forKey:@"facebookUser"];
-    
-    if (![[PFUser currentUser] objectForKey:kUserEmailKey]) {
-        [[PFUser currentUser] setObject:fbUser.email forKey:@"email"];
-    }
-    
-    return [[PFUser currentUser] rac_saveEventually];
-}
-
-- (NSDate *)dateFromJSONString:(NSString *)dateString
-{
-    return [[[self class] dateFormatter] dateFromString:dateString];
-}
-
-+ (NSDateFormatter *)dateFormatter {
-    static NSDateFormatter *formatter = nil;
-    if (!formatter) {
-        formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd"];
-    }
-    return formatter;
-}
+//#pragma mark - Private Methods
 
 #pragma mark - Public Signal Properties
 - (RACSignal *)usernameAndPasswordCombinedSignal

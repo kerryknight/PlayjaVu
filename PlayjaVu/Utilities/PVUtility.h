@@ -8,12 +8,14 @@
 
 @interface PVUtility : NSObject
 
-// Parse-related
-+ (void)configureParseWithLaunchOptions:(NSDictionary *)options;
-+ (void)updateCurrentParseUser;
-+ (void)logOut; // log out of everything, really
++ (PVUtility *)sharedUtility;
 
-// Facebook-related
-+ (BOOL)userHasValidFacebookData:(PFUser *)user;
+// configures Parse and Parse-related services at app launch
+- (void)configureParseWithLaunchOptions:(NSDictionary *)options;
 
+// Date Manipulation
+- (NSDate *)dateFromJSONString:(NSString *)dateString;
+
+// Error Handling
+- (NSError *)normalizeRACError:(NSError *)error;
 @end
