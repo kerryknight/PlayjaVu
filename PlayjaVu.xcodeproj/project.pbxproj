@@ -59,6 +59,7 @@
 		F1776FE31A55F572000BCCB2 /* PVNetworkingUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FC11A55F572000BCCB2 /* PVNetworkingUtility.m */; };
 		F198FC651A69FDC700E07A2C /* PVUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F198FC641A69FDC700E07A2C /* PVUtility.m */; };
 		F198FC6A1A6A1B8200E07A2C /* PVFBUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F198FC691A6A1B8200E07A2C /* PVFBUtility.m */; };
+		F198FC6E1A6A468800E07A2C /* PVFBFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = F198FC6D1A6A468800E07A2C /* PVFBFriend.m */; };
 		F1AB3F831A5CB57000B55058 /* PVLeftMenuViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1AB3F821A5CB57000B55058 /* PVLeftMenuViewModel.m */; };
 		F1EF6FF11A5873670082FD72 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
@@ -179,6 +180,8 @@
 		F198FC641A69FDC700E07A2C /* PVUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVUtility.m; sourceTree = "<group>"; };
 		F198FC681A6A1B8200E07A2C /* PVFBUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVFBUtility.h; sourceTree = "<group>"; };
 		F198FC691A6A1B8200E07A2C /* PVFBUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVFBUtility.m; sourceTree = "<group>"; };
+		F198FC6C1A6A468800E07A2C /* PVFBFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVFBFriend.h; sourceTree = "<group>"; };
+		F198FC6D1A6A468800E07A2C /* PVFBFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVFBFriend.m; sourceTree = "<group>"; };
 		F1AB3F811A5CB57000B55058 /* PVLeftMenuViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVLeftMenuViewModel.h; path = "View Models/PVLeftMenuViewModel.h"; sourceTree = "<group>"; };
 		F1AB3F821A5CB57000B55058 /* PVLeftMenuViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PVLeftMenuViewModel.m; path = "View Models/PVLeftMenuViewModel.m"; sourceTree = "<group>"; };
 		F1B9150E1A5EF54700CD168A /* PVRuntimeSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRuntimeSettings.h; sourceTree = "<group>"; };
@@ -580,6 +583,15 @@
 			name = Configuration;
 			sourceTree = "<group>";
 		};
+		F198FC6B1A6A465D00E07A2C /* PVObjects */ = {
+			isa = PBXGroup;
+			children = (
+				F198FC6C1A6A468800E07A2C /* PVFBFriend.h */,
+				F198FC6D1A6A468800E07A2C /* PVFBFriend.m */,
+			);
+			name = PVObjects;
+			sourceTree = "<group>";
+		};
 		F1AB3F7F1A5CB53700B55058 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -634,6 +646,7 @@
 		F1EF6FE91A586BF60082FD72 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F198FC6B1A6A465D00E07A2C /* PVObjects */,
 				F1EF6FEE1A586F6C0082FD72 /* PFObjects */,
 			);
 			path = Models;
@@ -833,6 +846,7 @@
 				F1776FD31A55F572000BCCB2 /* PVSignUpViewModel.m in Sources */,
 				F159E2F61A57B435009560A3 /* PVBaseOnboardingViewController.m in Sources */,
 				F1776FD81A55F572000BCCB2 /* UIImage+Coloring.m in Sources */,
+				F198FC6E1A6A468800E07A2C /* PVFBFriend.m in Sources */,
 				F1776FD71A55F572000BCCB2 /* UIImage+AlphaAdditions.m in Sources */,
 				F1776FDB1A55F572000BCCB2 /* UIImage+RoundedCornerAdditions.m in Sources */,
 				F1776FC61A55F572000BCCB2 /* STPSlideUpTransition.m in Sources */,

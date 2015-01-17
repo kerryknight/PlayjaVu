@@ -15,12 +15,9 @@
 - (void)clear;
 
 - (NSDictionary *)attributesForUser:(PFUser *)user;
-- (NSNumber *)photoCountForUser:(PFUser *)user;
-- (BOOL)followStatusForUser:(PFUser *)user;
-- (void)setPhotoCount:(NSNumber *)count user:(PFUser *)user;
-- (void)setFollowStatus:(BOOL)following user:(PFUser *)user;
 
 - (void)setFacebookFriends:(NSArray *)friends;
+
 - (NSArray *)facebookFriends;
 
 @end

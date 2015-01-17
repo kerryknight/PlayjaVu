@@ -7,6 +7,7 @@
 //
 
 #import "PVFBUtility.h"
+#import "PVFBFriend.h"
 
 typedef enum {
     PVGenderTypeFemale = 0,
@@ -82,8 +83,9 @@ typedef enum {
             
             self.expectedFacebookResponseCount++;
             
-            // REQUEST #1
+            // REQUEST #1; /me public info
             [connection addRequest:[FBRequest requestForMe] completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                
                 if (error) {
                     DLogRed(@"couldn't fetch facebook /me data: %@, logout", error);
                     [self checkErrorForOAuthException:error];
@@ -112,34 +114,15 @@ typedef enum {
                 self.expectedFacebookResponseCount++;
                 
                 // REQUEST #3; friends list
-                [connection addRequest:[FBRequest requestForMyFriends] completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                [connection addRequest:[FBRequest requestWithGraphPath:@"/me/taggable_friends" parameters:nil HTTPMethod:@"GET"] completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                    
                     if (error) {
                         DLogRed(@"error: %@", error);
-                        
 //                        // just clear the FB friend cache
 //                        [[PAPCache sharedCache] clear];
                     }
-                    else {
-                        NSArray *data = [result objectForKey:@"data"];
-                        DLogOrange(@"friend request result: %@", result);
-                        NSMutableArray *facebookIds = [[NSMutableArray alloc] initWithCapacity:[data count]];
-                        DLogGreen(@"friends facebookIds: %@", facebookIds);
-//                        for (NSDictionary *friendData in data) {
-//                            if (friendData[@"id"]) {
-//                                [facebookIds addObject:friendData[@"id"]];
-//                            }
-//                        }
-//                        // cache friend data
-//                        [[PAPCache sharedCache] setFacebookFriends:facebookIds];
-//                        
-//                        if ([currentParseUser objectForKey:kPAPUserFacebookFriendsKey]) {
-//                            [currentParseUser removeObjectForKey:kPAPUserFacebookFriendsKey];
-//                        }
-//                        if ([currentParseUser objectForKey:kPAPUserAlreadyAutoFollowedFacebookFriendsKey]) {
-//                            [PVFBUtility autoFollowUsers];
-//                        }
-                    }
                     
+                    [self handleFacebookUserTaggableFriendsResponseResult:(NSDictionary *)result];
                     [self processedFacebookResponse];
                 }];
             }
@@ -163,7 +146,6 @@ typedef enum {
 #pragma mark - Parsing Responses
 - (void)handleFacebookUserPublicDataResponseResult:(NSDictionary *)result
 {
-    DLogBlue(@"result: %@", result);
     // parse our FB data into our _User object subclass
     if (result[@"id"]) {
         // facebookId
@@ -218,6 +200,37 @@ typedef enum {
         // this is a larger version of our small profile pic
         NSString *profilePictureURL = result[@"picture"][@"data"][@"url"];
         [[PFUser currentUser] setObject:profilePictureURL forKey:kUserFBLargeProfilePicURLKey];
+    }
+}
+
+- (void)handleFacebookUserTaggableFriendsResponseResult:(NSDictionary *)result
+{
+    if (result[@"data"]) {
+        NSArray *data = result[@"data"];
+        NSMutableArray *friends = [[NSMutableArray alloc] initWithCapacity:data.count];
+        
+        [data enumerateObjectsUsingBlock:^(NSDictionary *friendData, NSUInteger idx, BOOL *stop) {
+            PVFBFriend *friend = [[PVFBFriend alloc] init];
+            
+            if (friendData[@"id"]) {
+                friend.fbId = friendData[@"id"];
+            }
+            
+            if (friendData[@"name"]) {
+                friend.name = friendData[@"name"];
+            }
+            
+            if (friendData[@"picture"][@"data"][@"url"]) {
+                friend.smallProfilePictureURL = friendData[@"smallProfilePictureURL"];
+            }
+            
+            [friends addObject:friend];
+        }];
+        
+        // we won't save the friends list to Parse, we'll just
+        // cache it an keep it locally since we rebuild it 
+        // everytime we open up the app
+        [[PVCache sharedCache] setFacebookFriends:friends];
     }
 }
 

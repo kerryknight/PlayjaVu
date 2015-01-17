@@ -8,7 +8,6 @@
 
 #import "PVCache.h"
 
-
 @interface PVCache()
 @property (nonatomic, strong) NSCache *cache;
 @end
@@ -41,66 +40,19 @@
     [self.cache removeAllObjects];
 }
 
-- (void)setAttributesForUser:(PFUser *)user photoCount:(NSNumber *)count followedByCurrentUser:(BOOL)following {
-    NSAssert(FALSE, @"Just tried a commented out thing");
-//    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                count, kUserAttributesPhotoCountKey,
-//                                [NSNumber numberWithBool:following], kUserAttributesIsFollowedByCurrentUserKey,
-//                                nil];
-//    [self setAttributes:attributes forUser:user];
-}
-
 - (NSDictionary *)attributesForUser:(PFUser *)user {
     NSString *key = [self keyForUser:user];
     return [self.cache objectForKey:key];
 }
 
-- (NSNumber *)photoCountForUser:(PFUser *)user {
-    NSDictionary *attributes = [self attributesForUser:user];
-    
-    if (attributes) {
-        NSNumber *photoCount = [attributes objectForKey:kUserAttributesPhotoCountKey];
-        
-        if (photoCount) {
-            return photoCount;
-        }
-    }
-    
-    return [NSNumber numberWithInt:0];
-}
-
-- (BOOL)followStatusForUser:(PFUser *)user {
-    NSAssert(FALSE, @"Just tried a commented out thing");
-//    NSDictionary *attributes = [self attributesForUser:user];
-//    
-//    if (attributes) {
-//        NSNumber *followStatus = [attributes objectForKey:kUserAttributesIsFollowedByCurrentUserKey];
-//        
-//        if (followStatus) {
-//            return [followStatus boolValue];
-//        }
-//    }
-    
-    return NO;
-}
-
-- (void)setPhotoCount:(NSNumber *)count user:(PFUser *)user {
-    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:[self attributesForUser:user]];
-    [attributes setObject:count forKey:kUserAttributesPhotoCountKey];
-    [self setAttributes:attributes forUser:user];
-}
-
-- (void)setFollowStatus:(BOOL)following user:(PFUser *)user {
-    NSAssert(FALSE, @"Just tried a commented out thing");
-//    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:[self attributesForUser:user]];
-//    [attributes setObject:[NSNumber numberWithBool:following] forKey:kUserAttributesIsFollowedByCurrentUserKey];
-//    [self setAttributes:attributes forUser:user];
-}
-
 - (void)setFacebookFriends:(NSArray *)friends {
     NSString *key = kUserDefaultsCacheFacebookFriendsKey;
     [self.cache setObject:friends forKey:key];
-    [[NSUserDefaults standardUserDefaults] setObject:friends forKey:key];
+    
+    // since we're storing custom PVFBFriend objects, we have to
+    // ensure we encode them for saving to user defaults
+    NSData *encodedFriends = [NSKeyedArchiver archivedDataWithRootObject:friends];
+    [[NSUserDefaults standardUserDefaults] setObject:encodedFriends forKey:key];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -111,7 +63,9 @@
         return [self.cache objectForKey:key];
     }
     
-    NSArray *friends = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    // and also decode the whole array of friends
+    NSData *encodedFriends = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    NSArray *friends = [NSKeyedUnarchiver unarchiveObjectWithData:encodedFriends];
     
     if (friends) {
         [self.cache setObject:friends forKey:key];
