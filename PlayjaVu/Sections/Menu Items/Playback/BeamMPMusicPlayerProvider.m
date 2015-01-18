@@ -33,7 +33,7 @@
 
 - (void)handleVolumeDidChangeNotification
 {
-//    self.controller.volume = self.musicPlayer.volume;
+    self.controller.volume = self.musicPlayer.volume;
 }
 
 - (void)setMusicPlayer:(MPMusicPlayerController *)value
@@ -65,21 +65,21 @@
     [self propagateMusicPlayerState];
 }
 
-//- (void)setController:(BeamMusicPlayerViewController *)value
-//{
-//    controller.delegate = nil;
-//    controller.dataSource = nil;
-//    controller = value;
-//    controller.delegate = self;
-//    controller.dataSource = self;
-//    [self propagateMusicPlayerState];
-//}
+- (void)setController:(BeamMusicPlayerViewController *)value
+{
+    controller.delegate = nil;
+    controller.dataSource = nil;
+    controller = value;
+    controller.delegate = self;
+    controller.dataSource = self;
+    [self propagateMusicPlayerState];
+}
 
 - (void)setMediaItems:(NSArray *)value
 {
     DLogPurple(@"");
     self.mediaItems = [value copy];
-//    [self.controller reloadData];
+    [self.controller reloadData];
 }
 
 - (MPMediaItem *)mediaItemAtIndex:(NSUInteger)index
@@ -94,24 +94,24 @@
 {
     // explicit call of setters with nil to deregister from objects
     self.musicPlayer = nil;
-//    self.controller = nil;
+    self.controller = nil;
 }
 
 - (void)propagateMusicPlayerState
 {
-//    if(self.controller && self.musicPlayer) {
-//        self.controller.delegate = nil;
-//        
-//        // refactor: playing property in musicplayer? and/or setter method differently
-//        [self.controller playTrack:self.musicPlayer.indexOfNowPlayingItem atPosition:self.musicPlayer.currentPlaybackTime volume:self.musicPlayer.volume];
-//        if(self.musicPlayer.playbackState == MPMusicPlaybackStatePlaying) {
-//            [self.controller play];
-//        } else {
-//            [self.controller pause];
-//        }
-//
-//        self.controller.delegate = self;
-//    }
+    if(self.controller && self.musicPlayer) {
+        self.controller.delegate = nil;
+        
+        // refactor: playing property in musicplayer? and/or setter method differently
+        [self.controller playTrack:self.musicPlayer.indexOfNowPlayingItem atPosition:self.musicPlayer.currentPlaybackTime volume:self.musicPlayer.volume];
+        if(self.musicPlayer.playbackState == MPMusicPlaybackStatePlaying) {
+            [self.controller play];
+        } else {
+            [self.controller pause];
+        }
+
+        self.controller.delegate = self;
+    }
 }
 
 - (NSString *)musicPlayer:(BeamMusicPlayerViewController *)player albumForTrack:(NSUInteger)trackNumber
@@ -151,8 +151,8 @@
     MPMediaItem *item = [self mediaItemAtIndex:trackNumber];
     MPMediaItemArtwork *artwork = [item valueForProperty:MPMediaItemPropertyArtwork];
     if (artwork) {
-//        UIImage *foo = [artwork imageWithSize:player.preferredSizeForCoverArt];
-//        receivingBlock(foo, nil);
+        UIImage *foo = [artwork imageWithSize:player.preferredSizeForCoverArt];
+        receivingBlock(foo, nil);
     } else {
         receivingBlock(nil,nil);
     }
@@ -166,13 +166,13 @@
         [self.musicPlayer setNowPlayingItem:[self mediaItemAtIndex:track]];
     } else {
         DLogPurple(@"");
-//        int delta = track - self.musicPlayer.indexOfNowPlayingItem;
-//        if(delta > 0)
-//            [self.musicPlayer skipToNextItem];
-//        if(delta == 0)
-//            [self.musicPlayer skipToBeginning];
-//        if(delta < 0)
-//            [self.musicPlayer skipToPreviousItem];
+        int delta = track - self.musicPlayer.indexOfNowPlayingItem;
+        if(delta > 0)
+            [self.musicPlayer skipToNextItem];
+        if(delta == 0)
+            [self.musicPlayer skipToBeginning];
+        if(delta < 0)
+            [self.musicPlayer skipToPreviousItem];
     }
     return self.musicPlayer.indexOfNowPlayingItem;
 }

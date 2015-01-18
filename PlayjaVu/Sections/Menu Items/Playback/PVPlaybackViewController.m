@@ -7,14 +7,15 @@
 //  Copyright (c) 2012 BeamApp UG. All rights reserved.
 //
 
-#import "BeamMusicPlayerViewController.h"
-#import "BeamMPMusicPlayerProvider.h"
+#import "PVPlaybackViewController.h"
+#import "PVPlaybackViewModel.h"
+#import "SlideNavigationController.h"
 #import "NSDateFormatter+Duration.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "AutoScrollLabel.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface BeamMusicPlayerViewController()
+@interface PVPlaybackViewController()
 @property (weak, nonatomic) IBOutlet UISlider *volumeSlider; // Volume Slider
 @property (weak, nonatomic) IBOutlet UISlider *progressSlider; // Progress Slider buried in the Progress View
 @property (weak, nonatomic) IBOutlet AutoScrollLabel *trackTitleLabel; // The Title Label
@@ -40,125 +41,25 @@
 @property (weak, nonatomic) IBOutlet UIImageView *scrobbleHighlightShadow; // It's reflection
 @property (weak, nonatomic) IBOutlet UIView *controlView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
-
-/// The BeamMusicPlayerDelegate object that acts as the delegate of the receiving music player.
-@property (assign, nonatomic) id <BeamMusicPlayerDelegate> delegate;
-/// The BeamMusicPlayerDataSource object that acts as the data source of the receiving music player.
-@property (assign, nonatomic) id <BeamMusicPlayerDataSource> dataSource;
-/// --------------------------------
-/// @name Controlling Playback and Sound
-/// --------------------------------
-
-/// The index of the currently set track
-@property (nonatomic) NSInteger currentTrack;
-
-/// YES, if the player is in play-state
-@property (nonatomic) BOOL playing;
-
-/// The Current Playback position in seconds
-@property (nonatomic) CGFloat currentPlaybackPosition;
-
-/// The current repeat mode of the player.
-@property (nonatomic) MPMusicRepeatMode repeatMode;
-
-/// YES, if the player is shuffling
-@property (nonatomic) BOOL shuffling;
-
-/// The Volume of the player. Valid values range from 0.0f to 1.0f
-@property (nonatomic) CGFloat volume;
-
-/**
- * Plays a given track using the supplied options.
- *
- * @param track the track that's to be played
- * @param position the position in the track at which the playback should begin
- * @param volume the Volume of the playback
- */
-- (void)playTrack:(NSUInteger)track atPosition:(CGFloat)position volume:(CGFloat)volume;
-
-/**
- * Shows or Hides the scrobble overlay in 3.5 inch displays
- *
- * @param show Yes, to show, No to hide overlay
- * @param animated Yes, to smoothly fade overlay
- */
-- (void)showScrobbleOverlay:(BOOL)show animated:(BOOL)animated;
-
-/**
- * Starts playback. If the player is already playing, this method does nothing except wasting some cycles.
- */
-- (void)play;
-
-/**
- * Starts playing the specified track. If the track is already playing, this method does nothing.
- */
-//- (void)playTrack:(NSUInteger)track;
-
-/**
- * Pauses the player. If the player is already paused, this method does nothing except generating some heat.
- */
-- (void)pause;
-
-/**
- * Stops the Player. If the player is already stopped, this method does nothing but seeks to the beginning of the current song.
- */
-- (void)stop;
-
-/**
- * Skips to the next track.
- *
- * If there is no next track, this method does nothing, if there is, it skips one track forward and informs the delegate.
- * In case [BeamMusicPlayerDelegate musicPlayer:shouldChangeTrack:] returns NO, the track is not changed.
- */
-- (void)next;
-
-/**
- * Skips to the previous track.
- *
- * If there is no previous track, i.e. the current track number is 0, this method does nothing, if there is, it skips one track backward and informs the delegate.
- * In case the [BeamMusicPlayerDelegate musicPlayer:shouldChangeTrack:] returns NO, the track is not changed.
- */
-- (void)previous;
-
-
-/// --------------------------------
-/// @name Controlling User Interaction
-/// --------------------------------
-
-/// If set to yes, the Previous-Track Button will be disabled if the first track of the set is played or set.
-@property (nonatomic) BOOL shouldHidePreviousTrackButtonAtBoundary;
-
-/// If set to yes, the Next-Track Button will be disabled if the last track of the set is played or set.
-@property (nonatomic) BOOL shouldHideNextTrackButtonAtBoundary;
-
-/// --------------------------------
-/// @name Misc
-/// --------------------------------
-
-/// The preferred size for cover art in pixels
-@property (nonatomic) CGSize preferredSizeForCoverArt;
-
-/// yes, if data source provided cover art for current song
-@property (nonatomic) BOOL customCovertArtLoaded;
-
-/// Timespan before placeholder for albumart will be set (default is 0.5). Supports long loading times.
-@property (nonatomic, assign) float placeholderImageDelay;
-@property (nonatomic, strong) NSTimer *playbackTickTimer; // Ticks each seconds when playing.
-@property (nonatomic, strong) UITapGestureRecognizer *coverArtGestureRecognizer; // Tap Recognizer used to dim in / out the scrobble overlay.
-@property (nonatomic) CGFloat currentTrackLength; // The Length of the currently playing track
-@property (nonatomic) NSInteger numberOfTracks; // Number of tracks, <0 if unknown
-@property (nonatomic) BOOL numberOfTracksAvailable;
-@property (nonatomic) BOOL scrobbling; // Whether the player is currently scrobbling
-@property (nonatomic) BOOL lastDirectionChangePositive; // Whether the last direction change was positive.
+@property (strong, nonatomic) UITapGestureRecognizer *coverArtGestureRecognizer; // Tap Recognizer used to dim in / out the scrobble overlay.
+@property (strong, nonatomic) PVPlaybackViewModel *viewModel;
 @end
 
-@implementation BeamMusicPlayerViewController
+@implementation PVPlaybackViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        [self configureViewModel];
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/black_linen_v2"]];
     
     // Scrobble overlay should always be visible on tall phones
     if(IS_IPHONE_4_OR_LESS) {
@@ -208,22 +109,7 @@
     self.trackTitleLabel.textColor = [UIColor whiteColor];
     [self.trackTitleLabel setFont:[UIFont boldSystemFontOfSize:12]];
     
-    self.placeholderImageDelay = 0.5;
-    
-    
-    
-    BeamMPMusicPlayerProvider *mpMusicPlayerProvider = [BeamMPMusicPlayerProvider new];
-    mpMusicPlayerProvider.controller = self;
-    NSAssert(self.delegate == mpMusicPlayerProvider, @"setController: sets itself as delegate");
-    NSAssert(self.dataSource == mpMusicPlayerProvider, @"setController: sets itself as datasource");
-    
-    mpMusicPlayerProvider.musicPlayer = [MPMusicPlayerController systemMusicPlayer];
-    
-    MPMediaQuery *mq = [MPMediaQuery songsQuery];
-    [MPMusicPlayerController.systemMusicPlayer setQueueWithQuery:mq];
-    mpMusicPlayerProvider.mediaItems = mq.items;
-//    self.exampleProvider = mpMusicPlayerProvider;
-    mpMusicPlayerProvider.musicPlayer.nowPlayingItem = [mpMusicPlayerProvider.mediaItems objectAtIndex:2];
+    self.viewModel.placeholderImageDelay = 0.5;
     
     self.shouldHideNextTrackButtonAtBoundary = YES;
     self.shouldHidePreviousTrackButtonAtBoundary = YES;
@@ -236,12 +122,16 @@
     self.coverArtGestureRecognizer = nil;
 }
 
+- (void)configureViewModel
+{
+    _viewModel = [[PVPlaybackViewModel alloc] init];
+}
 
 #pragma mark - Playback Management
 
 - (BOOL)numberOfTracksAvailable
 {
-    return self.numberOfTracks >= 0;
+    return self.viewModel.numberOfTracks >= 0;
 }
 
 - (void)setAlbumArtToPlaceholder
@@ -255,103 +145,117 @@
 - (void)updateUIForCurrentTrack
 {
     //set VolumeSlider initially
-    if ([self.dataSource respondsToSelector:@selector(volumeForMusicPlayer:)]) {
-        [self setVolume:[self.dataSource volumeForMusicPlayer:self]];
-    }
+#warning is this correct?
+    [self.viewModel setVolume:[self.viewModel volume]];
     
-    self.artistNameLabel.text = [self.dataSource musicPlayer:self artistForTrack:self.currentTrack];
-    self.trackTitleLabel.text = [self.dataSource musicPlayer:self titleForTrack:self.currentTrack];
-    self.albumTitleLabel.text = [self.dataSource musicPlayer:self albumForTrack:self.currentTrack];
+    self.artistNameLabel.text = [self.viewModel artistForTrack:self.viewModel.currentTrack];
+    self.trackTitleLabel.text = [self.viewModel titleForTrack:self.viewModel.currentTrack];
+    self.albumTitleLabel.text = [self.viewModel albumForTrack:self.viewModel.currentTrack];
 
     // set coverart to placeholder at a later point in time. Might be cancelled if datasource provides different image (see below)
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setAlbumArtToPlaceholder) object:nil];
-    [self performSelector:@selector(setAlbumArtToPlaceholder) withObject:nil afterDelay:self.placeholderImageDelay];
+    [self performSelector:@selector(setAlbumArtToPlaceholder) withObject:nil afterDelay:self.viewModel.placeholderImageDelay];
 
     // We only request the coverart if the delegate responds to it.
-    self.customCovertArtLoaded = NO;
-    if ([self.dataSource respondsToSelector:@selector(musicPlayer:artworkForTrack:receivingBlock:)]) {
+    self.viewModel.customCovertArtLoaded = NO;
+    
+//    // TODO: this transition needs to be overhauled before going live
+//    CATransition* transition = [CATransition animation];
+//    transition.type = kCATransitionPush;
+//    transition.subtype = self.lastDirectionChangePositive ? kCATransitionFromRight : kCATransitionFromLeft;
+//    [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+//    [[self.albumArtImageView layer] addAnimation:transition forKey:@"SlideOutandInImagek"];
+//    
+//    [[self.albumArtReflection layer] addAnimation:transition forKey:@"SlideOutandInImagek"];
+    
+    // Copy the current track to another variable, otherwise we would just access the current one.
+    NSUInteger track = self.viewModel.currentTrack;
+    
+    // Request the image.
+    [self.viewModel artworkForTrack:self.viewModel.currentTrack receivingBlock:^(UIImage *image, NSError *__autoreleasing *error) {
         
-        // TODO: this transition needs to be overhauled before going live
-//        CATransition* transition = [CATransition animation];
-//        transition.type = kCATransitionPush;
-//        transition.subtype = self.lastDirectionChangePositive ? kCATransitionFromRight : kCATransitionFromLeft;
-//        [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-//        [[self.albumArtImageView layer] addAnimation:transition forKey:@"SlideOutandInImagek"];
-//
-//        [[self.albumArtReflection layer] addAnimation:transition forKey:@"SlideOutandInImagek"];
-
-        // Copy the current track to another variable, otherwise we would just access the current one.
-        NSUInteger track = self.currentTrack;
-        
-        // Request the image.
-        [self.dataSource musicPlayer:self artworkForTrack:self.currentTrack receivingBlock:^(UIImage *image, NSError *__autoreleasing *error) {
+        if (track == self.viewModel.currentTrack) {
             
-            if (track == self.currentTrack) {
-            
-                // If there is no image given, stay with the placeholder
-                if (image  != nil) {
-
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setAlbumArtToPlaceholder) object:nil];
-                        self.albumArtImageView.image = image;
-                        self.customCovertArtLoaded = YES;
-                    });
-                }
-            
-            } else {
-                DLog(@"Discarded CoverArt for track: %lu, current track already moved to %ld.", (unsigned long)track, (long)self.currentTrack);
+            // If there is no image given, stay with the placeholder
+            if (image  != nil) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setAlbumArtToPlaceholder) object:nil];
+                    self.albumArtImageView.image = image;
+                    self.viewModel.customCovertArtLoaded = YES;
+                });
             }
-        }];
-    }
+            
+        } else {
+            DLog(@"Discarded CoverArt for track: %lu, current track already moved to %ld.", (unsigned long)track, (long)self.viewModel.currentTrack);
+        }
+    }];
 }
 
+/**
+ * Starts playback. If the player is already playing, this method does nothing except wasting some cycles.
+ */
 - (void)play
 {
-    if (!self.playing) {
-        self.playing = YES;
+    if (!self.viewModel.playing) {
+        self.viewModel.playing = YES;
         
-        self.playbackTickTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(playbackTick:) userInfo:nil repeats:YES];
+        self.viewModel.playbackTickTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(playbackTick:) userInfo:nil repeats:YES];
         
-        if ([self.delegate respondsToSelector:@selector(musicPlayerDidStartPlaying:)]) {
-            [self.delegate musicPlayerDidStartPlaying:self];
-        }
+        [self.viewModel startPlaying];
         
         [self adjustPlayButtonState];
     }
 }
 
+/**
+ * Pauses the player. If the player is already paused, this method does nothing except generating some heat.
+ */
 - (void)pause
 {
-    if (self.playing) {
-        self.playing = NO;
-        [self.playbackTickTimer invalidate];
-        self.playbackTickTimer = nil;
+    if (self.viewModel.playing) {
+        self.viewModel.playing = NO;
+        [self.viewModel.playbackTickTimer invalidate];
+        self.viewModel.playbackTickTimer = nil;
         
-        if ([self.delegate respondsToSelector:@selector(musicPlayerDidStopPlaying:)]) {
-            [self.delegate musicPlayerDidStopPlaying:self];
-        }
+        [self.viewModel stopPlaying];
         
         [self adjustPlayButtonState];
     }
 }
 
+/**
+ * Stops the Player. If the player is already stopped, this method does nothing but seeks to the beginning of the current song.
+ */
 - (void)stop
 {
     [self pause];
-    self.currentPlaybackPosition = 0;
+    self.viewModel.currentPlaybackPosition = 0;
     [self updateSeekUI];
 }
 
+/**
+ * Skips to the next track.
+ *
+ * If there is no next track, this method does nothing, if there is, it skips one track forward and informs the delegate.
+ * In case [BeamMusicPlayerDelegate musicPlayer:shouldChangeTrack:] returns NO, the track is not changed.
+ */
 - (void)next
 {
-    self.lastDirectionChangePositive = YES;
-    [self changeTrack:self.currentTrack + 1];
+    self.viewModel.lastDirectionChangePositive = YES;
+    [self changeTrack:self.viewModel.currentTrack + 1];
 }
 
+/**
+ * Skips to the previous track.
+ *
+ * If there is no previous track, i.e. the current track number is 0, this method does nothing, if there is, it skips one track backward and informs the delegate.
+ * In case the [BeamMusicPlayerDelegate musicPlayer:shouldChangeTrack:] returns NO, the track is not changed.
+ */
 - (void)previous
 {
-    self.lastDirectionChangePositive = NO;
-    [self changeTrack:self.currentTrack - 1];
+    self.viewModel.lastDirectionChangePositive = NO;
+    [self changeTrack:self.viewModel.currentTrack - 1];
 }
 
 /*
@@ -361,21 +265,28 @@
 {
     // TODO: deactivate automatic actions via additional property
     // overhaul this method
-    if (self.repeatMode != MPMusicRepeatModeOne) {
+    if (self.viewModel.repeatMode != MPMusicRepeatModeOne) {
         // [self next];  - reactivate me
 
     }
     else {
-        self.currentPlaybackPosition = 0;
+        self.viewModel.currentPlaybackPosition = 0;
         [self updateSeekUI];
     }
 }
 
+/**
+ * Plays a given track using the supplied options.
+ *
+ * @param track the track that's to be played
+ * @param position the position in the track at which the playback should begin
+ * @param volume the Volume of the playback
+ */
 - (void)playTrack:(NSUInteger)track atPosition:(CGFloat)position volume:(CGFloat)volume
 {
     self.volume = volume;
     [self changeTrack:track];
-    self.currentPlaybackPosition = position;
+    self.viewModel.currentPlaybackPosition = position;
     [self updateSeekUI];
     [self play];
 }
@@ -383,7 +294,7 @@
 - (void)updateUI
 {
     // Slider
-    self.progressSlider.maximumValue = self.currentTrackLength;
+    self.progressSlider.maximumValue = self.viewModel.currentTrackLength;
     self.progressSlider.minimumValue = 0;
     
     [self updateUIForCurrentTrack];
@@ -399,18 +310,13 @@
 {
     BOOL shouldChange = YES;
     
-    if ([self.delegate respondsToSelector:@selector(musicPlayer:shouldChangeTrack:)]) {
-        shouldChange = [self.delegate musicPlayer:self shouldChangeTrack:newTrack];
-    }
+    shouldChange = [self.viewModel shouldChangeTrack:newTrack];
     
-    if ([self.dataSource respondsToSelector:@selector(numberOfTracksInPlayer:)]) {
-        self.numberOfTracks = [self.dataSource numberOfTracksInPlayer:self];
-    }
-    else {
-        self.numberOfTracks = -1;
-    }
+#warning review this too
+    self.viewModel.numberOfTracks = [self.viewModel numberOfTracks];
+    
 
-    if (newTrack < 0 || (self.numberOfTracksAvailable && newTrack >= self.numberOfTracks)) {
+    if (newTrack < 0 || (self.numberOfTracksAvailable && newTrack >= self.viewModel.numberOfTracks)) {
         shouldChange = NO;
         // If we can't next, stop the playback.
         // TODO: notify delegate about the fact we felt off the playlist
@@ -418,19 +324,18 @@
     }
     
     if (shouldChange) {
-        if ([self.delegate respondsToSelector:@selector(musicPlayer:didChangeTrack:)]) {
-            newTrack = [self.delegate musicPlayer:self didChangeTrack:newTrack];
-        }
+        newTrack = [self.viewModel didChangeTrack:newTrack];
         
         if (newTrack == NSNotFound) {
             // TODO: notify delegate about the fact we felt off the playlist
             [self pause];
         }
         else {
-            self.currentPlaybackPosition = 0;
-            self.currentTrack = newTrack;
+            self.viewModel.currentPlaybackPosition = 0;
+            self.viewModel.currentTrack = newTrack;
             
-            self.currentTrackLength = [self.dataSource musicPlayer:self lengthForTrack:self.currentTrack];
+#warning review this
+            self.viewModel.currentTrackLength = [self.viewModel lengthForTrack:self.viewModel.currentTrack];
             [self updateUI];
         }
     }
@@ -442,14 +347,10 @@
 - (void)reloadData
 {
     
-    if([self.dataSource respondsToSelector:@selector(numberOfTracksInPlayer:)]) {
-        self.numberOfTracks = [self.dataSource numberOfTracksInPlayer:self];
-    }
-    else {
-        self.numberOfTracks = -1;
-    }
+#warning review these two
+    self.viewModel.numberOfTracks = [self.viewModel numberOfTracks];
+    self.viewModel.currentTrackLength = [self.viewModel lengthForTrack:self.viewModel.currentTrack];
     
-    self.currentTrackLength = [self.dataSource musicPlayer:self lengthForTrack:self.currentTrack];
     [self updateUI];
 }
 
@@ -459,12 +360,12 @@
 - (void)playbackTick:(id)unused
 {
     // Only tick forward if not scrobbling.
-    if (!self.scrobbling) {
-        if (self.currentPlaybackPosition+1.0 > self.currentTrackLength ) {
+    if (!self.viewModel.scrobbling) {
+        if (self.viewModel.currentPlaybackPosition + 1.0 > self.viewModel.currentTrackLength ) {
             [self currentTrackFinished];
         }
         else {
-            self.currentPlaybackPosition += 1.0f;
+            self.viewModel.currentPlaybackPosition += 1.0f;
             [self updateSeekUI];
         }
     }
@@ -475,12 +376,12 @@
  */
 - (void)updateSeekUI
 {
-    NSString* elapsed = [NSDateFormatter formattedDuration:(long)self.currentPlaybackPosition];
-    NSString* remaining = [NSDateFormatter formattedDuration:(self.currentTrackLength-self.currentPlaybackPosition)*-1];
+    NSString *elapsed = [NSDateFormatter formattedDuration:(long)self.viewModel.currentPlaybackPosition];
+    NSString *remaining = [NSDateFormatter formattedDuration:(self.viewModel.currentTrackLength - self.viewModel.currentPlaybackPosition) * -1];
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.timeElapsedLabel.text =elapsed;
-        self.timeRemainingLabel.text =remaining;
-        self.progressSlider.value = self.currentPlaybackPosition;
+        self.timeElapsedLabel.text = elapsed;
+        self.timeRemainingLabel.text = remaining;
+        self.progressSlider.value = self.viewModel.currentPlaybackPosition;
     });
 }
 
@@ -489,15 +390,15 @@
  */
 - (void)updateTrackDisplay
 {
-    if (!self.scrobbling ) {
-        self.numberOfTracksLabel.text = [NSString stringWithFormat:@"Track %ld of %ld", self.currentTrack + 1, (long)self.numberOfTracks];
-        self.numberOfTracksLabel.hidden = !self.numberOfTracksAvailable;
+    if (!self.viewModel.scrobbling ) {
+        self.numberOfTracksLabel.text = [NSString stringWithFormat:@"Track %ld of %ld", self.viewModel.currentTrack + 1, (long)self.viewModel.numberOfTracks];
+        self.numberOfTracksLabel.hidden = !self.viewModel.numberOfTracksAvailable;
     }
 }
 
 - (void)updateRepeatButton
 {
-    MPMusicRepeatMode currentMode = self.repeatMode;
+    MPMusicRepeatMode currentMode = self.viewModel.repeatMode;
     NSString *imageName = nil;
     
     switch (currentMode) {
@@ -532,7 +433,7 @@
 {
     self.shuffling = newShuffling;
     
-    NSString *imageName = (self.shuffling ? @"shuffle_on.png" : @"shuffle_off.png");
+    NSString *imageName = (self.viewModel.shuffling ? @"shuffle_on.png" : @"shuffle_off.png");
     [self.shuffleButton setImage:[UIImage imageNamed:[@"BeamMusicPlayerController.bundle/images/" stringByAppendingString:imageName]] forState:UIControlStateNormal];
 }
 
@@ -558,7 +459,7 @@
 
 - (IBAction)playAction:(UIBarButtonItem *)sender
 {
-    if (self.playing) {
+    if (self.viewModel.playing) {
         [self pause];
     } else {
         [self play];
@@ -576,6 +477,12 @@
     [self previous];
 }
 
+/**
+ * Shows or Hides the scrobble overlay in 3.5 inch displays
+ *
+ * @param show Yes, to show, No to hide overlay
+ * @param animated Yes, to smoothly fade overlay
+ */
 - (void)showScrobbleOverlay:(BOOL)show animated:(BOOL)animated
 {
     if(!IS_IPHONE_4_OR_LESS)
@@ -604,14 +511,14 @@
  */
 - (void)adjustDirectionalButtonStates
 {
-    if (self.numberOfTracksAvailable && self.currentTrack+1 == self.numberOfTracks && self.shouldHideNextTrackButtonAtBoundary ) {
+    if (self.viewModel.numberOfTracksAvailable && self.viewModel.currentTrack + 1 == self.viewModel.numberOfTracks && self.viewModel.shouldHideNextTrackButtonAtBoundary) {
         self.fastForwardButton.enabled = NO;
     }
     else {
         self.fastForwardButton.enabled = YES;
     }
     
-    if (self.numberOfTracksAvailable && self.currentTrack == 0 && self.shouldHidePreviousTrackButtonAtBoundary ) {
+    if (self.viewModel.numberOfTracksAvailable && self.viewModel.currentTrack == 0 && self.viewModel.shouldHidePreviousTrackButtonAtBoundary) {
         self.rewindButton.enabled = NO;
     }
     else {
@@ -624,7 +531,7 @@
  */
 - (void)adjustPlayButtonState
 {
-    if (!self.playing) {
+    if (!self.viewModel.playing) {
         self.playButton.image = [UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/play.png"];
         [self.playButtonIPad setImage:[UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/play.png"] forState:UIControlStateNormal];
     }
@@ -674,7 +581,7 @@
  */
 - (IBAction)sliderDidBeginScrubbing:(id)sender
 {
-    self.scrobbling = YES;
+    self.viewModel.scrobbling = YES;
     [self setScrobbleUI:YES animated:YES];
 }
 
@@ -683,7 +590,7 @@
  */
 - (IBAction)sliderDidEndScrubbing:(id)sender
 {
-    self.scrobbling = NO;
+    self.viewModel.scrobbling = NO;
     [self setScrobbleUI:NO animated:YES];
     [self updateTrackDisplay];
 }
@@ -708,13 +615,11 @@
  */
 - (IBAction)sliderValueChanged:(id)slider
 {
-    self.currentPlaybackPosition = self.progressSlider.value;
+    self.viewModel.currentPlaybackPosition = self.progressSlider.value;
     
 //    [self updateUIForScrubbingSpeed: self.progressSlider.scrubbingSpeed];
     
-    if ([self.delegate respondsToSelector:@selector(musicPlayer:didSeekToPosition:)]) {
-        [self.delegate musicPlayer:self didSeekToPosition:self.currentPlaybackPosition];
-    }
+    [self.viewModel didSeekToPosition:self.viewModel.currentPlaybackPosition];
     
     [self updateSeekUI];
     
@@ -725,9 +630,7 @@
  */
 - (IBAction)volumeSliderValueChanged:(id)sender
 {
-    if ([self.delegate respondsToSelector:@selector(musicPlayer:didChangeVolume:)]) {
-        [self.delegate musicPlayer:self didChangeVolume:self.volumeSlider.value];
-    }
+    [self.viewModel didChangeVolume:self.volumeSlider.value];
 }
 
 /*
@@ -735,7 +638,7 @@
  */
 - (IBAction)repeatModeButtonAction:(id)sender
 {
-    MPMusicRepeatMode currentMode = self.repeatMode;
+    MPMusicRepeatMode currentMode = self.viewModel.repeatMode;
     
     switch (currentMode) {
         case MPMusicRepeatModeDefault:
@@ -752,9 +655,7 @@
             break;
     }
     
-    if ([self.delegate respondsToSelector:@selector(musicPlayer:didChangeRepeatMode:)]) {
-        [self.delegate musicPlayer:self didChangeRepeatMode:self.repeatMode];
-    }
+    [self.viewModel didChangeRepeatMode:self.viewModel.repeatMode];
 }
 
 /*
@@ -762,10 +663,8 @@
  */
 - (IBAction)shuffleButtonAction:(id)sender
 {
-    self.shuffling = !self.shuffling;
-    if ([self.delegate respondsToSelector:@selector(musicPlayer:didChangeShuffleState:)]) {
-        [self.delegate musicPlayer:self didChangeShuffleState:self.shuffling];
-    }
+    self.viewModel.shuffling = !self.viewModel.shuffling;
+    [self.viewModel didChangeShuffleState:self.viewModel.shuffling];
 }
 
 - (IBAction)backButtonAction:(id)sender

@@ -12,6 +12,7 @@
 
 @interface PVPlaybackViewController ()<SlideNavigationControllerDelegate>
 @property (strong, nonatomic) PVPlaybackViewModel *viewModel;
+@property (nonatomic, strong) UITapGestureRecognizer *coverArtGestureRecognizer; // Tap Recognizer used to dim in / out the scrobble overlay.
 @end
 
 @implementation PVPlaybackViewController
