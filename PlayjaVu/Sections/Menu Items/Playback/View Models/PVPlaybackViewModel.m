@@ -143,6 +143,11 @@
     return self.mediaItems ? self.mediaItems.count : -1;
 }
 
+- (BOOL)tracksAreAvailable
+{
+    return self.numberOfTracks >= 0;
+}
+
 - (void)artworkForTrack:(NSUInteger)trackNumber receivingBlock:(void (^)(UIImage *image, NSError **error))receivingBlock
 {
     DLogPurple(@"");

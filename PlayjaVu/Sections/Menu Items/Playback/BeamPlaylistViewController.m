@@ -1,6 +1,6 @@
 //
 //  BeamPlaylistViewController.m
-//  BeamMusicPlayerExample
+//  PVPlaybackExample
 //
 //  Created by Dominik Alexander on 26.06.13.
 //  Copyright (c) 2013 n/a. All rights reserved.

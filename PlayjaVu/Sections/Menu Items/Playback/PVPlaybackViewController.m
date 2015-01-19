@@ -1,6 +1,6 @@
 //
-//  BeamMusicPlayerViewController.m
-//  Part of BeamMusicPlayerViewController (license: New BSD)
+//  PVPlaybackViewController.m
+//  Part of PVPlaybackViewController (license: New BSD)
 //  -> https://github.com/BeamApp/MusicPlayerViewController
 //
 //  Created by Moritz Haarmann on 30.05.12.
@@ -42,6 +42,10 @@
 @property (weak, nonatomic) IBOutlet UIView *controlView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (strong, nonatomic) UITapGestureRecognizer *coverArtGestureRecognizer; // Tap Recognizer used to dim in / out the scrobble overlay.
+/// If set to yes, the Previous-Track Button will be disabled if the first track of the set is played or set.
+@property (nonatomic) BOOL shouldHidePreviousTrackButtonAtBoundary;
+/// If set to yes, the Next-Track Button will be disabled if the last track of the set is played or set.
+@property (nonatomic) BOOL shouldHideNextTrackButtonAtBoundary;
 @property (strong, nonatomic) PVPlaybackViewModel *viewModel;
 @end
 
@@ -61,25 +65,20 @@
 {
     [super viewDidLoad];
     
-    // Scrobble overlay should always be visible on tall phones
-    if(IS_IPHONE_4_OR_LESS) {
-        self.scrobbleOverlay.alpha = 0;
-        self.coverArtGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(coverArtTapped:)];
-        [self.albumArtImageView addGestureRecognizer:self.coverArtGestureRecognizer];
-    }
-    else {
-        self.scrobbleOverlay.alpha = 1;
-    }
+    // Scrobble overlay
+    self.scrobbleOverlay.alpha = 1;
+    self.coverArtGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(coverArtTapped:)];
+    [self.albumArtImageView addGestureRecognizer:self.coverArtGestureRecognizer];
     
     // Progess Slider
-    UIImage *knob = [UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/VolumeKnob"];
+    UIImage *knob = [UIImage imageNamed:@"PVPlaybackController.bundle/images/VolumeKnob"];
     [self.progressSlider setThumbImage:knob forState:UIControlStateNormal];
     self.progressSlider.maximumTrackTintColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
     
     // Volume Slider
-    UIImage *minImg = [[UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/speakerSliderMinValue.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 16, 0, 16)];
-    UIImage *maxImg = [[UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/speakerSliderMaxValue.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 16, 0, 16)];
-    UIImage *knobImg = [UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/speakerSliderKnob.png"];
+    UIImage *minImg = [[UIImage imageNamed:@"PVPlaybackController.bundle/images/speakerSliderMinValue.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 16, 0, 16)];
+    UIImage *maxImg = [[UIImage imageNamed:@"PVPlaybackController.bundle/images/speakerSliderMaxValue.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 16, 0, 16)];
+    UIImage *knobImg = [UIImage imageNamed:@"PVPlaybackController.bundle/images/speakerSliderKnob.png"];
     [self.volumeSlider setThumbImage:knobImg forState:UIControlStateNormal];
     [self.volumeSlider setThumbImage:knobImg forState:UIControlStateHighlighted];
     [self.volumeSlider setMinimumTrackImage:minImg forState:UIControlStateNormal];
@@ -109,8 +108,6 @@
     self.trackTitleLabel.textColor = [UIColor whiteColor];
     [self.trackTitleLabel setFont:[UIFont boldSystemFontOfSize:12]];
     
-    self.viewModel.placeholderImageDelay = 0.5;
-    
     self.shouldHideNextTrackButtonAtBoundary = YES;
     self.shouldHidePreviousTrackButtonAtBoundary = YES;
 }
@@ -125,18 +122,14 @@
 - (void)configureViewModel
 {
     _viewModel = [[PVPlaybackViewModel alloc] init];
+    _viewModel.placeholderImageDelay = 0.5;
 }
 
 #pragma mark - Playback Management
 
-- (BOOL)numberOfTracksAvailable
-{
-    return self.viewModel.numberOfTracks >= 0;
-}
-
 - (void)setAlbumArtToPlaceholder
 {
-    self.albumArtImageView.image = [UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/noartplaceholder.png"];
+    self.albumArtImageView.image = [UIImage imageNamed:@"PVPlaybackController.bundle/images/noartplaceholder.png"];
 }
 
 /**
@@ -238,7 +231,7 @@
  * Skips to the next track.
  *
  * If there is no next track, this method does nothing, if there is, it skips one track forward and informs the delegate.
- * In case [BeamMusicPlayerDelegate musicPlayer:shouldChangeTrack:] returns NO, the track is not changed.
+ * In case [PVPlaybackDelegate musicPlayer:shouldChangeTrack:] returns NO, the track is not changed.
  */
 - (void)next
 {
@@ -250,7 +243,7 @@
  * Skips to the previous track.
  *
  * If there is no previous track, i.e. the current track number is 0, this method does nothing, if there is, it skips one track backward and informs the delegate.
- * In case the [BeamMusicPlayerDelegate musicPlayer:shouldChangeTrack:] returns NO, the track is not changed.
+ * In case the [PVPlaybackDelegate musicPlayer:shouldChangeTrack:] returns NO, the track is not changed.
  */
 - (void)previous
 {
@@ -316,7 +309,7 @@
     self.viewModel.numberOfTracks = [self.viewModel numberOfTracks];
     
 
-    if (newTrack < 0 || (self.numberOfTracksAvailable && newTrack >= self.viewModel.numberOfTracks)) {
+    if (newTrack < 0 || (self.viewModel.tracksAreAvailable && newTrack >= self.viewModel.numberOfTracks)) {
         shouldChange = NO;
         // If we can't next, stop the playback.
         // TODO: notify delegate about the fact we felt off the playlist
@@ -347,8 +340,8 @@
 - (void)reloadData
 {
     
-#warning review these two
-    self.viewModel.numberOfTracks = [self.viewModel numberOfTracks];
+//#warning review these two
+//    self.viewModel.numberOfTracks = [self.viewModel numberOfTracks];
     self.viewModel.currentTrackLength = [self.viewModel lengthForTrack:self.viewModel.currentTrack];
     
     [self updateUI];
@@ -392,7 +385,7 @@
 {
     if (!self.viewModel.scrobbling ) {
         self.numberOfTracksLabel.text = [NSString stringWithFormat:@"Track %ld of %ld", self.viewModel.currentTrack + 1, (long)self.viewModel.numberOfTracks];
-        self.numberOfTracksLabel.hidden = !self.viewModel.numberOfTracksAvailable;
+        self.numberOfTracksLabel.hidden = !self.viewModel.tracksAreAvailable;
     }
 }
 
@@ -415,7 +408,7 @@
     }
     
     if (imageName) {
-            [self.repeatButton setImage:[UIImage imageNamed:[@"BeamMusicPlayerController.bundle/images/" stringByAppendingString:imageName]] forState:UIControlStateNormal];
+            [self.repeatButton setImage:[UIImage imageNamed:[@"PVPlaybackController.bundle/images/" stringByAppendingString:imageName]] forState:UIControlStateNormal];
     }
 }
 
@@ -434,7 +427,7 @@
     self.shuffling = newShuffling;
     
     NSString *imageName = (self.viewModel.shuffling ? @"shuffle_on.png" : @"shuffle_off.png");
-    [self.shuffleButton setImage:[UIImage imageNamed:[@"BeamMusicPlayerController.bundle/images/" stringByAppendingString:imageName]] forState:UIControlStateNormal];
+    [self.shuffleButton setImage:[UIImage imageNamed:[@"PVPlaybackController.bundle/images/" stringByAppendingString:imageName]] forState:UIControlStateNormal];
 }
 
 #pragma mark - Volume
@@ -511,14 +504,15 @@
  */
 - (void)adjustDirectionalButtonStates
 {
-    if (self.viewModel.numberOfTracksAvailable && self.viewModel.currentTrack + 1 == self.viewModel.numberOfTracks && self.viewModel.shouldHideNextTrackButtonAtBoundary) {
+    DLogPurple(@"");
+    if (self.viewModel.tracksAreAvailable && self.viewModel.currentTrack + 1 == self.viewModel.numberOfTracks && self.shouldHideNextTrackButtonAtBoundary) {
         self.fastForwardButton.enabled = NO;
     }
     else {
         self.fastForwardButton.enabled = YES;
     }
     
-    if (self.viewModel.numberOfTracksAvailable && self.viewModel.currentTrack == 0 && self.viewModel.shouldHidePreviousTrackButtonAtBoundary) {
+    if (self.viewModel.tracksAreAvailable && self.viewModel.currentTrack == 0 && self.shouldHidePreviousTrackButtonAtBoundary) {
         self.rewindButton.enabled = NO;
     }
     else {
@@ -532,26 +526,26 @@
 - (void)adjustPlayButtonState
 {
     if (!self.viewModel.playing) {
-        self.playButton.image = [UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/play.png"];
-        [self.playButtonIPad setImage:[UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/play.png"] forState:UIControlStateNormal];
+        self.playButton.image = [UIImage imageNamed:@"PVPlaybackController.bundle/images/play.png"];
+        [self.playButtonIPad setImage:[UIImage imageNamed:@"PVPlaybackController.bundle/images/play.png"] forState:UIControlStateNormal];
     }
     else {
-        self.playButton.image = [UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/pause.png"];
-        [self.playButtonIPad setImage:[UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/pause.png"] forState:UIControlStateNormal];
+        self.playButton.image = [UIImage imageNamed:@"PVPlaybackController.bundle/images/pause.png"];
+        [self.playButtonIPad setImage:[UIImage imageNamed:@"PVPlaybackController.bundle/images/pause.png"] forState:UIControlStateNormal];
     }
 }
 
-- (void)setShouldHideNextTrackButtonAtBoundary:(BOOL)newShouldHideNextTrackButtonAtBoundary
-{
-    self.shouldHideNextTrackButtonAtBoundary = newShouldHideNextTrackButtonAtBoundary;
-    [self adjustDirectionalButtonStates];
-}
-
-- (void)setShouldHidePreviousTrackButtonAtBoundary:(BOOL)newShouldHidePreviousTrackButtonAtBoundary
-{
-    self.shouldHidePreviousTrackButtonAtBoundary = newShouldHidePreviousTrackButtonAtBoundary;
-    [self adjustDirectionalButtonStates];
-}
+//- (void)setShouldHideNextTrackButtonAtBoundary:(BOOL)newShouldHideNextTrackButtonAtBoundary
+//{
+//    self.shouldHideNextTrackButtonAtBoundary = newShouldHideNextTrackButtonAtBoundary;
+//    [self adjustDirectionalButtonStates];
+//}
+//
+//- (void)setShouldHidePreviousTrackButtonAtBoundary:(BOOL)newShouldHidePreviousTrackButtonAtBoundary
+//{
+//    self.shouldHidePreviousTrackButtonAtBoundary = newShouldHidePreviousTrackButtonAtBoundary;
+//    [self adjustDirectionalButtonStates];
+//}
 
 #pragma mark - scrubbing slider
 

@@ -1,6 +1,6 @@
 //
 //  BeamPlaylistTableViewCell.m
-//  BeamMusicPlayerExample
+//  PVPlaybackExample
 //
 //  Created by Dominik Alexander on 26.06.13.
 //  Copyright (c) 2013 n/a. All rights reserved.
@@ -132,7 +132,7 @@
     // Show playing image if it is the current song
     if (currentSong)
     {
-        [self.playingImageView setImage:[UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/playing"]];
+        [self.playingImageView setImage:[UIImage imageNamed:@"PVPlaybackController.bundle/images/playing"]];
     }
     else
     {
