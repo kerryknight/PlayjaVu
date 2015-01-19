@@ -93,7 +93,7 @@
     static NSDateFormatter *formatter = nil;
     if (!formatter) {
         formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd/mm/yyyy"];
+        [formatter setDateFormat:@"MM/dd/yyyy"]; // facebook's format 
     }
     return formatter;
 }

@@ -53,8 +53,8 @@ typedef enum {
     // this includes profile pic and friends list from FB.
     FBSession *session = [PFFacebookUtils session];
     
-    DLogBlue(@"session: %@", session);
-    DLogBlue(@"user: %@", [PFUser currentUser]);
+//    DLogBlue(@"session: %@", session);
+//    DLogBlue(@"user: %@", [PFUser currentUser]);
     
     if (!session.isOpen) {
         DLogRed(@"FB Session does not exist, logout");
