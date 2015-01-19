@@ -46,6 +46,7 @@
 	bufferSpaceBetweenLabels = LABEL_BUFFER_SPACE;
 	self.scrollView.showsVerticalScrollIndicator = NO;
 	self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.scrollsToTop = NO;
 	self.userInteractionEnabled = NO;
     
 
@@ -81,7 +82,7 @@
     return self;
 }
 
-- (void)awakeFromNib {
+-(void)awakeFromNib {
     UIImage* fadeImage = [UIImage imageNamed:@"BeamMusicPlayerController.bundle/images/fade_overlay.png"];
 
     // Set the frame
@@ -194,7 +195,7 @@
 
 }
 
-- (void)showLeftShadow:(NSNumber*)show {
+-(void)showLeftShadow:(NSNumber*)show {
     BOOL shouldShow = show.boolValue;
     UIColor* color = shouldShow? [UIColor clearColor] : [UIColor whiteColor];
     self.leftShadowMask.backgroundColor = color.CGColor;
@@ -351,7 +352,7 @@
 	return scrollDirection;
 }
 
-- (void)layoutSubviews {
+-(void)layoutSubviews {
     [self readjustLabels];
 }
 
