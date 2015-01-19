@@ -41,12 +41,12 @@
         // enable logging
         [Parse setLogLevel:PFLogLevelDebug];
         
-#warning BE SURE TO TURN THE RUN SCRIPT BACK ON TOO FOR SYMBOL UPLOAD
-        // Enable crash reporting on Parse
-        [ParseCrashReporting enable];
-        
-        // enable Parse local sqlite data store
-        [Parse enableLocalDatastore];
+//#warning BE SURE TO TURN THE RUN SCRIPT BACK ON TOO FOR SYMBOL UPLOAD
+//        // Enable crash reporting on Parse
+//        [ParseCrashReporting enable];
+//        
+//        // enable Parse local sqlite data store
+//        [Parse enableLocalDatastore];
         
         // initialize everything
         [Parse setApplicationId:kParseApplicationID clientKey:kParseApplicationClientKey];
@@ -93,7 +93,7 @@
     static NSDateFormatter *formatter = nil;
     if (!formatter) {
         formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd"];
+        [formatter setDateFormat:@"dd/mm/yyyy"];
     }
     return formatter;
 }

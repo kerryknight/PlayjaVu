@@ -11,7 +11,7 @@
 
 @interface PVPlaybackViewModel : NSObject
 
-@property (strong, nonatomic) MPVolumeView *view;
+@property (strong, nonatomic) MPVolumeView *volumeView;
 
 @property (copy, nonatomic) NSArray *mediaItems;
 
@@ -96,12 +96,12 @@
 /**
  * Returns the artwork for a given track.
  *
- * The artwork is returned using a receiving block void(^)(UIImage *image, NSError **error) that takes an UIImage and an optional error. If you supply nil as an image, a placeholder will be shown.
+ * The artwork is returned using a receiving block void(^)(MPMediaItemArtwork *mediaArt, NSError **error) that takes an MPMediaItemArtwork and an optional error. If you supply nil as an image, a placeholder will be shown.
  * @param trackNumber the index of the track for which the artwork is requested.
- * @param receivingBlock a block of type void(^)(UIImage *image, NSError **error) that needs to be called when the image is prepared by the receiver.
+ * @param receivingBlock a block of type void(^)(MPMediaItemArtwork *mediaArt, NSError **error) that needs to be called when the image is prepared by the receiver.
  * @see [PVPlaybackViewController preferredSizeForCoverArt]
  */
-- (void)artworkForTrack:(NSUInteger)trackNumber receivingBlock:(void(^)(UIImage *image, NSError **error))receivingBlock;
+- (void)artworkForTrack:(NSUInteger)trackNumber receivingBlock:(void(^)(MPMediaItemArtwork *mediaArt, NSError **error))receivingBlock;
 
 /**
  * Called by the player after the player started playing a song.

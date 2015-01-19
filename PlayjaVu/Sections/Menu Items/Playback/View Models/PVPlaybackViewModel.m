@@ -21,17 +21,35 @@
     if (self) {
         // This HACK hides the volume overlay when changing the volume.
         // It's insipired by http://stackoverflow.com/questions/3845222/iphone-sdk-how-to-disable-the-volume-indicator-view-if-the-hardware-buttons-ar
-        _view = [MPVolumeView new];
+        _volumeView = [MPVolumeView new];
         // Put it far offscreen
-        _view.frame = CGRectMake(1000, 1000, 120, 12);
+        _volumeView.frame = CGRectMake(1000, 1000, 120, 12);
         
-        [[UIApplication sharedApplication].keyWindow addSubview:_view];
-        
-        _musicPlayer = [MPMusicPlayerController systemMusicPlayer];
+        [[UIApplication sharedApplication].keyWindow addSubview:_volumeView];
         
         MPMediaQuery *mq = [MPMediaQuery songsQuery];
-        [MPMusicPlayerController.systemMusicPlayer setQueueWithQuery:mq];
-        _mediaItems = mq.items;
+        _musicPlayer = [MPMusicPlayerController systemMusicPlayer];
+        
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver: self
+               selector: @selector (propagateMusicPlayerState)
+                   name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                 object: self.musicPlayer];
+        [nc addObserver: self
+               selector: @selector (propagateMusicPlayerState)
+                   name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
+                 object: self.musicPlayer];
+        [nc addObserver: self
+               selector: @selector (handleVolumeDidChangeNotification)
+                   name: MPMusicPlayerControllerVolumeDidChangeNotification
+                 object: self.musicPlayer];
+        
+        [_musicPlayer beginGeneratingPlaybackNotifications];
+        
+        [self propagateMusicPlayerState];
+        
+        _mediaItems = [mq.items copy];
+        [_musicPlayer setQueueWithQuery:mq];
         _musicPlayer.nowPlayingItem = _mediaItems[0];
     }
     
@@ -41,11 +59,22 @@
 #pragma mark - Private Methods
 - (void)handleVolumeDidChangeNotification
 {
+    DLogOrange(@"");
 //    self.controller.volume = self.musicPlayer.volume;
 }
 
-- (void)setMusicPlayer:(MPMusicPlayerController *)value
+- (MPMediaItem *)mediaItemAtIndex:(NSUInteger)index
 {
+    if (self.mediaItems == nil || self.mediaItems.count == 0)
+        return self.musicPlayer.nowPlayingItem;
+    else
+        return self.mediaItems[index];
+}
+
+- (void)dealloc
+{
+    DLogOrange(@"");
+    
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
     [nc removeObserver:self name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification object:self.musicPlayer];
@@ -53,45 +82,7 @@
     [nc removeObserver:self name:MPMusicPlayerControllerVolumeDidChangeNotification object:self.musicPlayer];
     [self.musicPlayer endGeneratingPlaybackNotifications];
     
-    self.musicPlayer = value;
-    
-    [nc addObserver: self
-           selector: @selector (propagateMusicPlayerState)
-               name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-             object: self.musicPlayer];
-    [nc addObserver: self
-           selector: @selector (propagateMusicPlayerState)
-               name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-             object: self.musicPlayer];
-    [nc addObserver: self
-           selector: @selector (handleVolumeDidChangeNotification)
-               name: MPMusicPlayerControllerVolumeDidChangeNotification
-             object: self.musicPlayer];
-    
-    [self.musicPlayer beginGeneratingPlaybackNotifications];
-    
-    [self propagateMusicPlayerState];
-}
-
-- (void)setMediaItems:(NSArray *)value
-{
-    self.mediaItems = [value copy];
-//    [self.controller reloadData];
-}
-
-- (MPMediaItem *)mediaItemAtIndex:(NSUInteger)index
-{
-    if(self.mediaItems == nil || self.mediaItems.count == 0)
-        return self.musicPlayer.nowPlayingItem;
-    else
-        return [self.mediaItems objectAtIndex:index];
-}
-
-- (void)dealloc
-{
-    // explicit call of setters with nil to deregister from objects
     self.musicPlayer = nil;
-//    self.controller = nil;
 }
 
 #pragma mark - Public Methods
@@ -148,18 +139,11 @@
     return self.numberOfTracks >= 0;
 }
 
-- (void)artworkForTrack:(NSUInteger)trackNumber receivingBlock:(void (^)(UIImage *image, NSError **error))receivingBlock
+- (void)artworkForTrack:(NSUInteger)trackNumber receivingBlock:(void (^)(MPMediaItemArtwork *mediaArt, NSError **error))receivingBlock
 {
-    DLogPurple(@"");
-    
     MPMediaItem *item = [self mediaItemAtIndex:trackNumber];
     MPMediaItemArtwork *artwork = [item valueForProperty:MPMediaItemPropertyArtwork];
-//    if (artwork) {
-//        UIImage *foo = [artwork imageWithSize:player.preferredSizeForCoverArt];
-//        receivingBlock(foo, nil);
-//    } else {
-//        receivingBlock(nil,nil);
-//    }
+    receivingBlock(artwork, nil);
 }
 
 #pragma mark Delegate-like
@@ -194,7 +178,6 @@
 
 - (void)didSeekToPosition:(CGFloat)position
 {
-    DLogPurple(@"");
     [self.musicPlayer setCurrentPlaybackTime:position];
 }
 
@@ -223,7 +206,6 @@
 
 - (void)didChangeVolume:(CGFloat)volume
 {
-    DLogPurple(@"");
     [self.musicPlayer setVolume:volume];
 }
 

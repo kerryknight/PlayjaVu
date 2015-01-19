@@ -165,7 +165,7 @@
                     message = NSLocalizedString(@"Enable logging into PlayjaVu with Facebook by going to Settings > Facebook > and ensuring PlayjaVu is turned ON.", nil);
                 } else {
                     //error logging in, show error message
-                    message = [NSString stringWithFormat:NSLocalizedString(@"Error: %@ \n\nPlease try again.", nil), [error localizedDescription]];
+                    message = [NSString stringWithFormat:NSLocalizedString(@"%@ \n\nPlease try again.", nil), [FBErrorUtility userMessageForError:error]];
                 }
                 
                 SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Facebook Login Error" andMessage:message];

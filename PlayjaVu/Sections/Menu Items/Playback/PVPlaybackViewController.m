@@ -137,10 +137,6 @@
  */
 - (void)updateUIForCurrentTrack
 {
-    //set VolumeSlider initially
-#warning is this correct?
-    [self.viewModel setVolume:[self.viewModel volume]];
-    
     self.artistNameLabel.text = [self.viewModel artistForTrack:self.viewModel.currentTrack];
     self.trackTitleLabel.text = [self.viewModel titleForTrack:self.viewModel.currentTrack];
     self.albumTitleLabel.text = [self.viewModel albumForTrack:self.viewModel.currentTrack];
@@ -165,16 +161,18 @@
     NSUInteger track = self.viewModel.currentTrack;
     
     // Request the image.
-    [self.viewModel artworkForTrack:self.viewModel.currentTrack receivingBlock:^(UIImage *image, NSError *__autoreleasing *error) {
+    [self.viewModel artworkForTrack:self.viewModel.currentTrack receivingBlock:^(MPMediaItemArtwork *mediaArt, NSError *__autoreleasing *error) {
         
         if (track == self.viewModel.currentTrack) {
             
             // If there is no image given, stay with the placeholder
-            if (image  != nil) {
+            if (mediaArt) {
+                UIImage *artwork = [mediaArt imageWithSize:self.preferredSizeForCoverArt];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setAlbumArtToPlaceholder) object:nil];
-                    self.albumArtImageView.image = image;
+                    DLogCyan(@"album image: %@", artwork);
+                    self.albumArtImageView.image = artwork;
                     self.viewModel.customCovertArtLoaded = YES;
                 });
             }
@@ -305,8 +303,8 @@
     
     shouldChange = [self.viewModel shouldChangeTrack:newTrack];
     
-#warning review this too
-    self.viewModel.numberOfTracks = [self.viewModel numberOfTracks];
+//#warning review this too
+//    self.viewModel.numberOfTracks = [self.viewModel numberOfTracks];
     
 
     if (newTrack < 0 || (self.viewModel.tracksAreAvailable && newTrack >= self.viewModel.numberOfTracks)) {
@@ -327,8 +325,6 @@
             self.viewModel.currentPlaybackPosition = 0;
             self.viewModel.currentTrack = newTrack;
             
-#warning review this
-            self.viewModel.currentTrackLength = [self.viewModel lengthForTrack:self.viewModel.currentTrack];
             [self updateUI];
         }
     }
@@ -339,9 +335,6 @@
  */
 - (void)reloadData
 {
-    
-//#warning review these two
-//    self.viewModel.numberOfTracks = [self.viewModel numberOfTracks];
     self.viewModel.currentTrackLength = [self.viewModel lengthForTrack:self.viewModel.currentTrack];
     
     [self updateUI];

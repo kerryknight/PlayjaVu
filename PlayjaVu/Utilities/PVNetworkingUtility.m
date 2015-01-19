@@ -7,7 +7,7 @@
 //
 
 #import "PVNetworkingUtility.h"
-#import "PVFBUtility.h"
+#import "PVFacebookUtility.h"
 
 @implementation PVNetworkingUtility
 
@@ -95,7 +95,7 @@
     //check what type of login we have
     if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
         // logged in with Facebook so refresh our FB data
-        [[PVFBUtility sharedUtility] refreshFacebookUser];
+        [[PVFacebookUtility sharedUtility] refreshFacebookUser];
     } else {
         //we're logged with via a Parse account
         DLog(@"LOGGED IN WITH PARSE OR LOGGED OUT");

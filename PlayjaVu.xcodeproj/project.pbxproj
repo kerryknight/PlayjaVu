@@ -22,7 +22,7 @@
 		F10ED4811A5D1ADE0077CEAE /* PVBaseSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F10ED4801A5D1ADE0077CEAE /* PVBaseSlidingViewController.m */; };
 		F119E3C11A6CD81B00365507 /* NSDateFormatter+Duration.m in Sources */ = {isa = PBXBuildFile; fileRef = F119E3C01A6CD81B00365507 /* NSDateFormatter+Duration.m */; };
 		F119E3C41A6CDB3F00365507 /* AutoScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F119E3C31A6CDB3F00365507 /* AutoScrollLabel.m */; };
-		F119E3C61A6CDC2E00365507 /* BeamMusicPlayerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F119E3C51A6CDC2E00365507 /* BeamMusicPlayerController.bundle */; };
+		F119E3C61A6CDC2E00365507 /* PVPlaybackController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F119E3C51A6CDC2E00365507 /* PVPlaybackController.bundle */; };
 		F119E3CF1A6CDE5400365507 /* PVPlaybackTransparentToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F119E3C81A6CDE5400365507 /* PVPlaybackTransparentToolbar.m */; };
 		F119E3D01A6CDE5400365507 /* BeamPlaylistTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F119E3CA1A6CDE5400365507 /* BeamPlaylistTableViewCell.m */; };
 		F119E3D21A6CDE5400365507 /* BeamRadialGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = F119E3CE1A6CDE5400365507 /* BeamRadialGradientView.m */; };
@@ -35,7 +35,6 @@
 		F145D8021A562F570000D472 /* PFRACCallbacks+PV_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F10BA41D1A5621C500B19739 /* PFRACCallbacks+PV_Extensions.m */; };
 		F146F1F31A561A10002EDD15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F146F1F21A561A10002EDD15 /* AudioToolbox.framework */; };
 		F159E2F61A57B435009560A3 /* PVBaseOnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F159E2F51A57B435009560A3 /* PVBaseOnboardingViewController.m */; };
-		F159E2FF1A57C8FB009560A3 /* PVPlaybackViewControllerOLD.xib in Resources */ = {isa = PBXBuildFile; fileRef = F159E2FC1A57C8FB009560A3 /* PVPlaybackViewControllerOLD.xib */; };
 		F1776FC31A55F572000BCCB2 /* PVLeftMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1776F6E1A55F571000BCCB2 /* PVLeftMenuViewController.xib */; };
 		F1776FC51A55F572000BCCB2 /* STPCardTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F741A55F571000BCCB2 /* STPCardTransition.m */; };
 		F1776FC61A55F572000BCCB2 /* STPSlideUpTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776F761A55F571000BCCB2 /* STPSlideUpTransition.m */; };
@@ -62,13 +61,13 @@
 		F1776FE11A55F572000BCCB2 /* PVCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FBC1A55F572000BCCB2 /* PVCache.m */; };
 		F1776FE21A55F572000BCCB2 /* PVConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FBE1A55F572000BCCB2 /* PVConfig.m */; };
 		F1776FE31A55F572000BCCB2 /* PVNetworkingUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FC11A55F572000BCCB2 /* PVNetworkingUtility.m */; };
+		F17C0F8D1A6CE80900BDEDFC /* PVPlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F17C0F8B1A6CE80900BDEDFC /* PVPlaybackViewController.m */; };
+		F17C0F8E1A6CE80900BDEDFC /* PVPlaybackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F17C0F8C1A6CE80900BDEDFC /* PVPlaybackViewController.xib */; };
 		F198FC651A69FDC700E07A2C /* PVUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F198FC641A69FDC700E07A2C /* PVUtility.m */; };
-		F198FC6A1A6A1B8200E07A2C /* PVFBUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F198FC691A6A1B8200E07A2C /* PVFBUtility.m */; };
+		F198FC6A1A6A1B8200E07A2C /* PVFacebookUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F198FC691A6A1B8200E07A2C /* PVFacebookUtility.m */; };
 		F198FC6E1A6A468800E07A2C /* PVFBFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = F198FC6D1A6A468800E07A2C /* PVFBFriend.m */; };
 		F1AB3F831A5CB57000B55058 /* PVLeftMenuViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1AB3F821A5CB57000B55058 /* PVLeftMenuViewModel.m */; };
 		F1EF6FF11A5873670082FD72 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */; };
-		F1F5C7531A6B01AD0061C101 /* PVPlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F5C74A1A6B01AD0061C101 /* PVPlaybackViewController.m */; };
-		F1F5C7541A6B01AD0061C101 /* PVPlaybackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1F5C74B1A6B01AD0061C101 /* PVPlaybackViewController.xib */; };
 		F1F5C7581A6B03C50061C101 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F5C7571A6B03C50061C101 /* AVFoundation.framework */; };
 		F1F5C75A1A6B040A0061C101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F5C7591A6B040A0061C101 /* CoreAudio.framework */; };
 		F1F5C75C1A6B04150061C101 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F5C75B1A6B04150061C101 /* MediaPlayer.framework */; };
@@ -119,7 +118,7 @@
 		F119E3C01A6CD81B00365507 /* NSDateFormatter+Duration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+Duration.m"; sourceTree = "<group>"; };
 		F119E3C21A6CDB3F00365507 /* AutoScrollLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutoScrollLabel.h; path = "Non-Pod Libraries/AutoScrollLabel.h"; sourceTree = "<group>"; };
 		F119E3C31A6CDB3F00365507 /* AutoScrollLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AutoScrollLabel.m; path = "Non-Pod Libraries/AutoScrollLabel.m"; sourceTree = "<group>"; };
-		F119E3C51A6CDC2E00365507 /* BeamMusicPlayerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BeamMusicPlayerController.bundle; path = PlayjaVu/BeamMusicPlayerController.bundle; sourceTree = SOURCE_ROOT; };
+		F119E3C51A6CDC2E00365507 /* PVPlaybackController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = PVPlaybackController.bundle; path = PlayjaVu/PVPlaybackController.bundle; sourceTree = SOURCE_ROOT; };
 		F119E3C71A6CDE5400365507 /* PVPlaybackTransparentToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVPlaybackTransparentToolbar.h; sourceTree = "<group>"; };
 		F119E3C81A6CDE5400365507 /* PVPlaybackTransparentToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVPlaybackTransparentToolbar.m; sourceTree = "<group>"; };
 		F119E3C91A6CDE5400365507 /* BeamPlaylistTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeamPlaylistTableViewCell.h; sourceTree = "<group>"; };
@@ -142,9 +141,6 @@
 		F146F1F21A561A10002EDD15 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F159E2F41A57B435009560A3 /* PVBaseOnboardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVBaseOnboardingViewController.h; sourceTree = "<group>"; };
 		F159E2F51A57B435009560A3 /* PVBaseOnboardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVBaseOnboardingViewController.m; sourceTree = "<group>"; };
-		F159E2FA1A57C8FB009560A3 /* PVPlaybackViewControllerOLD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVPlaybackViewControllerOLD.h; sourceTree = "<group>"; };
-		F159E2FB1A57C8FB009560A3 /* PVPlaybackViewControllerOLD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVPlaybackViewControllerOLD.m; sourceTree = "<group>"; };
-		F159E2FC1A57C8FB009560A3 /* PVPlaybackViewControllerOLD.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVPlaybackViewControllerOLD.xib; sourceTree = "<group>"; };
 		F1776F6C1A55F571000BCCB2 /* PVLeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVLeftMenuViewController.h; sourceTree = "<group>"; };
 		F1776F6D1A55F571000BCCB2 /* PVLeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVLeftMenuViewController.m; sourceTree = "<group>"; };
 		F1776F6E1A55F571000BCCB2 /* PVLeftMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PVLeftMenuViewController.xib; sourceTree = "<group>"; };
@@ -199,10 +195,13 @@
 		F1776FE41A55F5D2000BCCB2 /* NOTES.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = NOTES.text; path = PlayjaVu/NOTES.text; sourceTree = "<group>"; };
 		F1776FE51A55F5D2000BCCB2 /* System Design Specifications.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "System Design Specifications.text"; path = "PlayjaVu/System Design Specifications.text"; sourceTree = "<group>"; };
 		F1776FE81A55F930000BCCB2 /* PlayjaVu-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PlayjaVu-Prefix.pch"; sourceTree = "<group>"; };
+		F17C0F8A1A6CE80900BDEDFC /* PVPlaybackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVPlaybackViewController.h; path = "PlayjaVu/Sections/Menu Items/Playback/PVPlaybackViewController.h"; sourceTree = SOURCE_ROOT; };
+		F17C0F8B1A6CE80900BDEDFC /* PVPlaybackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PVPlaybackViewController.m; path = "PlayjaVu/Sections/Menu Items/Playback/PVPlaybackViewController.m"; sourceTree = SOURCE_ROOT; };
+		F17C0F8C1A6CE80900BDEDFC /* PVPlaybackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PVPlaybackViewController.xib; path = "PlayjaVu/Sections/Menu Items/Playback/PVPlaybackViewController.xib"; sourceTree = SOURCE_ROOT; };
 		F198FC631A69FDC700E07A2C /* PVUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVUtility.h; sourceTree = "<group>"; };
 		F198FC641A69FDC700E07A2C /* PVUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVUtility.m; sourceTree = "<group>"; };
-		F198FC681A6A1B8200E07A2C /* PVFBUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVFBUtility.h; sourceTree = "<group>"; };
-		F198FC691A6A1B8200E07A2C /* PVFBUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVFBUtility.m; sourceTree = "<group>"; };
+		F198FC681A6A1B8200E07A2C /* PVFacebookUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVFacebookUtility.h; sourceTree = "<group>"; };
+		F198FC691A6A1B8200E07A2C /* PVFacebookUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVFacebookUtility.m; sourceTree = "<group>"; };
 		F198FC6C1A6A468800E07A2C /* PVFBFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVFBFriend.h; sourceTree = "<group>"; };
 		F198FC6D1A6A468800E07A2C /* PVFBFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVFBFriend.m; sourceTree = "<group>"; };
 		F1AB3F811A5CB57000B55058 /* PVLeftMenuViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVLeftMenuViewModel.h; path = "View Models/PVLeftMenuViewModel.h"; sourceTree = "<group>"; };
@@ -211,9 +210,6 @@
 		F1EF6FEA1A586C1E0082FD72 /* PVUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVUser.h; sourceTree = "<group>"; };
 		F1EF6FEB1A586C1E0082FD72 /* PVUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVUser.m; sourceTree = "<group>"; };
 		F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		F1F5C7491A6B01AD0061C101 /* PVPlaybackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVPlaybackViewController.h; path = ../PVPlaybackViewController.h; sourceTree = "<group>"; };
-		F1F5C74A1A6B01AD0061C101 /* PVPlaybackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PVPlaybackViewController.m; path = ../PVPlaybackViewController.m; sourceTree = "<group>"; };
-		F1F5C74B1A6B01AD0061C101 /* PVPlaybackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PVPlaybackViewController.xib; path = ../PVPlaybackViewController.xib; sourceTree = "<group>"; };
 		F1F5C7571A6B03C50061C101 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F1F5C7591A6B040A0061C101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		F1F5C75B1A6B04150061C101 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -385,13 +381,10 @@
 		F159E2F91A57C8FB009560A3 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F119E3C51A6CDC2E00365507 /* BeamMusicPlayerController.bundle */,
-				F1F5C7491A6B01AD0061C101 /* PVPlaybackViewController.h */,
-				F1F5C74A1A6B01AD0061C101 /* PVPlaybackViewController.m */,
-				F1F5C74B1A6B01AD0061C101 /* PVPlaybackViewController.xib */,
-				F159E2FA1A57C8FB009560A3 /* PVPlaybackViewControllerOLD.h */,
-				F159E2FB1A57C8FB009560A3 /* PVPlaybackViewControllerOLD.m */,
-				F159E2FC1A57C8FB009560A3 /* PVPlaybackViewControllerOLD.xib */,
+				F17C0F8A1A6CE80900BDEDFC /* PVPlaybackViewController.h */,
+				F17C0F8B1A6CE80900BDEDFC /* PVPlaybackViewController.m */,
+				F17C0F8C1A6CE80900BDEDFC /* PVPlaybackViewController.xib */,
+				F119E3C51A6CDC2E00365507 /* PVPlaybackController.bundle */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -615,8 +608,8 @@
 		F198FC661A6A196A00E07A2C /* Facebook */ = {
 			isa = PBXGroup;
 			children = (
-				F198FC681A6A1B8200E07A2C /* PVFBUtility.h */,
-				F198FC691A6A1B8200E07A2C /* PVFBUtility.m */,
+				F198FC681A6A1B8200E07A2C /* PVFacebookUtility.h */,
+				F198FC691A6A1B8200E07A2C /* PVFacebookUtility.m */,
 			);
 			name = Facebook;
 			sourceTree = "<group>";
@@ -831,11 +824,10 @@
 				F1776FD51A55F572000BCCB2 /* PVMyProfileViewController.xib in Resources */,
 				F1776FCD1A55F572000BCCB2 /* PVLoginViewController.xib in Resources */,
 				F122B37E1A55F18400A5BBCB /* LaunchScreen.xib in Resources */,
-				F1F5C7541A6B01AD0061C101 /* PVPlaybackViewController.xib in Resources */,
-				F159E2FF1A57C8FB009560A3 /* PVPlaybackViewControllerOLD.xib in Resources */,
+				F17C0F8E1A6CE80900BDEDFC /* PVPlaybackViewController.xib in Resources */,
 				F122B37B1A55F18400A5BBCB /* Images.xcassets in Resources */,
 				F1776FCF1A55F572000BCCB2 /* PVSignUpViewController.xib in Resources */,
-				F119E3C61A6CDC2E00365507 /* BeamMusicPlayerController.bundle in Resources */,
+				F119E3C61A6CDC2E00365507 /* PVPlaybackController.bundle in Resources */,
 				F1776FC31A55F572000BCCB2 /* PVLeftMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -906,6 +898,7 @@
 				F1776FD21A55F572000BCCB2 /* PVLoginViewModel.m in Sources */,
 				F145D8021A562F570000D472 /* PFRACCallbacks+PV_Extensions.m in Sources */,
 				F119E3CF1A6CDE5400365507 /* PVPlaybackTransparentToolbar.m in Sources */,
+				F17C0F8D1A6CE80900BDEDFC /* PVPlaybackViewController.m in Sources */,
 				F11BB6E01A5765F000A1185C /* PVLeftMenuViewController.m in Sources */,
 				F10ED4781A5CF4E10077CEAE /* PVPlaybackViewModel.m in Sources */,
 				F119E3D21A6CDE5400365507 /* BeamRadialGradientView.m in Sources */,
@@ -914,7 +907,6 @@
 				F1776FCC1A55F572000BCCB2 /* PVLoginViewController.m in Sources */,
 				F1776FDC1A55F572000BCCB2 /* JVFloatLabeledTextField+LabelText.m in Sources */,
 				F10BA4371A5621C500B19739 /* PFObject+RACExtensions.m in Sources */,
-				F1F5C7531A6B01AD0061C101 /* PVPlaybackViewController.m in Sources */,
 				F119E3D01A6CDE5400365507 /* BeamPlaylistTableViewCell.m in Sources */,
 				F1776FD41A55F572000BCCB2 /* PVMyProfileViewController.m in Sources */,
 				F1776FD31A55F572000BCCB2 /* PVSignUpViewModel.m in Sources */,
@@ -935,7 +927,7 @@
 				F10BA4391A5621C500B19739 /* PFQuery+RACExtensions.m in Sources */,
 				F122B3701A55F18400A5BBCB /* main.m in Sources */,
 				F1776FE01A55F572000BCCB2 /* PVStatusBarNotification.m in Sources */,
-				F198FC6A1A6A1B8200E07A2C /* PVFBUtility.m in Sources */,
+				F198FC6A1A6A1B8200E07A2C /* PVFacebookUtility.m in Sources */,
 				F1776FDA1A55F572000BCCB2 /* UIImage+ResizeAdditions.m in Sources */,
 				F10BA4321A5621C500B19739 /* PFFile+RACExtensions.m in Sources */,
 				F1776FD11A55F572000BCCB2 /* PVForgotPasswordViewModel.m in Sources */,

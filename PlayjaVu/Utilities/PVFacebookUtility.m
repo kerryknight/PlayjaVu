@@ -1,12 +1,12 @@
 //
-//  PVFBUtility.m
+//  PVFacebookUtility.m
 //  PlayjaVu
 //
 //  Created by Kerry on 12/4/12.
 //  Copyright (c) 2012 Kerry Knight. All rights reserved.
 //
 
-#import "PVFBUtility.h"
+#import "PVFacebookUtility.h"
 #import "PVFBFriend.h"
 
 typedef enum {
@@ -14,19 +14,19 @@ typedef enum {
     PVGenderTypeMale = 1
 } PVGenderType;
 
-@interface PVFBUtility ()
+@interface PVFacebookUtility ()
 @property (assign, nonatomic) int facebookResponseCount;
 @property (assign, nonatomic) int expectedFacebookResponseCount;
 @end
 
-@implementation PVFBUtility
+@implementation PVFacebookUtility
 
 #pragma mark - Public Methods
-+ (PVFBUtility *)sharedUtility {
-    static PVFBUtility * _sharedUtility = nil;
++ (PVFacebookUtility *)sharedUtility {
+    static PVFacebookUtility * _sharedUtility = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedUtility = [[PVFBUtility alloc] init];
+        _sharedUtility = [[PVFacebookUtility alloc] init];
     });
     
     return _sharedUtility;
@@ -53,8 +53,8 @@ typedef enum {
     // this includes profile pic and friends list from FB.
     FBSession *session = [PFFacebookUtils session];
     
-//    DLogBlue(@"session: %@", session);
-//    DLogBlue(@"user: %@", [PFUser currentUser]);
+    DLogBlue(@"session: %@", session);
+    DLogBlue(@"user: %@", [PFUser currentUser]);
     
     if (!session.isOpen) {
         DLogRed(@"FB Session does not exist, logout");
@@ -181,7 +181,10 @@ typedef enum {
     }
     
     if (result[@"birthday"]) {
-        [[PFUser currentUser] setObject:result[@"birthday"] forKey:kUserBirthdayKey];
+        NSDate *bday = [[PVUtility sharedUtility] dateFromJSONString:result[@"birthday"]];
+        if (bday) {
+            [[PFUser currentUser] setObject:bday forKey:kUserBirthdayKey];
+        }
     }
     
     if (result[@"gender"]) {

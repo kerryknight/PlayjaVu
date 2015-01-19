@@ -1,8 +1,5 @@
 PlayjaVu Developer Notes
 ========================
-
-
-
 To Do
 -----
 
@@ -23,11 +20,29 @@ To Do
         -   also includes a table view header search bar for searching records
     -   note, the RW tut on Parse w/core data uses AFNetworking and Parse REST API, not it's SDK so may not use core data for anything other than storing default rules locally?
 
+- error handling at facebook login to display errors to user
+- use FB's AsyncDisplayKit as much as possible for performance
+- read Spotify tutorial
+- get the basic music player interface working
+    - get ibactions doing something again
+    - bottom toolbar isn't displaying
+    - do I want to go ahead and change the design to light colored with blurs like dribbble?
+    - use a bright gradient on selected row like MusicMatch app redesign dribbble
+    - use the new MPVolumeView for controlling volume now
 
-Issues
-------
 
--   
+TO VERIFY
+--------------
+- what happens if user disallows facebook access when it asks for it
+- if app asks for more than than public_profile, email and user_friends from facebook it will require review
+- what happens during playback if user get's a phone call or other notification?
+
+
+ISSUES
+--------------
+- fb login doesn't respond after logging in, logging out and then back in if local datastore is enabled...do i continue to try to work around it or scrap it for core data?
+- this is a known bug: https://developers.facebook.com/bugs/994229510592686/
+
 
 
 
@@ -40,6 +55,17 @@ Best Practices
 
 Examples/Snippets
 -----------------
+// Fetches the config at most once every 12 hours per app runtime
+const NSTimeInterval configRefreshInterval = 12.0 * 60.0 * 60.0;
+static NSDate *lastFetchedDate;
+if (lastFetchedDate == nil ||
+[lastFetchedDate timeIntervalSinceNow] * -1.0 > configRefreshInterval) {
+[PFConfig getConfigInBackgroundWithBlock:^(PFConfig *config, NSError *error) {
+// no op
+}];
+lastFetchedDate = [NSDate date];
+}
+
 
 ### Use RAC for NSNotificationCenter observing
 

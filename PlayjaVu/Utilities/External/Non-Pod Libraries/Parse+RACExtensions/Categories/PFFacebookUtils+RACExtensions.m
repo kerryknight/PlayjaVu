@@ -19,6 +19,8 @@
 + (RACSignal *)rac_logInWithPermissions:(NSArray *)permissions {
     return [RACSignal createSignal:^RACDisposable * (id<RACSubscriber> subscriber) {
         [self logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
+            DLogPurple(@"user: %@", user);
+            DLogPurple(@"error: %@", error);
             if (error == nil) {
                 if (user.isNew) {
                     DLogGreen(@"User with facebook signed up and logged in!");
