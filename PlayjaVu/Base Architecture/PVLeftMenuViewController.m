@@ -100,7 +100,7 @@ static NSString * const kMenuViewControllerCellReuseId = @"PVMenuCell";
     [[SlideNavigationController sharedInstance] setViewControllers:@[playbackVC]];
     [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:YES];
     
-    self.navBarTitleLabel.text = @"Now Playing";
+    self.navBarTitleLabel.text = @"";
     
     // update our user info in the background
     [[PVNetworkingUtility sharedUtility] refreshUser];

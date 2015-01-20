@@ -62,10 +62,11 @@
 		F1776FE21A55F572000BCCB2 /* PVConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FBE1A55F572000BCCB2 /* PVConfig.m */; };
 		F1776FE31A55F572000BCCB2 /* PVNetworkingUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F1776FC11A55F572000BCCB2 /* PVNetworkingUtility.m */; };
 		F17C0F8D1A6CE80900BDEDFC /* PVPlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F17C0F8B1A6CE80900BDEDFC /* PVPlaybackViewController.m */; };
-		F17C0F8E1A6CE80900BDEDFC /* PVPlaybackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F17C0F8C1A6CE80900BDEDFC /* PVPlaybackViewController.xib */; };
+		F17C0F8E1A6CE80900BDEDFC /* PVPlaybackViewControllerOLD.xib in Resources */ = {isa = PBXBuildFile; fileRef = F17C0F8C1A6CE80900BDEDFC /* PVPlaybackViewControllerOLD.xib */; };
 		F198FC651A69FDC700E07A2C /* PVUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F198FC641A69FDC700E07A2C /* PVUtility.m */; };
 		F198FC6A1A6A1B8200E07A2C /* PVFacebookUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F198FC691A6A1B8200E07A2C /* PVFacebookUtility.m */; };
 		F198FC6E1A6A468800E07A2C /* PVFBFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = F198FC6D1A6A468800E07A2C /* PVFBFriend.m */; };
+		F19C047B1A6E1086002FDE85 /* PVPlaybackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F19C047A1A6E1086002FDE85 /* PVPlaybackViewController.xib */; };
 		F1AB3F831A5CB57000B55058 /* PVLeftMenuViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1AB3F821A5CB57000B55058 /* PVLeftMenuViewModel.m */; };
 		F1EF6FF11A5873670082FD72 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F1EF6FF01A5873670082FD72 /* libsqlite3.dylib */; };
 		F1F5C7581A6B03C50061C101 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F5C7571A6B03C50061C101 /* AVFoundation.framework */; };
@@ -197,13 +198,14 @@
 		F1776FE81A55F930000BCCB2 /* PlayjaVu-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PlayjaVu-Prefix.pch"; sourceTree = "<group>"; };
 		F17C0F8A1A6CE80900BDEDFC /* PVPlaybackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVPlaybackViewController.h; path = "PlayjaVu/Sections/Menu Items/Playback/PVPlaybackViewController.h"; sourceTree = SOURCE_ROOT; };
 		F17C0F8B1A6CE80900BDEDFC /* PVPlaybackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PVPlaybackViewController.m; path = "PlayjaVu/Sections/Menu Items/Playback/PVPlaybackViewController.m"; sourceTree = SOURCE_ROOT; };
-		F17C0F8C1A6CE80900BDEDFC /* PVPlaybackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PVPlaybackViewController.xib; path = "PlayjaVu/Sections/Menu Items/Playback/PVPlaybackViewController.xib"; sourceTree = SOURCE_ROOT; };
+		F17C0F8C1A6CE80900BDEDFC /* PVPlaybackViewControllerOLD.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PVPlaybackViewControllerOLD.xib; path = "PlayjaVu/Sections/Menu Items/Playback/PVPlaybackViewControllerOLD.xib"; sourceTree = SOURCE_ROOT; };
 		F198FC631A69FDC700E07A2C /* PVUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVUtility.h; sourceTree = "<group>"; };
 		F198FC641A69FDC700E07A2C /* PVUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVUtility.m; sourceTree = "<group>"; };
 		F198FC681A6A1B8200E07A2C /* PVFacebookUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVFacebookUtility.h; sourceTree = "<group>"; };
 		F198FC691A6A1B8200E07A2C /* PVFacebookUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVFacebookUtility.m; sourceTree = "<group>"; };
 		F198FC6C1A6A468800E07A2C /* PVFBFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVFBFriend.h; sourceTree = "<group>"; };
 		F198FC6D1A6A468800E07A2C /* PVFBFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PVFBFriend.m; sourceTree = "<group>"; };
+		F19C047A1A6E1086002FDE85 /* PVPlaybackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PVPlaybackViewController.xib; path = "PlayjaVu/Sections/Menu Items/Playback/PVPlaybackViewController.xib"; sourceTree = SOURCE_ROOT; };
 		F1AB3F811A5CB57000B55058 /* PVLeftMenuViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVLeftMenuViewModel.h; path = "View Models/PVLeftMenuViewModel.h"; sourceTree = "<group>"; };
 		F1AB3F821A5CB57000B55058 /* PVLeftMenuViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PVLeftMenuViewModel.m; path = "View Models/PVLeftMenuViewModel.m"; sourceTree = "<group>"; };
 		F1B9150E1A5EF54700CD168A /* PVRuntimeSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRuntimeSettings.h; sourceTree = "<group>"; };
@@ -383,7 +385,8 @@
 			children = (
 				F17C0F8A1A6CE80900BDEDFC /* PVPlaybackViewController.h */,
 				F17C0F8B1A6CE80900BDEDFC /* PVPlaybackViewController.m */,
-				F17C0F8C1A6CE80900BDEDFC /* PVPlaybackViewController.xib */,
+				F19C047A1A6E1086002FDE85 /* PVPlaybackViewController.xib */,
+				F17C0F8C1A6CE80900BDEDFC /* PVPlaybackViewControllerOLD.xib */,
 				F119E3C51A6CDC2E00365507 /* PVPlaybackController.bundle */,
 			);
 			path = "View Controllers";
@@ -824,7 +827,8 @@
 				F1776FD51A55F572000BCCB2 /* PVMyProfileViewController.xib in Resources */,
 				F1776FCD1A55F572000BCCB2 /* PVLoginViewController.xib in Resources */,
 				F122B37E1A55F18400A5BBCB /* LaunchScreen.xib in Resources */,
-				F17C0F8E1A6CE80900BDEDFC /* PVPlaybackViewController.xib in Resources */,
+				F17C0F8E1A6CE80900BDEDFC /* PVPlaybackViewControllerOLD.xib in Resources */,
+				F19C047B1A6E1086002FDE85 /* PVPlaybackViewController.xib in Resources */,
 				F122B37B1A55F18400A5BBCB /* Images.xcassets in Resources */,
 				F1776FCF1A55F572000BCCB2 /* PVSignUpViewController.xib in Resources */,
 				F119E3C61A6CDC2E00365507 /* PVPlaybackController.bundle in Resources */,

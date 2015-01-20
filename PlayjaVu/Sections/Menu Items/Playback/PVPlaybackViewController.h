@@ -12,9 +12,4 @@
 
 @interface PVPlaybackViewController : PVBaseSlidingViewController
 
-/**
- * Reloads data from the data source and updates the player. If the player is currently playing, the playback is stopped.
- */
-- (void)reloadData;
-
 @end

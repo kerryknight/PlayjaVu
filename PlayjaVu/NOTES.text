@@ -20,15 +20,9 @@ To Do
         -   also includes a table view header search bar for searching records
     -   note, the RW tut on Parse w/core data uses AFNetworking and Parse REST API, not it's SDK so may not use core data for anything other than storing default rules locally?
 
-- error handling at facebook login to display errors to user
 - use FB's AsyncDisplayKit as much as possible for performance
 - read Spotify tutorial
-- get the basic music player interface working
-    - get ibactions doing something again
-    - bottom toolbar isn't displaying
-    - do I want to go ahead and change the design to light colored with blurs like dribbble?
-    - use a bright gradient on selected row like MusicMatch app redesign dribbble
-    - use the new MPVolumeView for controlling volume now
+
 
 
 TO VERIFY
@@ -41,7 +35,8 @@ TO VERIFY
 ISSUES
 --------------
 - fb login doesn't respond after logging in, logging out and then back in if local datastore is enabled...do i continue to try to work around it or scrap it for core data?
-- this is a known bug: https://developers.facebook.com/bugs/994229510592686/
+    - this is a known bug: https://developers.facebook.com/bugs/994229510592686/
+- there can be issues logging in with FB if the native iOS settings are not logged correctly into FB; go to Settings app to verify if start getting the "Invalid Application ID" error message again.  May need to make a more explicit recovery message for users in case of this event.
 
 
 

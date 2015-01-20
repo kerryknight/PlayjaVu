@@ -10,6 +10,9 @@
 
 @interface PVPlaybackViewModel()
 @property (strong, nonatomic) MPMusicPlayerController *musicPlayer; // An instance of an itunes music player
+@property (copy, nonatomic) NSArray *mediaItems;
+@property (strong, nonatomic, readwrite) RACSignal *updatePlaybackUISignal;
+@property (strong, nonatomic, readwrite) RACSignal *playSignal;
 @end
 
 @implementation PVPlaybackViewModel
@@ -19,6 +22,9 @@
 {
     self = [super init];
     if (self) {
+        _updatePlaybackUISignal = [[RACSubject subject] setNameWithFormat:@"PVPlaybackViewModel updatePlaybackUISignal"];
+        _playSignal = [[RACSubject subject] setNameWithFormat:@"PVPlaybackViewModel playSignal"];
+        
         // This HACK hides the volume overlay when changing the volume.
         // It's insipired by http://stackoverflow.com/questions/3845222/iphone-sdk-how-to-disable-the-volume-indicator-view-if-the-hardware-buttons-ar
         _volumeView = [MPVolumeView new];
@@ -27,106 +33,113 @@
         
         [[UIApplication sharedApplication].keyWindow addSubview:_volumeView];
         
-        MPMediaQuery *mq = [MPMediaQuery songsQuery];
         _musicPlayer = [MPMusicPlayerController systemMusicPlayer];
         
-        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver: self
-               selector: @selector (propagateMusicPlayerState)
-                   name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-                 object: self.musicPlayer];
-        [nc addObserver: self
-               selector: @selector (propagateMusicPlayerState)
-                   name: MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                 object: self.musicPlayer];
-        [nc addObserver: self
-               selector: @selector (handleVolumeDidChangeNotification)
-                   name: MPMusicPlayerControllerVolumeDidChangeNotification
-                 object: self.musicPlayer];
-        
-        [_musicPlayer beginGeneratingPlaybackNotifications];
-        
-        [self propagateMusicPlayerState];
-        
-        _mediaItems = [mq.items copy];
-        [_musicPlayer setQueueWithQuery:mq];
-        _musicPlayer.nowPlayingItem = _mediaItems[0];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+//            [nc addObserver:self
+//                   selector:@selector(propagateMusicPlayerState:)
+//                       name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+//                     object:self.musicPlayer];
+            [nc addObserver:self
+                   selector:@selector(propagateMusicPlayerState:)
+                       name:MPMusicPlayerControllerPlaybackStateDidChangeNotification
+                     object:self.musicPlayer];
+            
+            [_musicPlayer beginGeneratingPlaybackNotifications];
+            
+            MPMediaQuery *mq = [MPMediaQuery songsQuery];
+            _mediaItems = [mq.items copy];
+            
+            // update our UI once everything is set up properly
+            [[self didBecomeActiveSignal] subscribeNext:^(id x) {
+                [self propagateMusicPlayerState:nil];
+            }];
+        });
     }
     
     return self;
 }
 
 #pragma mark - Private Methods
-- (void)handleVolumeDidChangeNotification
-{
-    DLogOrange(@"");
-//    self.controller.volume = self.musicPlayer.volume;
-}
-
-- (MPMediaItem *)mediaItemAtIndex:(NSUInteger)index
-{
-    if (self.mediaItems == nil || self.mediaItems.count == 0)
-        return self.musicPlayer.nowPlayingItem;
-    else
-        return self.mediaItems[index];
-}
-
 - (void)dealloc
 {
-    DLogOrange(@"");
-    
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    
-    [nc removeObserver:self name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification object:self.musicPlayer];
-    [nc removeObserver:self name:MPMusicPlayerControllerPlaybackStateDidChangeNotification object:self.musicPlayer];
-    [nc removeObserver:self name:MPMusicPlayerControllerVolumeDidChangeNotification object:self.musicPlayer];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.musicPlayer endGeneratingPlaybackNotifications];
-    
     self.musicPlayer = nil;
 }
 
 #pragma mark - Public Methods
 #pragma mark - Data
-- (void)propagateMusicPlayerState
+- (void)propagateMusicPlayerState:(NSNotification *)notification
 {
-//    if(self.controller && self.musicPlayer) {
-//        self.controller.delegate = nil;
-//        
-//        // refactor: playing property in musicplayer? and/or setter method differently
-//        [self.controller playTrack:self.musicPlayer.indexOfNowPlayingItem atPosition:self.musicPlayer.currentPlaybackTime volume:self.musicPlayer.volume];
-//        if(self.musicPlayer.playbackState == MPMusicPlaybackStatePlaying) {
-//            [self.controller play];
-//        } else {
-//            [self.controller pause];
-//        }
-//        
-//        self.controller.delegate = self;
-//    }
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSDictionary *userInfo = [notification userInfo];
+        
+        if (userInfo[@"MPMusicPlayerControllerPlaybackStateKey"]) {
+            MPMusicPlaybackState playbackState = (MPMusicPlaybackState)[userInfo[@"MPMusicPlayerControllerPlaybackStateKey"] integerValue];
+            
+            if (self.musicPlayer) {
+                // tell our player UI to update itself with our new data
+                self.currentPlaybackPosition = self.musicPlayer.currentPlaybackTime;
+                // make sure we keep track of our currently playing track's index
+                self.currentTrack = self.musicPlayer.indexOfNowPlayingItem;
+                
+                switch (playbackState) {
+                    case MPMusicPlaybackStateStopped: {
+                        DLogOrange(@"MPMusicPlaybackStateStopped");
+                        return;
+                    }
+                    case MPMusicPlaybackStatePlaying: {
+                        DLogOrange(@"MPMusicPlaybackStatePlaying");
+                        [(RACSubject *)self.playSignal sendNext:nil];
+                        break;
+                    }
+                    case MPMusicPlaybackStatePaused: {
+                        DLogOrange(@"MPMusicPlaybackStatePaused");
+                        return;
+                    }
+                    case MPMusicPlaybackStateInterrupted:
+                        DLogOrange(@"MPMusicPlaybackStateInterrupted");
+                        break;
+                    case MPMusicPlaybackStateSeekingForward:
+                        DLogOrange(@"MPMusicPlaybackStateSeekingForward");
+                        break;
+                    case MPMusicPlaybackStateSeekingBackward:
+                        DLogOrange(@"MPMusicPlaybackStateSeekingBackward");
+                        break;
+                    default:
+                        break;
+                }
+                
+                [(RACSubject *)self.updatePlaybackUISignal sendNext:@(self.musicPlayer.indexOfNowPlayingItem)];
+            }
+        }
+//    });
 }
 
-- (NSString *)albumForTrack:(NSUInteger)trackNumber
+- (NSString *)trackAlbum
 {
-    MPMediaItem *item = [self mediaItemAtIndex:trackNumber];
+    MPMediaItem *item = self.musicPlayer.nowPlayingItem;
     return [item valueForProperty:MPMediaItemPropertyAlbumTitle];
 }
 
-- (NSString *)artistForTrack:(NSUInteger)trackNumber
+- (NSString *)trackArtist
 {
-    MPMediaItem *item = [self mediaItemAtIndex:trackNumber];
+    MPMediaItem *item = self.musicPlayer.nowPlayingItem;
     return [item valueForProperty:MPMediaItemPropertyArtist];
 }
 
-- (NSString *)titleForTrack:(NSUInteger)trackNumber
+- (NSString *)trackTitle
 {
-    MPMediaItem *item = [self mediaItemAtIndex:trackNumber];
+    MPMediaItem *item = self.musicPlayer.nowPlayingItem;
     return [item valueForProperty:MPMediaItemPropertyTitle];
 }
 
-- (CGFloat)lengthForTrack:(NSUInteger)trackNumber
+- (CGFloat)trackLength
 {
-    MPMediaItem *item = [self mediaItemAtIndex:trackNumber];
+    MPMediaItem *item = self.musicPlayer.nowPlayingItem;
     return [[item valueForProperty:MPMediaItemPropertyPlaybackDuration] longValue];
-    
 }
 
 - (NSInteger)numberOfTracks
@@ -139,84 +152,62 @@
     return self.numberOfTracks >= 0;
 }
 
-- (void)artworkForTrack:(NSUInteger)trackNumber receivingBlock:(void (^)(MPMediaItemArtwork *mediaArt, NSError **error))receivingBlock
+- (void)artworkForCurrentTrackWithCompletion:(void (^)(MPMediaItemArtwork *mediaArt, NSError **error))completion
 {
-    MPMediaItem *item = [self mediaItemAtIndex:trackNumber];
-    MPMediaItemArtwork *artwork = [item valueForProperty:MPMediaItemPropertyArtwork];
-    receivingBlock(artwork, nil);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        MPMediaItem *item = self.musicPlayer.nowPlayingItem;
+        MPMediaItemArtwork *artwork = [item valueForProperty:MPMediaItemPropertyArtwork];
+        completion(artwork, nil);
+    });
 }
 
 #pragma mark Delegate-like
 - (void)startPlaying
 {
-    DLogPurple(@"");
-    [self.musicPlayer play];
-}
-
-- (BOOL)shouldStartPlaying
-{
-    DLogPurple(@"");
-    return YES;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.musicPlayer play];
+    });
 }
 
 - (void)stopPlaying
 {
-    DLogPurple(@"");
-    [self.musicPlayer pause];
-}
-
-- (void)didStopPlayingLastTrack
-{
-    DLogPurple(@"");
-}
-
-- (BOOL)shouldStopPlaying
-{
-    DLogPurple(@"");
-    return YES;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.musicPlayer pause];
+    });
 }
 
 - (void)didSeekToPosition:(CGFloat)position
 {
-    [self.musicPlayer setCurrentPlaybackTime:position];
-}
-
-- (BOOL)shouldChangeTrack:(NSUInteger)track
-{
-    DLogPurple(@"");
-    return YES;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.musicPlayer setCurrentPlaybackTime:position];
+    });
 }
 
 - (NSInteger)didChangeTrack:(NSUInteger)track
 {
-    if (self.mediaItems) {
-        [self.musicPlayer setNowPlayingItem:[self mediaItemAtIndex:track]];
-    } else {
-        DLogPurple(@"");
-        NSInteger delta = track - self.musicPlayer.indexOfNowPlayingItem;
-        if(delta > 0)
-            [self.musicPlayer skipToNextItem];
-        if(delta == 0)
-            [self.musicPlayer skipToBeginning];
-        if(delta < 0)
-            [self.musicPlayer skipToPreviousItem];
+    NSInteger delta = track - self.musicPlayer.indexOfNowPlayingItem;
+    
+    if (delta > 0) {
+        [self.musicPlayer skipToNextItem];
     }
+    else if (delta == 0) {
+        [self.musicPlayer skipToBeginning];
+    }
+    else if (delta < 0) {
+        [self.musicPlayer skipToPreviousItem];
+    }
+    
     return self.musicPlayer.indexOfNowPlayingItem;
-}
-
-- (void)didChangeVolume:(CGFloat)volume
-{
-    [self.musicPlayer setVolume:volume];
 }
 
 - (void)didChangeShuffleState:(BOOL)shuffling
 {
-    DLogPurple(@"");
+    DLogYellow(@"");
 }
 
 - (void)didChangeRepeatMode:(MPMusicRepeatMode)repeatMode
 {
-    DLogPurple(@"");
+    DLogYellow(@"");
 }
 
 @end

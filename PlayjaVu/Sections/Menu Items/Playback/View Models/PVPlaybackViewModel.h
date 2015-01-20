@@ -8,12 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "RVMViewModel.h"
 
-@interface PVPlaybackViewModel : NSObject
-
-@property (strong, nonatomic) MPVolumeView *volumeView;
-
-@property (copy, nonatomic) NSArray *mediaItems;
+@interface PVPlaybackViewModel : RVMViewModel
 
 /// The index of the currently set track
 @property (nonatomic) NSInteger currentTrack;
@@ -30,6 +27,7 @@
 /// YES, if the player is shuffling
 @property (nonatomic) BOOL shuffling;
 
+@property (strong, nonatomic) MPVolumeView *volumeView;
 /// The Volume of the player. Valid values range from 0.0f to 1.0f
 @property (nonatomic) CGFloat volume;
 
@@ -42,47 +40,35 @@
 /// Timespan before placeholder for albumart will be set (default is 0.5). Supports long loading times.
 @property (nonatomic, assign) float placeholderImageDelay;
 @property (nonatomic, strong) NSTimer *playbackTickTimer; // Ticks each seconds when playing.
-@property (nonatomic) CGFloat currentTrackLength; // The Length of the currently playing track
 @property (nonatomic) NSInteger numberOfTracks; // Number of tracks, <0 if unknown
 @property (nonatomic) BOOL scrobbling; // Whether the player is currently scrobbling
-@property (nonatomic) BOOL lastDirectionChangePositive; // Whether the last direction change was positive.
-
-- (void)propagateMusicPlayerState;
+@property (strong, nonatomic, readonly) RACSignal *updatePlaybackUISignal;
+@property (strong, nonatomic, readonly) RACSignal *playSignal;
 
 /**
  * Returns the title of the given track and player as a NSString. You can return nil for no title.
- * @param trackNumber the track number this request is for.
  * @return A string to use as the title of the track. If you return nil, this track will have no title.
  */
-- (NSString *)titleForTrack:(NSUInteger)trackNumber;
+- (NSString *)trackTitle;
 
 /**
  * Returns the artist for the given track.
- * @param trackNumber the track number this request is for.
  * @return A string to use as the artist name of the track. If you return nil, this track will have no artist name.
  */
-- (NSString *)artistForTrack:(NSUInteger)trackNumber;
+- (NSString *)trackArtist;
 
 /**
  * Returns the album for the given track
- * @param trackNumber the track number this request is for.
  * @return A string to use as the album name of the track. If you return nil, this track will have no album name.
  */
-- (NSString *)albumForTrack:(NSUInteger)trackNumber;
+- (NSString *)trackAlbum;
 
 /**
  * Returns the length for the given track. Your implementation must provide a
  * value larger than 0.
- * @param trackNumber the track number this request is for.
  * @return length in seconds
  */
-- (CGFloat)lengthForTrack:(NSUInteger)trackNumber;
-
-/**
- * Returns the volume
- * @return volume A float holding the volume on a range from 0.0f to 1.0f
- */
-- (CGFloat)volume;
+- (CGFloat)trackLength;
 
 /**
  * Returns the number of tracks for the given player. If you do not implement this method
@@ -97,24 +83,16 @@
  * Returns the artwork for a given track.
  *
  * The artwork is returned using a receiving block void(^)(MPMediaItemArtwork *mediaArt, NSError **error) that takes an MPMediaItemArtwork and an optional error. If you supply nil as an image, a placeholder will be shown.
- * @param trackNumber the index of the track for which the artwork is requested.
- * @param receivingBlock a block of type void(^)(MPMediaItemArtwork *mediaArt, NSError **error) that needs to be called when the image is prepared by the receiver.
+ * @param completion a block of type void(^)(MPMediaItemArtwork *mediaArt, NSError **error) that needs to be called when the image is prepared by the receiver.
  * @see [PVPlaybackViewController preferredSizeForCoverArt]
  */
-- (void)artworkForTrack:(NSUInteger)trackNumber receivingBlock:(void(^)(MPMediaItemArtwork *mediaArt, NSError **error))receivingBlock;
+- (void)artworkForCurrentTrackWithCompletion:(void (^)(MPMediaItemArtwork *mediaArt, NSError **error))completion;
 
 /**
  * Called by the player after the player started playing a song.
  * @param player the PVPlaybackViewController sending the message
  */
 - (void)startPlaying;
-
-/**
- * Called after a user presses the "play"-button but before the player actually starts playing.
- * @param player the PVPlaybackViewController sending the message
- * @return  If the value returned is NO, the player won't start playing. YES, tells the player to starts. Default is YES.
- */
-- (BOOL)shouldStartPlaying;
 
 /**
  * Called after the player stopped playing. This method is called both when the current song ends
@@ -124,34 +102,11 @@
 - (void)stopPlaying;
 
 /**
- * Called after the player stopped playing the last track.
- * @param player the PVPlaybackViewController sending the message
- */
-- (void)didStopPlayingLastTrack;
-
-/**
- * Called before the player stops playing but after the user initiated the stop action.
- * @param player the PVPlaybackViewController sending the message
- * @return By returning NO here, the delegate may prevent the player from stopping the playback. Default YES.
- */
-- (BOOL)shouldStopPlaying;
-
-/**
  * Called after the player seeked or scrubbed to a new position. This is mostly the result of a user interaction.
  * @param player the PVPlaybackViewController sending the message
  * @param position new position in seconds
  */
 - (void)didSeekToPosition:(CGFloat)position;
-
-/**
- * Called before the player actually skips to the next song, but after the user initiated that action.
- *
- * If an implementation returns NO, the track will not be changed, if it returns YES the track will be changed. If you do not implement this method, YES is assumed.
- * @param player the PVPlaybackViewController sending the message
- * @param track a NSUInteger containing the number of the new track
- * @return YES if the track can be changed, NO if not. Default YES.
- */
-- (BOOL)shouldChangeTrack:(NSUInteger)track;
 
 /**
  * Called after the music player changed to a new track
@@ -162,15 +117,6 @@
  * @return the actual track the delegate has changed to
  */
 - (NSInteger)didChangeTrack:(NSUInteger)track;
-
-/**
- * Called when the player's volume changed
- *
- * Note that this not actually change the volume of anything, but is rather a result of a change in the internal state of the PVPlaybackViewController. If you want to change the volume of a playback module, you can implement this method.
- * @param player The PVPlaybackViewController changing the volume
- * @param volume A float holding the volume on a range from 0.0f to 1.0f
- */
-- (void)didChangeVolume:(CGFloat)volume;
 
 /**
  * Called when the player changes it's shuffle state.
