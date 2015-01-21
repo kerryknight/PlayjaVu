@@ -11,8 +11,18 @@
 @interface PVPlaybackViewModel()
 @property (strong, nonatomic) MPMusicPlayerController *musicPlayer; // An instance of an itunes music player
 @property (copy, nonatomic) NSArray *mediaItems;
+@property (copy, nonatomic, readwrite) NSString *trackTitle;
+@property (copy, nonatomic, readwrite) NSString *trackArtist;
+@property (copy, nonatomic, readwrite) NSString *trackAlbum;
+@property (assign, nonatomic, readwrite) CGFloat trackLength;
 @property (strong, nonatomic, readwrite) RACSignal *updatePlaybackUISignal;
 @property (strong, nonatomic, readwrite) RACSignal *playSignal;
+@property (strong, nonatomic, readwrite) RACSignal *nextButtonEnabledSignal;
+@property (strong, nonatomic, readwrite) RACSignal *previousButtonEnabledSignal;
+@property (strong, nonatomic, readwrite) dispatch_queue_t userInteractiveQueue;
+@property (strong, nonatomic, readwrite) dispatch_queue_t userInitiatedQueue;
+@property (strong, nonatomic, readwrite) dispatch_queue_t utilityQueue;
+@property (strong, nonatomic, readwrite) dispatch_queue_t backgroundQueue;
 @end
 
 @implementation PVPlaybackViewModel
@@ -22,6 +32,12 @@
 {
     self = [super init];
     if (self) {
+        
+        _userInteractiveQueue = dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0);
+        _userInitiatedQueue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
+        _utilityQueue = dispatch_get_global_queue(QOS_CLASS_UTILITY, 0);
+        _backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0);
+        
         _updatePlaybackUISignal = [[RACSubject subject] setNameWithFormat:@"PVPlaybackViewModel updatePlaybackUISignal"];
         _playSignal = [[RACSubject subject] setNameWithFormat:@"PVPlaybackViewModel playSignal"];
         
@@ -35,33 +51,42 @@
         
         _musicPlayer = [MPMusicPlayerController systemMusicPlayer];
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-//            [nc addObserver:self
-//                   selector:@selector(propagateMusicPlayerState:)
-//                       name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-//                     object:self.musicPlayer];
-            [nc addObserver:self
-                   selector:@selector(propagateMusicPlayerState:)
-                       name:MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                     object:self.musicPlayer];
-            
+        [self configureRACObservers];
+        
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+
+        [nc addObserver:self
+               selector:@selector(propagateMusicPlayerState:)
+                   name:MPMusicPlayerControllerPlaybackStateDidChangeNotification
+                   // name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                 object:self.musicPlayer];
+        
+        MPMediaQuery *mq = [MPMediaQuery songsQuery];
+        _mediaItems = [mq.items copy];
+        
+        // update our UI once everything is set up properly
+        [[self didBecomeActiveSignal] subscribeNext:^(id x) {
+            // start listening for playback notifications
             [_musicPlayer beginGeneratingPlaybackNotifications];
-            
-            MPMediaQuery *mq = [MPMediaQuery songsQuery];
-            _mediaItems = [mq.items copy];
-            
-            // update our UI once everything is set up properly
-            [[self didBecomeActiveSignal] subscribeNext:^(id x) {
-                [self propagateMusicPlayerState:nil];
-            }];
-        });
+        }];
     }
     
     return self;
 }
 
 #pragma mark - Private Methods
+- (void)configureRACObservers
+{
+    @weakify(self);
+    [RACObserve(self.musicPlayer, nowPlayingItem) subscribeNext:^(id x) {
+        @strongify(self);
+        self.trackTitle = [self valueForMediaItemProperty:MPMediaItemPropertyTitle];
+        self.trackArtist = [self valueForMediaItemProperty:MPMediaItemPropertyArtist];
+        self.trackAlbum = [self valueForMediaItemProperty:MPMediaItemPropertyAlbumTitle];
+        self.trackLength = [[self valueForMediaItemProperty:MPMediaItemPropertyPlaybackDuration] longValue];
+    }];
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -116,28 +141,18 @@
     }
 }
 
-- (NSString *)trackAlbum
+- (id)valueForMediaItemProperty:(NSString *)property// completion:(void(^)(id value))completion
 {
-    MPMediaItem *item = self.musicPlayer.nowPlayingItem;
-    return [item valueForProperty:MPMediaItemPropertyAlbumTitle];
-}
-
-- (NSString *)trackArtist
-{
-    MPMediaItem *item = self.musicPlayer.nowPlayingItem;
-    return [item valueForProperty:MPMediaItemPropertyArtist];
-}
-
-- (NSString *)trackTitle
-{
-    MPMediaItem *item = self.musicPlayer.nowPlayingItem;
-    return [item valueForProperty:MPMediaItemPropertyTitle];
-}
-
-- (CGFloat)trackLength
-{
-    MPMediaItem *item = self.musicPlayer.nowPlayingItem;
-    return [[item valueForProperty:MPMediaItemPropertyPlaybackDuration] longValue];
+    __block id newValue;
+    
+//    dispatch_async(self.userInitiatedQueue, ^{
+        MPMediaItem *item = self.musicPlayer.nowPlayingItem;
+        newValue = [item valueForProperty:property];
+//    });
+    
+    DLogOrange(@"newValue: %@", newValue);
+    
+    return newValue;
 }
 
 - (NSInteger)numberOfTracks
@@ -150,35 +165,36 @@
     return self.numberOfTracks >= 0;
 }
 
+#warning I THINK THIS CAN BE RAC OBSERVED TOO
 - (void)artworkForCurrentTrackWithCompletion:(void (^)(MPMediaItemArtwork *mediaArt, NSError **error))completion
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(self.utilityQueue, ^{
         MPMediaItem *item = self.musicPlayer.nowPlayingItem;
         MPMediaItemArtwork *artwork = [item valueForProperty:MPMediaItemPropertyArtwork];
         completion(artwork, nil);
-    });
+//    });
 }
 
 #pragma mark Delegate-like
 - (void)startPlaying
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(self.userInitiatedQueue, ^{
         [self.musicPlayer play];
-    });
+//    });
 }
 
 - (void)stopPlaying
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(self.userInitiatedQueue, ^{
         [self.musicPlayer pause];
-    });
+//    });
 }
 
 - (void)didSeekToPosition:(CGFloat)position
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(self.userInitiatedQueue, ^{
         [self.musicPlayer setCurrentPlaybackTime:position];
-    });
+//    });
 }
 
 - (NSInteger)didChangeTrack:(NSUInteger)track
@@ -206,6 +222,48 @@
 - (void)didChangeRepeatMode:(MPMusicRepeatMode)repeatMode
 {
     DLogYellow(@"");
+}
+
+- (RACSignal *)nextButtonEnabledSignal
+{
+    if (!_nextButtonEnabledSignal) {
+        @weakify(self);
+        
+#warning this isn't firing on every item switch
+        _nextButtonEnabledSignal = [RACSignal combineLatest:@[RACObserve(self.musicPlayer, nowPlayingItem)] reduce:^id{
+            @strongify(self);
+            BOOL enabled = YES;
+            
+            if (self.tracksAreAvailable && self.currentTrack + 1 == self.numberOfTracks) {
+                enabled = NO;
+            }
+            
+            DLogCyan(@"next enabled: %i", enabled);
+            return @(enabled);
+        }];
+    }
+    return _nextButtonEnabledSignal;
+}
+
+- (RACSignal *)previousButtonEnabledSignal
+{
+    if (!_previousButtonEnabledSignal) {
+        @weakify(self);
+        
+#warning this isn't firing on every item switch
+        _previousButtonEnabledSignal = [[RACSignal combineLatest:@[RACObserve(self.musicPlayer, nowPlayingItem)]] map:^(id x) {
+            @strongify(self);
+            BOOL enabled = YES;
+            
+            if (self.tracksAreAvailable && self.currentTrack == 0) {
+                enabled = NO;
+            }
+            
+            DLogCyan(@"previous enabled: %i", enabled);
+            return @(enabled);
+        }];
+    }
+    return _previousButtonEnabledSignal;
 }
 
 @end

@@ -38,10 +38,6 @@
 @property (weak, nonatomic) IBOutlet UIView *controlView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (strong, nonatomic) UITapGestureRecognizer *coverArtGestureRecognizer; // Tap Recognizer used to dim in / out the scrobble overlay.
-/// If set to yes, the Previous-Track Button will be disabled if the first track of the set is played or set.
-@property (nonatomic) BOOL shouldHidePreviousTrackButtonAtBoundary;
-/// If set to yes, the Next-Track Button will be disabled if the last track of the set is played or set.
-@property (nonatomic) BOOL shouldHideNextTrackButtonAtBoundary;
 @property (strong, nonatomic) PVPlaybackViewModel *viewModel;
 @property (strong, nonatomic) NSDate *startTime;
 @end
@@ -62,6 +58,9 @@
     
     // set up our view model once the view loads
     [self configureViewModel];
+    
+    // attach our observers
+    [self configureRACObservers];
 }
 
 - (void)dealloc
@@ -106,9 +105,6 @@
     
     self.trackTitleLabel.textColor = [UIColor whiteColor];
     [self.trackTitleLabel setFont:[UIFont boldSystemFontOfSize:12]];
-    
-    self.shouldHideNextTrackButtonAtBoundary = YES;
-    self.shouldHidePreviousTrackButtonAtBoundary = YES;
 }
 
 - (void)configureViewModel
@@ -133,41 +129,35 @@
 
 - (void)setAlbumArtToPlaceholder
 {
-    self.albumArtImageView.image = [UIImage imageNamed:@"PVPlaybackController.bundle/images/noartplaceholder.png"];
+    DLogGreen(@"");
+//    dispatch_async(self.viewModel.userInteractiveQueue, ^{
+        self.albumArtImageView.image = [UIImage imageNamed:@"PVPlaybackController.bundle/images/noartplaceholder.png"];
+//    });
 }
 
 - (void)updateUI
 {
-    DLogYellow(@"");
     os_activity_initiate("updateUI", OS_ACTIVITY_FLAG_DETACHED, ^{
-        // Slider
-        self.progressSlider.maximumValue = [self.viewModel trackLength];
-        self.progressSlider.minimumValue = 0;
-        
         [self updateUIForCurrentTrack];
-        [self updateSeekUI];
-        [self adjustDirectionalButtonStates];
-        
-        DLogRed(@"prev button: %@", NSStringFromCGRect(self.previousButton.frame));
-        DLogRed(@"play button: %@", NSStringFromCGRect(self.playButton.frame));
-        DLogRed(@"next button: %@", NSStringFromCGRect(self.nextButton.frame));
     });
 }
 
-/*
- * Updates the remaining and elapsed time label, as well as the progress bar's value
- */
-- (void)updateSeekUI
+- (void)configureRACObservers
 {
-    NSString *elapsed = [NSDateFormatter formattedDuration:(long)self.viewModel.currentPlaybackPosition];
-    NSString *remaining = [NSDateFormatter formattedDuration:([self.viewModel trackLength] - self.viewModel.currentPlaybackPosition) * -1];
+    RAC(self.artistNameLabel, text) = RACObserve(self.viewModel, trackArtist);
+    RAC(self.trackTitleLabel, text) = RACObserve(self.viewModel, trackTitle);
+    RAC(self.albumTitleLabel, text) = RACObserve(self.viewModel, trackAlbum);
+    RAC(self.progressSlider, maximumValue) = RACObserve(self.viewModel, trackLength);
+    RAC(self.progressSlider, value) = RACObserve(self.viewModel, currentPlaybackPosition);
+    RAC(self.nextButton, enabled) = self.viewModel.nextButtonEnabledSignal;
+    RAC(self.previousButton, enabled) = self.viewModel.previousButtonEnabledSignal;
     
-    // update labels and slider
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.timeElapsedLabel.text = elapsed;
-        self.timeRemainingLabel.text = remaining;
-        self.progressSlider.value = self.viewModel.currentPlaybackPosition;
-    });
+    @weakify(self);
+    [RACObserve(self.viewModel, currentPlaybackPosition) subscribeNext:^(id x) {
+        @strongify(self);
+        self.timeElapsedLabel.text = [NSDateFormatter formattedDuration:(long)self.viewModel.currentPlaybackPosition];
+        self.timeRemainingLabel.text = [NSDateFormatter formattedDuration:([self.viewModel trackLength] - self.viewModel.currentPlaybackPosition) * -1];
+    }];
 }
 
 /**
@@ -175,25 +165,13 @@
  */
 - (void)updateUIForCurrentTrack
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        os_activity_set_breadcrumb("updateUIForCurrentTrack:updateText");
-        self.artistNameLabel.text = [self.viewModel trackArtist];
-        self.trackTitleLabel.text = [self.viewModel trackTitle];
-        self.albumTitleLabel.text = [self.viewModel trackAlbum];
-        
-        DLogGreen(@"ARTIST: %@", self.artistNameLabel.text);
-        
+
+//    dispatch_async(self.viewModel.utilityQueue, ^{
+        os_activity_set_breadcrumb("updateUIForCurrentTrack:getArtwork");
         // set cover art to placeholder at a later point in time. Might be cancelled if datasource provides different image (see below)
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setAlbumArtToPlaceholder) object:nil];
         [self performSelector:@selector(setAlbumArtToPlaceholder) withObject:nil afterDelay:self.viewModel.placeholderImageDelay];
         
-        NSDate *endTime = [NSDate date];
-        NSTimeInterval executionTime = [endTime timeIntervalSinceDate:self.startTime];
-        DLogYellow(@"updateUIForCurrentTrack execution time = %f", executionTime);
-    });
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        os_activity_set_breadcrumb("updateUIForCurrentTrack:getArtwork");
         // We only request the coverart if the delegate responds to it.
         self.viewModel.customCovertArtLoaded = NO;
         
@@ -208,22 +186,20 @@
                 
                 // If there is no image given, stay with the placeholder
                 if (mediaArt) {
-                    
-                    DLogPurple(@"self.preferredSizeForCoverArt: %@", NSStringFromCGSize(self.preferredSizeForCoverArt));
                     UIImage *artwork = [mediaArt imageWithSize:self.preferredSizeForCoverArt];
+                    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setAlbumArtToPlaceholder) object:nil];
+                    self.viewModel.customCovertArtLoaded = YES;
                     
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setAlbumArtToPlaceholder) object:nil];
+//                    dispatch_async(self.viewModel.userInteractiveQueue, ^{
                         self.albumArtImageView.image = artwork;
-                        self.viewModel.customCovertArtLoaded = YES;
-                    });
+//                    });
                 }
                 
             } else {
                 DLog(@"Discarded CoverArt for track: %lu, current track already moved to %ld.", (unsigned long)track, (long)self.viewModel.currentTrack);
             }
         }];
-    });
+//    });
 }
 
 - (void)updateRepeatButton
@@ -286,9 +262,7 @@
             self.viewModel.playing = NO;
             [self.viewModel.playbackTickTimer invalidate];
             self.viewModel.playbackTickTimer = nil;
-            
             [self.viewModel stopPlaying];
-            
             [self adjustPlayButtonState];
         }
     });
@@ -302,7 +276,6 @@
     os_activity_initiate("Stop Track", OS_ACTIVITY_FLAG_DETACHED, ^{
         [self pause];
         self.viewModel.currentPlaybackPosition = 0;
-        [self updateSeekUI];
     });
 }
 
@@ -357,7 +330,7 @@
     os_activity_set_breadcrumb("changeToTrack:");
     __block NSInteger newTrack = track;
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(self.viewModel.userInitiatedQueue, ^{
         // benchmarking
         self.startTime = [NSDate date];
         
@@ -390,7 +363,7 @@
         NSDate *endTime = [NSDate date];
         NSTimeInterval executionTime = [endTime timeIntervalSinceDate:self.startTime];
         DLogYellow(@"changeToTrack: execution time = %f", executionTime);
-    });
+//    });
 }
 
 /**
@@ -405,7 +378,6 @@
         }
         else {
             self.viewModel.currentPlaybackPosition += 1.0f;
-            [self updateSeekUI];
         }
     }
 }
@@ -423,11 +395,12 @@
 
 - (void)setShuffling:(BOOL)newShuffling
 {
-    NSAssert([[NSThread currentThread] isMainThread], @"-setShuffling must be called from main thread.");
-    self.shuffling = newShuffling;
+    self.viewModel.shuffling = newShuffling;
     
-    NSString *imageName = (self.viewModel.shuffling ? @"shuffle_on.png" : @"shuffle_off.png");
-    [self.shuffleButton setImage:[UIImage imageNamed:[@"PVPlaybackController.bundle/images/" stringByAppendingString:imageName]] forState:UIControlStateNormal];
+//    dispatch_async(self.viewModel.userInteractiveQueue, ^{
+        NSString *imageName = (newShuffling ? @"shuffle_on.png" : @"shuffle_off.png");
+        [self.shuffleButton setImage:[UIImage imageNamed:[@"PVPlaybackController.bundle/images/" stringByAppendingString:imageName]] forState:UIControlStateNormal];
+//    });
 }
 
 #pragma mark - Volume
@@ -435,21 +408,27 @@
 #pragma mark - User Interface Actions
 - (IBAction)playAction:(id)sender
 {
-    if (self.viewModel.playing) {
-        [self pause];
-    } else {
-        [self playOrResume];
-    }
+//    dispatch_async(self.viewModel.userInitiatedQueue, ^{
+        if (self.viewModel.playing) {
+            [self pause];
+        } else {
+            [self playOrResume];
+        }
+//    });
 }
 
 - (IBAction)nextAction:(id)sender
 {
-    [self next];
+//    dispatch_async(self.viewModel.userInitiatedQueue, ^{
+        [self next];
+//    });
 }
 
 - (IBAction)previousAction:(id)sender
 {
-    [self previous];
+//    dispatch_async(self.viewModel.userInitiatedQueue, ^{
+        [self previous];
+//    });
 }
 
 /**
@@ -474,42 +453,19 @@
 }
 
 #pragma mark - Playback button state management
-
-/*
- * Adjusts the directional buttons to comply with the shouldHide-Button settings.
- */
-- (void)adjustDirectionalButtonStates
-{
-//    if (self.viewModel.tracksAreAvailable && self.viewModel.currentTrack + 1 == self.viewModel.numberOfTracks && self.shouldHideNextTrackButtonAtBoundary) {
-//        self.nextButton.enabled = NO;
-//    }
-//    else {
-//        self.nextButton.enabled = YES;
-//    }
-//    
-//    if (self.viewModel.tracksAreAvailable && self.viewModel.currentTrack == 0 && self.shouldHidePreviousTrackButtonAtBoundary) {
-//        self.previousButton.enabled = NO;
-//    }
-//    else {
-//        self.previousButton.enabled = YES;
-//    }
-//    
-//    NSDate *endTime = [NSDate date];
-//    NSTimeInterval executionTime = [endTime timeIntervalSinceDate:self.startTime];
-//    DLogYellow(@"adjustDirectionalButtonStates execution time = %f", executionTime);
-}
-
 /*
  * Adjusts the state of the play button to match the current state of the player
  */
 - (void)adjustPlayButtonState
 {
-    if (!self.viewModel.playing) {
-        self.playButton.imageView.image = [UIImage imageNamed:@"playButton"];
-    }
-    else {
-        self.playButton.imageView.image = [UIImage imageNamed:@"pauseButton"];
-    }
+//    dispatch_async(self.viewModel.userInteractiveQueue, ^{
+        if (!self.viewModel.playing) {
+            self.playButton.imageView.image = [UIImage imageNamed:@"playButton"];
+        }
+        else {
+            self.playButton.imageView.image = [UIImage imageNamed:@"pauseButton"];
+        }
+//    });
 }
 
 #pragma mark - scrubbing slider
@@ -554,7 +510,6 @@
 {
     self.viewModel.currentPlaybackPosition = self.progressSlider.value;
     [self.viewModel didSeekToPosition:self.viewModel.currentPlaybackPosition];
-    [self updateSeekUI];
 }
 
 /*

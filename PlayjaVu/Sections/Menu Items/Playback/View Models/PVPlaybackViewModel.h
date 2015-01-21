@@ -42,40 +42,18 @@
 @property (nonatomic, strong) NSTimer *playbackTickTimer; // Ticks each seconds when playing.
 @property (nonatomic) NSInteger numberOfTracks; // Number of tracks, <0 if unknown
 @property (nonatomic) BOOL scrobbling; // Whether the player is currently scrobbling
+@property (copy, nonatomic, readonly) NSString *trackTitle;
+@property (copy, nonatomic, readonly) NSString *trackArtist;
+@property (copy, nonatomic, readonly) NSString *trackAlbum;
+@property (assign, nonatomic, readonly) CGFloat trackLength;
 @property (strong, nonatomic, readonly) RACSignal *updatePlaybackUISignal;
 @property (strong, nonatomic, readonly) RACSignal *playSignal;
-
-/**
- * Returns the title of the given track and player as a NSString. You can return nil for no title.
- * @return A string to use as the title of the track. If you return nil, this track will have no title.
- */
-- (NSString *)trackTitle;
-
-/**
- * Returns the artist for the given track.
- * @return A string to use as the artist name of the track. If you return nil, this track will have no artist name.
- */
-- (NSString *)trackArtist;
-
-/**
- * Returns the album for the given track
- * @return A string to use as the album name of the track. If you return nil, this track will have no album name.
- */
-- (NSString *)trackAlbum;
-
-/**
- * Returns the length for the given track. Your implementation must provide a
- * value larger than 0.
- * @return length in seconds
- */
-- (CGFloat)trackLength;
-
-/**
- * Returns the number of tracks for the given player. If you do not implement this method
- * or return anything smaller than 2, one track is assumed and the skip-buttons are disabled.
- * @return number of available tracks, -1 if unknown
- */
-- (NSInteger)numberOfTracks;
+@property (strong, nonatomic, readonly) RACSignal *nextButtonEnabledSignal;
+@property (strong, nonatomic, readonly) RACSignal *previousButtonEnabledSignal;
+@property (strong, nonatomic, readonly) dispatch_queue_t userInteractiveQueue;
+@property (strong, nonatomic, readonly) dispatch_queue_t userInitiatedQueue;
+@property (strong, nonatomic, readonly) dispatch_queue_t utilityQueue;
+@property (strong, nonatomic, readonly) dispatch_queue_t backgroundQueue;
 
 - (BOOL)tracksAreAvailable;
 

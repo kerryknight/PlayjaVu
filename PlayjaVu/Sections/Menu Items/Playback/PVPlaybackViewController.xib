@@ -6,7 +6,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PVPlaybackViewController">
             <connections>
-                <outlet property="albumArtImageView" destination="Mrc-Tx-uzZ" id="6LJ-nc-pCy"/>
                 <outlet property="controlView" destination="dgZ-Ok-xuw" id="MzI-Wl-3xd"/>
                 <outlet property="nextButton" destination="PKk-PP-Ybt" id="hur-iv-myM"/>
                 <outlet property="playButton" destination="Jat-i8-kgl" id="cv4-Cp-q6w"/>
@@ -22,9 +21,6 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView contentMode="scaleToFill" image="previousButton@2x" translatesAutoresizingMaskIntoConstraints="NO" id="Mrc-Tx-uzZ">
-                    <rect key="frame" x="0.0" y="44" width="320" height="320"/>
-                </imageView>
                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UxR-Mf-2lD" userLabel="Album Blur Overlay">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="yUv-oQ-S8Y">
@@ -392,17 +388,12 @@
                 <constraint firstItem="dgZ-Ok-xuw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="6Rw-XI-nOn"/>
                 <constraint firstAttribute="bottom" secondItem="dgZ-Ok-xuw" secondAttribute="bottom" id="94S-Px-fOl"/>
                 <constraint firstAttribute="trailing" secondItem="UxR-Mf-2lD" secondAttribute="trailing" id="FQi-gh-nji"/>
-                <constraint firstItem="Mrc-Tx-uzZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ING-Jx-TPh"/>
                 <constraint firstAttribute="bottom" secondItem="UxR-Mf-2lD" secondAttribute="bottom" id="LwW-xB-yd8"/>
                 <constraint firstItem="UxR-Mf-2lD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bHN-cb-OUR"/>
-                <constraint firstAttribute="trailing" secondItem="Mrc-Tx-uzZ" secondAttribute="trailing" id="mbD-Vo-0KK"/>
-                <constraint firstAttribute="bottom" secondItem="Mrc-Tx-uzZ" secondAttribute="bottom" id="syN-yV-GqD"/>
-                <constraint firstItem="Mrc-Tx-uzZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vXv-pk-DUi"/>
                 <constraint firstItem="UxR-Mf-2lD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="x56-eY-chI"/>
             </constraints>
             <variation key="default">
                 <mask key="subviews">
-                    <exclude reference="Mrc-Tx-uzZ"/>
                     <exclude reference="UxR-Mf-2lD"/>
                     <exclude reference="dgZ-Ok-xuw"/>
                 </mask>
@@ -414,15 +405,10 @@
                     <exclude reference="2kD-Ys-rYk"/>
                     <exclude reference="6Rw-XI-nOn"/>
                     <exclude reference="94S-Px-fOl"/>
-                    <exclude reference="ING-Jx-TPh"/>
-                    <exclude reference="mbD-Vo-0KK"/>
-                    <exclude reference="syN-yV-GqD"/>
-                    <exclude reference="vXv-pk-DUi"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
-                    <include reference="Mrc-Tx-uzZ"/>
                     <include reference="UxR-Mf-2lD"/>
                     <include reference="dgZ-Ok-xuw"/>
                 </mask>
@@ -434,10 +420,6 @@
                     <include reference="2kD-Ys-rYk"/>
                     <include reference="6Rw-XI-nOn"/>
                     <include reference="94S-Px-fOl"/>
-                    <include reference="ING-Jx-TPh"/>
-                    <include reference="mbD-Vo-0KK"/>
-                    <include reference="syN-yV-GqD"/>
-                    <include reference="vXv-pk-DUi"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="-688" y="119"/>
@@ -450,6 +432,5 @@
         <image name="nextButton" width="28" height="28"/>
         <image name="playButton" width="28" height="28"/>
         <image name="previousButton" width="28" height="28"/>
-        <image name="previousButton@2x" width="16" height="16"/>
     </resources>
 </document>
