@@ -41,9 +41,13 @@
 {
     RAC(self.viewModel, email) = self.emailAddressFloatTextField.rac_textSignal;
     
+    @weakify(self);
     self.sendResetLinkButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^(id _) {
-        [self dismissAnyKeyboard];
-        [self sendResetLink];
+        os_activity_initiate("Send Reset Password Link Click", OS_ACTIVITY_FLAG_DEFAULT, ^{
+            @strongify(self);
+            [self dismissAnyKeyboard];
+            [self sendResetLink];
+        });
         return [RACSignal empty];
     }];
     
@@ -84,6 +88,7 @@
     
 	return [[[self.viewModel rac_sendResetPasswordLink] deliverOn:[RACScheduler mainThreadScheduler]]
 	        subscribeError:^(NSError *error) {
+                os_trace_error("Send password reset link failed error %ld", error.code);
                 DLogRed(@"reset link send error show alert: %@", [error localizedDescription]);
                 
                 //dismiss the spinner regardless of outcome
@@ -94,6 +99,7 @@
                 [PVStatusBarNotification showWithStatus:message dismissAfter:2.0 customStyleName:PVStatusBarError];
                 
             } completed:^{
+                os_activity_set_breadcrumb("Send reset password completed successfully");
                 DLog(@"sent reset link successfully, go back to login view");
                 
                 [PVStatusBarNotification showWithStatus:NSLocalizedString(@"Email with reset link sent!", nil) dismissAfter:2.0 customStyleName:PVStatusBarSuccess];
@@ -131,11 +137,14 @@
     [self.emailAddressFloatTextField setKeyboardType:UIKeyboardTypeEmailAddress];
     self.emailAddressFloatTextField.returnKeyType = UIReturnKeyGo;
     self.emailAddressFloatTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    
     //set our placeholder text color
     UIColor *gray = [kMedWhite colorWithAlphaComponent:0.5];
+    
     if ([self.emailAddressFloatTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
         self.emailAddressFloatTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Email Address", nil) attributes:@{NSForegroundColorAttributeName: gray}];
     }
+    
     [self.container addSubview:self.emailAddressFloatTextField];
     // ********** FLOATING LABEL TEXT FIELDS ********************** //
 }

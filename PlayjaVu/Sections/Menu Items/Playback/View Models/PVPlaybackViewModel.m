@@ -73,49 +73,47 @@
 #pragma mark - Data
 - (void)propagateMusicPlayerState:(NSNotification *)notification
 {
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSDictionary *userInfo = [notification userInfo];
+    NSDictionary *userInfo = [notification userInfo];
+    
+    if (userInfo[@"MPMusicPlayerControllerPlaybackStateKey"]) {
+        MPMusicPlaybackState playbackState = (MPMusicPlaybackState)[userInfo[@"MPMusicPlayerControllerPlaybackStateKey"] integerValue];
         
-        if (userInfo[@"MPMusicPlayerControllerPlaybackStateKey"]) {
-            MPMusicPlaybackState playbackState = (MPMusicPlaybackState)[userInfo[@"MPMusicPlayerControllerPlaybackStateKey"] integerValue];
+        if (self.musicPlayer) {
+            // tell our player UI to update itself with our new data
+            self.currentPlaybackPosition = self.musicPlayer.currentPlaybackTime;
+            // make sure we keep track of our currently playing track's index
+            self.currentTrack = self.musicPlayer.indexOfNowPlayingItem;
             
-            if (self.musicPlayer) {
-                // tell our player UI to update itself with our new data
-                self.currentPlaybackPosition = self.musicPlayer.currentPlaybackTime;
-                // make sure we keep track of our currently playing track's index
-                self.currentTrack = self.musicPlayer.indexOfNowPlayingItem;
-                
-                switch (playbackState) {
-                    case MPMusicPlaybackStateStopped: {
-                        DLogOrange(@"MPMusicPlaybackStateStopped");
-                        return;
-                    }
-                    case MPMusicPlaybackStatePlaying: {
-                        DLogOrange(@"MPMusicPlaybackStatePlaying");
-                        [(RACSubject *)self.playSignal sendNext:nil];
-                        break;
-                    }
-                    case MPMusicPlaybackStatePaused: {
-                        DLogOrange(@"MPMusicPlaybackStatePaused");
-                        return;
-                    }
-                    case MPMusicPlaybackStateInterrupted:
-                        DLogOrange(@"MPMusicPlaybackStateInterrupted");
-                        break;
-                    case MPMusicPlaybackStateSeekingForward:
-                        DLogOrange(@"MPMusicPlaybackStateSeekingForward");
-                        break;
-                    case MPMusicPlaybackStateSeekingBackward:
-                        DLogOrange(@"MPMusicPlaybackStateSeekingBackward");
-                        break;
-                    default:
-                        break;
+            switch (playbackState) {
+                case MPMusicPlaybackStateStopped: {
+                    DLogOrange(@"MPMusicPlaybackStateStopped");
+                    return;
                 }
-                
-                [(RACSubject *)self.updatePlaybackUISignal sendNext:@(self.musicPlayer.indexOfNowPlayingItem)];
+                case MPMusicPlaybackStatePlaying: {
+                    DLogOrange(@"MPMusicPlaybackStatePlaying");
+                    [(RACSubject *)self.playSignal sendNext:nil];
+                    break;
+                }
+                case MPMusicPlaybackStatePaused: {
+                    DLogOrange(@"MPMusicPlaybackStatePaused");
+                    return;
+                }
+                case MPMusicPlaybackStateInterrupted:
+                    DLogOrange(@"MPMusicPlaybackStateInterrupted");
+                    break;
+                case MPMusicPlaybackStateSeekingForward:
+                    DLogOrange(@"MPMusicPlaybackStateSeekingForward");
+                    break;
+                case MPMusicPlaybackStateSeekingBackward:
+                    DLogOrange(@"MPMusicPlaybackStateSeekingBackward");
+                    break;
+                default:
+                    break;
             }
+            
+            [(RACSubject *)self.updatePlaybackUISignal sendNext:@(self.musicPlayer.indexOfNowPlayingItem)];
         }
-//    });
+    }
 }
 
 - (NSString *)trackAlbum

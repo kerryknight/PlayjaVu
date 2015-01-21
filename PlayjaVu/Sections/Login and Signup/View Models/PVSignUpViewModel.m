@@ -34,6 +34,7 @@
 #pragma mark - Public Methods
 - (RACSignal *)rac_signUpNewUser
 {
+    os_activity_set_breadcrumb("Kick off new user sign up request");
     //create a new PFUser with username and password set; the email address will double as the username
     PFUser *user = [PFUser user];
     user.username = self.username;

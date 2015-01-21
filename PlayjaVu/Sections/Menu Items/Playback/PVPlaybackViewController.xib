@@ -228,12 +228,12 @@
                                             </mask>
                                             <mask key="constraints">
                                                 <exclude reference="Mll-Bf-gmk"/>
-                                                <exclude reference="yId-q6-gkB"/>
                                                 <exclude reference="7d2-Yv-un0"/>
                                                 <exclude reference="e0M-Ln-Ec6"/>
                                                 <exclude reference="hDT-EN-ith"/>
                                                 <exclude reference="Rzp-zC-8hB"/>
                                                 <exclude reference="cRB-w1-F3p"/>
+                                                <exclude reference="yId-q6-gkB"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=compact">
@@ -244,12 +244,12 @@
                                             </mask>
                                             <mask key="constraints">
                                                 <include reference="Mll-Bf-gmk"/>
-                                                <include reference="yId-q6-gkB"/>
                                                 <include reference="7d2-Yv-un0"/>
                                                 <include reference="e0M-Ln-Ec6"/>
                                                 <include reference="hDT-EN-ith"/>
                                                 <include reference="Rzp-zC-8hB"/>
                                                 <include reference="cRB-w1-F3p"/>
+                                                <include reference="yId-q6-gkB"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -285,9 +285,6 @@
                                     <mask key="constraints">
                                         <exclude reference="PL4-Hj-DJa"/>
                                         <exclude reference="loW-b2-uRq"/>
-                                        <exclude reference="SbH-FE-FJT"/>
-                                        <exclude reference="nLD-Gm-cZr"/>
-                                        <exclude reference="sh0-qi-WaX"/>
                                         <exclude reference="0N5-d3-rqb"/>
                                         <exclude reference="kbn-js-Kwf"/>
                                         <exclude reference="ndY-yy-3s3"/>
@@ -298,6 +295,9 @@
                                         <exclude reference="vyz-Z4-8pI"/>
                                         <exclude reference="RCD-0s-ZZc"/>
                                         <exclude reference="VCq-Xu-NLT"/>
+                                        <exclude reference="SbH-FE-FJT"/>
+                                        <exclude reference="nLD-Gm-cZr"/>
+                                        <exclude reference="sh0-qi-WaX"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -312,9 +312,6 @@
                                     <mask key="constraints">
                                         <include reference="PL4-Hj-DJa"/>
                                         <include reference="loW-b2-uRq"/>
-                                        <include reference="SbH-FE-FJT"/>
-                                        <include reference="nLD-Gm-cZr"/>
-                                        <include reference="sh0-qi-WaX"/>
                                         <include reference="0N5-d3-rqb"/>
                                         <include reference="kbn-js-Kwf"/>
                                         <include reference="ndY-yy-3s3"/>
@@ -325,6 +322,9 @@
                                         <include reference="vyz-Z4-8pI"/>
                                         <include reference="RCD-0s-ZZc"/>
                                         <include reference="VCq-Xu-NLT"/>
+                                        <include reference="SbH-FE-FJT"/>
+                                        <include reference="nLD-Gm-cZr"/>
+                                        <include reference="sh0-qi-WaX"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -407,10 +407,6 @@
                     <exclude reference="dgZ-Ok-xuw"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="ING-Jx-TPh"/>
-                    <exclude reference="mbD-Vo-0KK"/>
-                    <exclude reference="syN-yV-GqD"/>
-                    <exclude reference="vXv-pk-DUi"/>
                     <exclude reference="FQi-gh-nji"/>
                     <exclude reference="LwW-xB-yd8"/>
                     <exclude reference="bHN-cb-OUR"/>
@@ -418,6 +414,10 @@
                     <exclude reference="2kD-Ys-rYk"/>
                     <exclude reference="6Rw-XI-nOn"/>
                     <exclude reference="94S-Px-fOl"/>
+                    <exclude reference="ING-Jx-TPh"/>
+                    <exclude reference="mbD-Vo-0KK"/>
+                    <exclude reference="syN-yV-GqD"/>
+                    <exclude reference="vXv-pk-DUi"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -427,10 +427,6 @@
                     <include reference="dgZ-Ok-xuw"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="ING-Jx-TPh"/>
-                    <include reference="mbD-Vo-0KK"/>
-                    <include reference="syN-yV-GqD"/>
-                    <include reference="vXv-pk-DUi"/>
                     <include reference="FQi-gh-nji"/>
                     <include reference="LwW-xB-yd8"/>
                     <include reference="bHN-cb-OUR"/>
@@ -438,6 +434,10 @@
                     <include reference="2kD-Ys-rYk"/>
                     <include reference="6Rw-XI-nOn"/>
                     <include reference="94S-Px-fOl"/>
+                    <include reference="ING-Jx-TPh"/>
+                    <include reference="mbD-Vo-0KK"/>
+                    <include reference="syN-yV-GqD"/>
+                    <include reference="vXv-pk-DUi"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="-688" y="119"/>

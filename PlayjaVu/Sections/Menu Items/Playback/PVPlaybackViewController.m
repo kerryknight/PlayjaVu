@@ -139,17 +139,19 @@
 - (void)updateUI
 {
     DLogYellow(@"");
-    // Slider
-    self.progressSlider.maximumValue = [self.viewModel trackLength];
-    self.progressSlider.minimumValue = 0;
-    
-    [self updateUIForCurrentTrack];
-    [self updateSeekUI];
-    [self adjustDirectionalButtonStates];
-    
-    DLogRed(@"prev button: %@", NSStringFromCGRect(self.previousButton.frame));
-    DLogRed(@"play button: %@", NSStringFromCGRect(self.playButton.frame));
-    DLogRed(@"next button: %@", NSStringFromCGRect(self.nextButton.frame));
+    os_activity_initiate("updateUI", OS_ACTIVITY_FLAG_DETACHED, ^{
+        // Slider
+        self.progressSlider.maximumValue = [self.viewModel trackLength];
+        self.progressSlider.minimumValue = 0;
+        
+        [self updateUIForCurrentTrack];
+        [self updateSeekUI];
+        [self adjustDirectionalButtonStates];
+        
+        DLogRed(@"prev button: %@", NSStringFromCGRect(self.previousButton.frame));
+        DLogRed(@"play button: %@", NSStringFromCGRect(self.playButton.frame));
+        DLogRed(@"next button: %@", NSStringFromCGRect(self.nextButton.frame));
+    });
 }
 
 /*
@@ -174,6 +176,7 @@
 - (void)updateUIForCurrentTrack
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        os_activity_set_breadcrumb("updateUIForCurrentTrack:updateText");
         self.artistNameLabel.text = [self.viewModel trackArtist];
         self.trackTitleLabel.text = [self.viewModel trackTitle];
         self.albumTitleLabel.text = [self.viewModel trackAlbum];
@@ -190,6 +193,7 @@
     });
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        os_activity_set_breadcrumb("updateUIForCurrentTrack:getArtwork");
         // We only request the coverart if the delegate responds to it.
         self.viewModel.customCovertArtLoaded = NO;
         
@@ -198,6 +202,7 @@
         
         // Request the image.
         [self.viewModel artworkForCurrentTrackWithCompletion:^(MPMediaItemArtwork *mediaArt, NSError *__autoreleasing *error) {
+            os_activity_set_breadcrumb("updateUIForCurrentTrack:gotArtwork");
             
             if (track == self.viewModel.currentTrack) {
                 
@@ -251,22 +256,24 @@
  */
 - (void)playOrResume
 {
-    // if we aren't currently, we were stopped an hit the Play button
-    if (!self.viewModel.playing) {
-        // start playing new
-        self.viewModel.playing = YES;
-        [self.viewModel startPlaying];
-    }
-    else {
-        // else, we were already playing music when we opened the app
-        // so we'll just continue playing and don't need to do anything here
-    }
-    
-    [self adjustPlayButtonState];
-    [self.viewModel.playbackTickTimer invalidate];
-    self.viewModel.playbackTickTimer = nil;
-    self.viewModel.playbackTickTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(playbackTick:) userInfo:nil repeats:YES];
-    self.viewModel.playbackTickTimer.tolerance = 1.0; // 1 second tolerance
+    os_activity_initiate("Play/Resume Track", OS_ACTIVITY_FLAG_DETACHED, ^{
+        // if we aren't currently, we were stopped an hit the Play button
+        if (!self.viewModel.playing) {
+            // start playing new
+            self.viewModel.playing = YES;
+            [self.viewModel startPlaying];
+        }
+        else {
+            // else, we were already playing music when we opened the app
+            // so we'll just continue playing and don't need to do anything here
+        }
+        
+        [self adjustPlayButtonState];
+        [self.viewModel.playbackTickTimer invalidate];
+        self.viewModel.playbackTickTimer = nil;
+        self.viewModel.playbackTickTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(playbackTick:) userInfo:nil repeats:YES];
+        self.viewModel.playbackTickTimer.tolerance = 1.0; // 1 second tolerance
+    });
 }
 
 /**
@@ -274,15 +281,17 @@
  */
 - (void)pause
 {
-    if (self.viewModel.playing) {
-        self.viewModel.playing = NO;
-        [self.viewModel.playbackTickTimer invalidate];
-        self.viewModel.playbackTickTimer = nil;
-        
-        [self.viewModel stopPlaying];
-        
-        [self adjustPlayButtonState];
-    }
+    os_activity_initiate("Pause Track", OS_ACTIVITY_FLAG_DETACHED, ^{
+        if (self.viewModel.playing) {
+            self.viewModel.playing = NO;
+            [self.viewModel.playbackTickTimer invalidate];
+            self.viewModel.playbackTickTimer = nil;
+            
+            [self.viewModel stopPlaying];
+            
+            [self adjustPlayButtonState];
+        }
+    });
 }
 
 /**
@@ -290,9 +299,11 @@
  */
 - (void)stop
 {
-    [self pause];
-    self.viewModel.currentPlaybackPosition = 0;
-    [self updateSeekUI];
+    os_activity_initiate("Stop Track", OS_ACTIVITY_FLAG_DETACHED, ^{
+        [self pause];
+        self.viewModel.currentPlaybackPosition = 0;
+        [self updateSeekUI];
+    });
 }
 
 /**
@@ -302,7 +313,9 @@
  */
 - (void)next
 {
-    [self changeToTrack:self.viewModel.currentTrack + 1];
+    os_activity_initiate("Next Track", OS_ACTIVITY_FLAG_DETACHED, ^{
+        [self changeToTrack:self.viewModel.currentTrack + 1];
+    });
 }
 
 /**
@@ -313,8 +326,7 @@
  */
 - (void)previous
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
+    os_activity_initiate("Previous Track", OS_ACTIVITY_FLAG_DETACHED, ^{
         // only skip backwards if we're less than 2 seconds from the start of the song;
         // otherwise, simply skip back to the start of the song
         NSInteger numberOfTracksToMove = self.viewModel.currentPlaybackPosition <= 2 ? 1 : 0;
@@ -323,7 +335,7 @@
 }
 
 /*
- * Called when the player finished playing the current track. 
+ * Called when the player finished playing the current track.
  */
 - (void)currentTrackFinished
 {
@@ -342,6 +354,7 @@
  */
 - (void)changeToTrack:(NSInteger)track
 {
+    os_activity_set_breadcrumb("changeToTrack:");
     __block NSInteger newTrack = track;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -352,6 +365,7 @@
         
         if (newTrack < 0 || (self.viewModel.tracksAreAvailable && newTrack >= self.viewModel.numberOfTracks)) {
             shouldChange = NO;
+            os_activity_set_breadcrumb("changeToTrack:paused");
             // If we can't next, stop the playback.
             // TODO: notify delegate about the fact we fell off the playlist
             [self pause];
@@ -361,15 +375,18 @@
             newTrack = [self.viewModel didChangeTrack:newTrack];
             
             if (newTrack == NSNotFound) {
+                os_activity_set_breadcrumb("changeToTrack:newTrack:NotFound");
                 // TODO: notify delegate about the fact we felt off the playlist
                 [self pause];
             }
             else {
+                os_activity_set_breadcrumb("changeToTrack:newTrack:Found");
                 self.viewModel.currentPlaybackPosition = 0;
                 self.viewModel.currentTrack = newTrack;
             }
         }
         
+#warning BE SURE TO REMOVE ALL THESE TIMERS
         NSDate *endTime = [NSDate date];
         NSTimeInterval executionTime = [endTime timeIntervalSinceDate:self.startTime];
         DLogYellow(@"changeToTrack: execution time = %f", executionTime);

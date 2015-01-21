@@ -60,6 +60,8 @@
         
         // analytics
         [PFAnalytics trackAppOpenedWithLaunchOptionsInBackground:options block:nil];
+        
+        os_activity_set_breadcrumb("Configure Parse End");
     });
     
     // END 3RD PARTY

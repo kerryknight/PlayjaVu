@@ -18,6 +18,11 @@
 #import "PVAppDelegate.h"
 #import "UIImage+Coloring.h"
 
+@interface FBErrorUtility (PVActivityTracing)
++ (NSUInteger)errorCodeForError:(NSError *)error;
++ (NSUInteger)errorSubcodeForError:(NSError *)error;
+@end
+
 @interface PVLoginViewController () <UITextFieldDelegate>
 @property (strong, nonatomic) JVFloatLabeledTextField *usernameFloatTextField;
 @property (strong, nonatomic) JVFloatLabeledTextField *passwordFloatTextField;
@@ -42,29 +47,25 @@
     
     self.viewModel = [[PVLoginViewModel alloc] init];
     
-    [self rac_addButtonCommands];
+    [self createRACBindings];
 }
 
 #pragma mark - Private Methods
-- (void)rac_addButtonCommands {
-    [self rac_createLoginButtonAndTextFieldViewModelBindings];
-    [self rac_createForgotPasswordButtonSignal];
-    [self rac_createSignUpButtonSignal];
-    [self rac_createFacebookButtonSignal];
+- (void)createRACBindings {
+    [self createTextFieldViewModelBindings];
+    [self createParseLoginButtonSignal];
+    [self createForgotPasswordButtonSignal];
+    [self createSignUpButtonSignal];
+    [self createLoginWithFacebookButtonSignal];
 }
 
-- (void)rac_createLoginButtonAndTextFieldViewModelBindings {
+- (void)createTextFieldViewModelBindings {
     RAC(self.viewModel, username) = self.usernameFloatTextField.rac_textSignal;
     RAC(self.viewModel, password) = self.passwordFloatTextField.rac_textSignal;
     
 #pragma mark - REMOVE THIS HARDCODE LOGIN
     self.viewModel.username = @"kerry.a.knight@gmail.com";
     self.viewModel.password = @"H2C1spar";
-    
-    self.loginButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^(id _) {
-        [self logIn];
-        return [RACSignal empty];
-    }];
     
     //only show the login button solid color if we have a valid email address and
     //something is entered in the password field in order to reduce erroneous and
@@ -86,29 +87,48 @@
     }];
 }
 
-- (void)rac_createForgotPasswordButtonSignal {
-    self.forgotPasswordButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^(id _) {
-        [self loadForgotPasswordView];
+- (void)createParseLoginButtonSignal {
+    @weakify(self);
+    self.loginButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^(id _) {
+        os_activity_initiate("Log in with Parse Click", OS_ACTIVITY_FLAG_DEFAULT, ^{
+            @strongify(self);
+            [self logIn];
+        });
         return [RACSignal empty];
     }];
 }
 
-- (void)rac_createSignUpButtonSignal {
+- (void)createForgotPasswordButtonSignal {
+    @weakify(self);
+    self.forgotPasswordButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^(id _) {
+        os_activity_initiate("Forgot Password Click", OS_ACTIVITY_FLAG_DEFAULT, ^{
+            @strongify(self);
+            [self loadForgotPasswordView];
+        });
+        return [RACSignal empty];
+    }];
+}
+
+- (void)createSignUpButtonSignal {
     self.signUpButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^(id _) {
-        
         [self loadSignUpView];
         return [RACSignal empty];
     }];
 }
 
-- (void)rac_createFacebookButtonSignal {
+- (void)createLoginWithFacebookButtonSignal {
+    @weakify(self);
     self.facebookButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^(id _) {
-        [self logInWithFacebook];
+        os_activity_initiate("Log in with Facebook Click", OS_ACTIVITY_FLAG_DEFAULT, ^{
+            @strongify(self);
+            [self logInWithFacebook];
+        });
         return [RACSignal empty];
     }];
 }
 
 - (RACDisposable *)logIn {
+    
     dispatch_async(dispatch_get_main_queue(), ^(void) {
         //show the spinner
         MRProgressOverlayView *spinnerView = [MRProgressOverlayView showOverlayAddedTo:self.view title:NSLocalizedString(@"Logging in...", Nil) mode:MRProgressOverlayViewModeIndeterminate animated:YES];
@@ -122,10 +142,10 @@
                 
                 //error logging in, show error message
                 [PVStatusBarNotification showWithStatus:NSLocalizedString(@"Welcome back!", nil) dismissAfter:2.0 customStyleName:PVStatusBarSuccess];
-                
             }
             error:^(NSError *error) {
                 DLogRed(@"login error and show alert: %@", [error localizedDescription]);
+                os_trace_error("Parse login failed error %ld", error.code);
                 
                 //dismiss the spinner regardless of outcome
                 [MRProgressOverlayView dismissOverlayForView:self.view animated:YES];
@@ -135,6 +155,7 @@
                 [PVStatusBarNotification showWithStatus:message dismissAfter:2.0 customStyleName:PVStatusBarError];
             }
             completed:^{
+                os_activity_set_breadcrumb("Parse login completed successfully");
                 DLog(@"log in completed successfully, so show main interface");
                 //successfully logged in
                 //post a notification that our main interface should show which our
@@ -153,8 +174,12 @@
     
     return [[self.viewModel rac_logInWithFacebook]
             subscribeError:^(NSError *error) {
+                os_trace_error("Facebook login error code: %ld, subcode: %ld",
+                               [FBErrorUtility errorCodeForError:error],
+                               [FBErrorUtility errorSubcodeForError:error]);
+                
                 DLogError(@"Facebook-friendly ERROR: %@",  [FBErrorUtility userMessageForError:error]);
-                DLogError(@"ERROR: %@",  error);
+
                 NSString *message;
                 //dismiss the spinner regardless of outcome
                 [MRProgressOverlayView dismissOverlayForView:self.view animated:YES];
@@ -163,7 +188,10 @@
                 if ([[error userInfo][@"com.facebook.sdk:ErrorLoginFailedReason"] isEqualToString:@"com.facebook.sdk:SystemLoginDisallowedWithoutError"]) {
                     //alert user to allow facebook integration in Settings > Facebook > ApplicationName (NO)
                     message = NSLocalizedString(@"Enable logging into PlayjaVu with Facebook by going to Settings > Facebook > and ensuring PlayjaVu is turned ON.", nil);
+                    
+                    os_activity_set_breadcrumb("Facebook login error: System login disallowed without error.");
                 } else {
+                    os_activity_set_breadcrumb("Facebook login error: Some other error.");
                     //error logging in, show error message
                     message = [NSString stringWithFormat:NSLocalizedString(@"%@ \n\nPlease try again.", nil), [FBErrorUtility userMessageForError:error]];
                 }
@@ -179,7 +207,7 @@
                 
             }
             completed:^{
-                DLog(@"rac_logInWithFacebook completed successfully, so show main interface");
+                os_activity_set_breadcrumb("Facebook login completed successfully");
                 //successfully logged in
 
                 //dismiss the spinner regardless of outcome

@@ -35,5 +35,8 @@
 #import "PVNetworkingUtility.h"
 #import "PVStatusBarNotification.h"
 
+// System
+#import <os/activity.h>
+#import <os/trace.h>
 
 #endif

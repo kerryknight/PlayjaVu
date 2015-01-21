@@ -126,5 +126,64 @@ alertView.transitionStyle = SIAlertViewTransitionStyleBounce;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   
-  
+### Activity Tracing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#import <os/activity.h>
+
+// new activity
+os_activity_initiate("Activity Name", flags, ^{});
+
+// detach an activity from current activity
+os_activity_detach("Activity Name", flags, ^{});
+
+// create new breadcrumb example:
+- (void)mySearchMethod {
+    if (useCache) {
+        os_activity_set_breadcrumb("searching cache");
+        db = [self _cache];
+    }
+    else {
+        os_activity_set_breadcrumb("searching database");
+        db = [self _database];
+    }
+
+    [db search];
+}
+
+// RELEASE trace message
+#import <os/trace.h>
+os_trace("Interface %ld state %d", ifindex, state);
+
+// DEBUG trace message
+os_debug_trace("Open socket %d total time %2.3f ms", sock, ttime);
+
+OS_ACTIVITY_MODE = debug // environment variable
+
+// payload trace message
+os_trace_with_payload("Interface: %ld", ifindex, ^(xpc_object_t xdict) {
+    // this block is only called if we specifically enable via environment
+    // variable: OS_ACTIVITY_MODE = stream;
+    // otherwise, it's skipped such as in a typical running application
+    xpc_dictionary_set_string(xdict, "ifname", ifname);
+});
+
+// reporting unexpected errors
+os_trace_error("Inferface %ld failed error %d", ifindex, errno);
+
+// reporting fatal errors
+os_trace_fault("invalide state %d, will likely crash", state);
+
+EX:
+
+int
+main(int argc, char *argv[]) {
+    os_activity_initiate("startup initialization", 0, ^ {
+        os_trace_debug("passed %d args", argc);
+        if (!_do_initialization(argc, argv)) {
+            os_trace_fault("failed to initialize %d", errno);
+            errx(EX_SOFTWARE, "failed to initialize");
+        }
+    });
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

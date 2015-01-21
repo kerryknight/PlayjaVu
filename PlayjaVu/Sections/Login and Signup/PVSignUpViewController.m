@@ -65,8 +65,12 @@
     RAC(self.viewModel, password) = self.passwordFloatTextField.rac_textSignal;
     RAC(self.viewModel, confirmPassword) = self.confirmPasswordFloatTextField.rac_textSignal;
     
+    @weakify(self);
     self.signUpButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^(id _) {
-        [self signUp];
+        os_activity_initiate("Sign Up Click", OS_ACTIVITY_FLAG_DEFAULT, ^{
+            @strongify(self);
+            [self signUp];
+        });
         return [RACSignal empty];
     }];
     
@@ -107,6 +111,7 @@
     
 	return [[[self.viewModel rac_signUpNewUser] deliverOn:[RACScheduler mainThreadScheduler]]
 	        subscribeError:^(NSError *error) {
+                os_trace_error("Parse sign up failed error %ld", error.code);
                 DLogRed(@"sign up error and show alert: %@", [error localizedDescription]);
                 
                 //dismiss the spinner regardless of outcome
@@ -117,6 +122,7 @@
                 [PVStatusBarNotification showWithStatus:message dismissAfter:2.0 customStyleName:PVStatusBarError];
                 
             } completed: ^{
+                os_activity_set_breadcrumb("New user sign up completed successfully");
                 DLogSuccess(@"Sign up completed successfully; show main interface");
                 
                 [PVStatusBarNotification showWithStatus:NSLocalizedString(@"Success!", nil) dismissAfter:2.0 customStyleName:PVStatusBarSuccess];

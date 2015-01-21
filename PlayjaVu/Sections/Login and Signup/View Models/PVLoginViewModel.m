@@ -23,6 +23,8 @@
 #pragma mark - Public Methods
 - (RACSignal *)rac_logIn
 {
+    os_activity_set_breadcrumb("kick off Parse login");
+    
 #if DEVELOPER_BYPASS_LOGIN_MODE
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         [subscriber sendNext:subscriber];
@@ -35,6 +37,8 @@
 
 - (RACSignal *)rac_logInWithFacebook
 {
+    os_activity_set_breadcrumb("kick off Facebook login");
+    
 #if DEVELOPER_BYPASS_LOGIN_MODE
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         [subscriber sendNext:subscriber];
