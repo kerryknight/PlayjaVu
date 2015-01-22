@@ -11,18 +11,19 @@
 @interface PVPlaybackViewModel()
 @property (strong, nonatomic) MPMusicPlayerController *musicPlayer; // An instance of an itunes music player
 @property (copy, nonatomic) NSArray *mediaItems;
+@property (nonatomic, strong) NSTimer *playbackTickTimer; // Ticks each seconds when playing.
+@property (assign, nonatomic) NSInteger currentTrackIndex;
+@property (copy, nonatomic, readwrite) NSString *currentTrackId;
 @property (copy, nonatomic, readwrite) NSString *trackTitle;
-@property (copy, nonatomic, readwrite) NSString *trackArtist;
-@property (copy, nonatomic, readwrite) NSString *trackAlbum;
+@property (copy, nonatomic, readwrite) NSString *trackAlbumAndArtist;
 @property (assign, nonatomic, readwrite) CGFloat trackLength;
-@property (strong, nonatomic, readwrite) RACSignal *updatePlaybackUISignal;
-@property (strong, nonatomic, readwrite) RACSignal *playSignal;
 @property (strong, nonatomic, readwrite) RACSignal *nextButtonEnabledSignal;
 @property (strong, nonatomic, readwrite) RACSignal *previousButtonEnabledSignal;
 @property (strong, nonatomic, readwrite) dispatch_queue_t userInteractiveQueue;
 @property (strong, nonatomic, readwrite) dispatch_queue_t userInitiatedQueue;
 @property (strong, nonatomic, readwrite) dispatch_queue_t utilityQueue;
 @property (strong, nonatomic, readwrite) dispatch_queue_t backgroundQueue;
+@property (strong, nonatomic, readwrite) UIImage *albumArt;
 @end
 
 @implementation PVPlaybackViewModel
@@ -38,9 +39,6 @@
         _utilityQueue = dispatch_get_global_queue(QOS_CLASS_UTILITY, 0);
         _backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0);
         
-        _updatePlaybackUISignal = [[RACSubject subject] setNameWithFormat:@"PVPlaybackViewModel updatePlaybackUISignal"];
-        _playSignal = [[RACSubject subject] setNameWithFormat:@"PVPlaybackViewModel playSignal"];
-        
         // This HACK hides the volume overlay when changing the volume.
         // It's insipired by http://stackoverflow.com/questions/3845222/iphone-sdk-how-to-disable-the-volume-indicator-view-if-the-hardware-buttons-ar
         _volumeView = [MPVolumeView new];
@@ -55,6 +53,11 @@
         
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 
+        [nc addObserver:self
+               selector:@selector(didChangeNowPlaying:)
+                   name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                 object:self.musicPlayer];
+        
         [nc addObserver:self
                selector:@selector(propagateMusicPlayerState:)
                    name:MPMusicPlayerControllerPlaybackStateDidChangeNotification
@@ -74,19 +77,6 @@
     return self;
 }
 
-#pragma mark - Private Methods
-- (void)configureRACObservers
-{
-    @weakify(self);
-    [RACObserve(self.musicPlayer, nowPlayingItem) subscribeNext:^(id x) {
-        @strongify(self);
-        self.trackTitle = [self valueForMediaItemProperty:MPMediaItemPropertyTitle];
-        self.trackArtist = [self valueForMediaItemProperty:MPMediaItemPropertyArtist];
-        self.trackAlbum = [self valueForMediaItemProperty:MPMediaItemPropertyAlbumTitle];
-        self.trackLength = [[self valueForMediaItemProperty:MPMediaItemPropertyPlaybackDuration] longValue];
-    }];
-}
-
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -95,62 +85,221 @@
 }
 
 #pragma mark - Public Methods
-#pragma mark - Data
+- (void)shouldPlayOrPauseTrack
+{
+    if (self.playing) {
+        // pause track
+        os_activity_initiate("Pause Track", OS_ACTIVITY_FLAG_DETACHED, ^{
+            [self pauseTrack];
+        });
+    }
+    else {
+        os_activity_initiate("Play Track", OS_ACTIVITY_FLAG_DETACHED, ^{
+            // start playing new
+            [self playTrack];
+        });
+    }
+}
+
+- (void)goToNextTrack
+{
+    os_activity_initiate("Next Track", OS_ACTIVITY_FLAG_DETACHED, ^{
+        [self changeToTrack:self.currentTrackIndex + 1];
+    });
+}
+
+- (void)goToPreviousTrack
+{
+    DLogPurple(@"");
+    os_activity_initiate("Previous Track", OS_ACTIVITY_FLAG_DETACHED, ^{
+        // only skip backwards if we're less than 2 seconds from the start of the song;
+        // otherwise, simply skip back to the start of the song
+        NSInteger numberOfTracksToMove = self.currentPlaybackPosition <= 2 ? 1 : 0;
+        [self changeToTrack:self.currentTrackIndex - numberOfTracksToMove];
+    });
+}
+
+#pragma mark - Private Methods
+- (void)playTrack
+{
+    [self.musicPlayer play];
+}
+
+- (void)pauseTrack
+{
+    [self.musicPlayer pause];
+}
+
+- (void)stopTrack
+{
+    [self.musicPlayer stop];
+}
+
+- (void)shouldStartPlayTimer:(BOOL)start
+{
+    self.playing = start;
+    start ? [self startTimer] : [self stopTimer];
+}
+
+- (void)configureRACObservers
+{
+    @weakify(self);
+    // throttle our signal as paused/next notifications happen together
+    // and we set our
+    [RACObserve(self, currentTrackId) subscribeNext:^(id x) {
+        @strongify(self);
+        // anytime self.currentTrack changes, update the following properties
+        self.trackTitle = [self valueForMediaItemProperty:MPMediaItemPropertyTitle];
+        self.trackLength = [[self valueForMediaItemProperty:MPMediaItemPropertyPlaybackDuration] longValue];
+        
+        // combine artist and album into a single row like native Music app
+        NSString *trackArtist = [self valueForMediaItemProperty:MPMediaItemPropertyArtist] ?: @"";
+        NSString *trackAlbum = [self valueForMediaItemProperty:MPMediaItemPropertyAlbumTitle] ?: @"";
+        self.trackAlbumAndArtist = [NSString stringWithFormat:@"%@ - %@", trackArtist, trackAlbum];
+        
+        // no hyphen if we don't have both items populated
+        if (!trackArtist.length && trackAlbum.length) {
+            self.trackAlbumAndArtist = [NSString stringWithFormat:@"%@", trackAlbum];
+        }
+        else if (trackArtist.length && !trackAlbum.length) {
+            self.trackAlbumAndArtist = [NSString stringWithFormat:@"%@", trackArtist];
+        }
+        else if (!trackArtist.length && !trackAlbum.length) {
+            self.trackAlbumAndArtist = @"";
+        }
+        
+        BOOL previousEnabled = YES;
+        BOOL nextEnabled = YES;
+        
+        // determine previous button's status
+        if (self.tracksAreAvailable && self.currentTrackIndex == 0) {
+            previousEnabled = NO;
+        }
+        
+        // determine next button's status
+        if (self.tracksAreAvailable && self.currentTrackIndex + 1 == self.numberOfTracks) {
+            nextEnabled = NO;
+        }
+        
+        self.previousButtonEnabledSignal = [RACSignal return:@(previousEnabled)];
+        self.nextButtonEnabledSignal = [RACSignal return:@(nextEnabled)];
+        
+        // update album art
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(clearAlbumArtImage) object:nil];
+        [self performSelector:@selector(clearAlbumArtImage) withObject:nil afterDelay:0.5];
+        
+        // Copy the current track to another variable, otherwise we would just access the current one.
+        NSUInteger track = self.currentTrackIndex;
+        
+        // Request the image.
+        [self artworkForCurrentTrackWithCompletion:^(MPMediaItemArtwork *mediaArt) {
+            os_activity_set_breadcrumb("updateUIForCurrentTrack:gotArtwork");
+            
+            if (track == self.currentTrackIndex) {
+                
+                // If there is no image given, stay with the placeholder
+                if (mediaArt) {
+                    UIImage *artwork = [mediaArt imageWithSize:self.preferredSizeForCoverArt];
+                    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(clearAlbumArtImage) object:nil];
+                    self.albumArt = artwork;
+                }
+                
+            } else {
+                DLog(@"Discarded CoverArt for track: %lu, current track already moved to %ld.", (unsigned long)track, (long)self.currentTrackIndex);
+            }
+        }];
+    }];
+}
+
+- (CGSize)preferredSizeForCoverArt
+{
+    CGFloat scale = UIScreen.mainScreen.scale;
+    CGSize points = self.albumArtSize;
+    return  CGSizeMake(points.width * scale, points.height * scale);
+}
+
+- (void)startTimer
+{
+    [self.playbackTickTimer invalidate];
+    self.playbackTickTimer = nil;
+    self.playbackTickTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(playbackTick:) userInfo:nil repeats:YES];
+    self.playbackTickTimer.tolerance = 1.0; // 1 second tolerance
+}
+
+- (void)stopTimer
+{
+    [self.playbackTickTimer invalidate];
+    self.playbackTickTimer = nil;
+}
+
+- (void)didChangeNowPlaying:(NSNotification *)notification
+{
+    // this is called whenever we change tracks
+    NSString *trackId = [NSString stringWithFormat:@"%@", [notification userInfo][@"MPMusicPlayerControllerNowPlayingItemPersistentIDKey"]];
+    
+    // only update everything if it's different
+    if (trackId) {
+        // check if we even have a currentTrackId (we won't if view just loaded)
+        if (!self.currentTrackId || ![trackId isEqualToString:self.currentTrackId]) {
+            self.currentTrackId = trackId;
+        }
+    }
+}
+
+- (void)clearAlbumArtImage
+{
+    self.albumArt = nil;
+}
+
 - (void)propagateMusicPlayerState:(NSNotification *)notification
 {
+    // this is called whenever we change playback of current track
     NSDictionary *userInfo = [notification userInfo];
     
     if (userInfo[@"MPMusicPlayerControllerPlaybackStateKey"]) {
         MPMusicPlaybackState playbackState = (MPMusicPlaybackState)[userInfo[@"MPMusicPlayerControllerPlaybackStateKey"] integerValue];
         
         if (self.musicPlayer) {
+            
             // tell our player UI to update itself with our new data
             self.currentPlaybackPosition = self.musicPlayer.currentPlaybackTime;
             // make sure we keep track of our currently playing track's index
-            self.currentTrack = self.musicPlayer.indexOfNowPlayingItem;
+            self.currentTrackIndex = self.musicPlayer.indexOfNowPlayingItem;
             
             switch (playbackState) {
                 case MPMusicPlaybackStateStopped: {
                     DLogOrange(@"MPMusicPlaybackStateStopped");
+                    [self shouldStartPlayTimer:NO];
                     return;
                 }
                 case MPMusicPlaybackStatePlaying: {
-                    DLogOrange(@"MPMusicPlaybackStatePlaying");
-                    [(RACSubject *)self.playSignal sendNext:nil];
+                    [self shouldStartPlayTimer:YES];
                     break;
                 }
                 case MPMusicPlaybackStatePaused: {
-                    DLogOrange(@"MPMusicPlaybackStatePaused");
+                    [self shouldStartPlayTimer:NO];
                     return;
                 }
                 case MPMusicPlaybackStateInterrupted:
                     DLogOrange(@"MPMusicPlaybackStateInterrupted");
+                    [self shouldStartPlayTimer:NO];
                     break;
                 case MPMusicPlaybackStateSeekingForward:
-                    DLogOrange(@"MPMusicPlaybackStateSeekingForward");
-                    break;
                 case MPMusicPlaybackStateSeekingBackward:
-                    DLogOrange(@"MPMusicPlaybackStateSeekingBackward");
-                    break;
                 default:
+                    NSAssert(FALSE, @"Conditional error; these shouldn't happen.");
                     break;
             }
-            
-            [(RACSubject *)self.updatePlaybackUISignal sendNext:@(self.musicPlayer.indexOfNowPlayingItem)];
         }
     }
 }
 
-- (id)valueForMediaItemProperty:(NSString *)property// completion:(void(^)(id value))completion
+- (id)valueForMediaItemProperty:(NSString *)property
 {
     __block id newValue;
     
-//    dispatch_async(self.userInitiatedQueue, ^{
-        MPMediaItem *item = self.musicPlayer.nowPlayingItem;
-        newValue = [item valueForProperty:property];
-//    });
-    
-    DLogOrange(@"newValue: %@", newValue);
+    MPMediaItem *item = self.musicPlayer.nowPlayingItem;
+    newValue = [item valueForProperty:property];
     
     return newValue;
 }
@@ -165,36 +314,76 @@
     return self.numberOfTracks >= 0;
 }
 
-#warning I THINK THIS CAN BE RAC OBSERVED TOO
-- (void)artworkForCurrentTrackWithCompletion:(void (^)(MPMediaItemArtwork *mediaArt, NSError **error))completion
+- (void)artworkForCurrentTrackWithCompletion:(void (^)(MPMediaItemArtwork *mediaArt))completion
 {
-//    dispatch_async(self.utilityQueue, ^{
-        MPMediaItem *item = self.musicPlayer.nowPlayingItem;
-        MPMediaItemArtwork *artwork = [item valueForProperty:MPMediaItemPropertyArtwork];
-        completion(artwork, nil);
-//    });
+    // make this an async request with callback as there's potential
+    // we could move to the next track prior to retrieving the image
+    MPMediaItem *item = self.musicPlayer.nowPlayingItem;
+    MPMediaItemArtwork *artwork = [item valueForProperty:MPMediaItemPropertyArtwork];
+    completion(artwork);
+}
+
+- (void)currentTrackFinished
+{
+    if (self.musicPlayer.repeatMode != MPMusicRepeatModeOne) {
+        [self goToNextTrack];
+    }
+    else {
+        self.currentPlaybackPosition = 0;
+    }
+}
+
+/**
+ * Tick method called each second when playing back.
+ */
+- (void)playbackTick:(id)unused
+{
+    // Only tick forward if not scrobbling.
+    if (!self.scrobbling) {
+        if (self.currentPlaybackPosition + 1.0 > self.trackLength) {
+            [self currentTrackFinished];
+        }
+        else {
+            self.currentPlaybackPosition += 1.0f;
+        }
+    }
 }
 
 #pragma mark Delegate-like
-- (void)startPlaying
-{
-//    dispatch_async(self.userInitiatedQueue, ^{
-        [self.musicPlayer play];
-//    });
-}
-
-- (void)stopPlaying
-{
-//    dispatch_async(self.userInitiatedQueue, ^{
-        [self.musicPlayer pause];
-//    });
-}
-
 - (void)didSeekToPosition:(CGFloat)position
 {
-//    dispatch_async(self.userInitiatedQueue, ^{
-        [self.musicPlayer setCurrentPlaybackTime:position];
-//    });
+    [self.musicPlayer setCurrentPlaybackTime:position];
+}
+
+- (void)changeToTrack:(NSInteger)track
+{
+    os_activity_set_breadcrumb("changeToTrack:");
+    __block NSInteger newTrack = track;
+    
+    BOOL shouldChange = YES;
+    
+    if (newTrack < 0 || (self.tracksAreAvailable && newTrack >= self.numberOfTracks)) {
+        shouldChange = NO;
+        os_activity_set_breadcrumb("changeToTrack:paused");
+        // If we can't next, stop the playback.
+        // TODO: we fell off the playlist
+        [self pauseTrack];
+    }
+    
+    if (shouldChange) {
+        newTrack = [self didChangeTrack:newTrack];
+        
+        if (newTrack == NSNotFound) {
+            os_activity_set_breadcrumb("changeToTrack:newTrack:NotFound");
+            // TODO: we fell off the playlist
+            [self pauseTrack];
+        }
+        else {
+            os_activity_set_breadcrumb("changeToTrack:newTrack:Found");
+            self.currentPlaybackPosition = 0;
+            self.currentTrackIndex = newTrack;
+        }
+    }
 }
 
 - (NSInteger)didChangeTrack:(NSUInteger)track
@@ -212,58 +401,6 @@
     }
     
     return self.musicPlayer.indexOfNowPlayingItem;
-}
-
-- (void)didChangeShuffleState:(BOOL)shuffling
-{
-    DLogYellow(@"");
-}
-
-- (void)didChangeRepeatMode:(MPMusicRepeatMode)repeatMode
-{
-    DLogYellow(@"");
-}
-
-- (RACSignal *)nextButtonEnabledSignal
-{
-    if (!_nextButtonEnabledSignal) {
-        @weakify(self);
-        
-#warning this isn't firing on every item switch
-        _nextButtonEnabledSignal = [RACSignal combineLatest:@[RACObserve(self.musicPlayer, nowPlayingItem)] reduce:^id{
-            @strongify(self);
-            BOOL enabled = YES;
-            
-            if (self.tracksAreAvailable && self.currentTrack + 1 == self.numberOfTracks) {
-                enabled = NO;
-            }
-            
-            DLogCyan(@"next enabled: %i", enabled);
-            return @(enabled);
-        }];
-    }
-    return _nextButtonEnabledSignal;
-}
-
-- (RACSignal *)previousButtonEnabledSignal
-{
-    if (!_previousButtonEnabledSignal) {
-        @weakify(self);
-        
-#warning this isn't firing on every item switch
-        _previousButtonEnabledSignal = [[RACSignal combineLatest:@[RACObserve(self.musicPlayer, nowPlayingItem)]] map:^(id x) {
-            @strongify(self);
-            BOOL enabled = YES;
-            
-            if (self.tracksAreAvailable && self.currentTrack == 0) {
-                enabled = NO;
-            }
-            
-            DLogCyan(@"previous enabled: %i", enabled);
-            return @(enabled);
-        }];
-    }
-    return _previousButtonEnabledSignal;
 }
 
 @end
